@@ -1,0 +1,45 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarThunderParody", "WarThunderParody\WarThunderParody.csproj", "{19EB3F9B-5A38-447A-8708-CB30FF53FBD3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DAL", "DAL", "{9C01DF3F-5D23-4F89-8C10-A66181144B56}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{026CB030-7BFA-4F4B-8C5F-C4AE2FE55C27}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Service", "Service", "{8180B02A-E0EA-470F-A938-5991B978BBE1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarThunderParody.DAL", "WarThunderParody.DAL\WarThunderParody.DAL.csproj", "{206C0CB0-C6CA-4168-AA65-E56C4E6B2138}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarThunderParody.Domain", "WarThunderParody.Domain\WarThunderParody.Domain.csproj", "{FFF511C5-1AA6-49C6-904F-4CC2AED63A36}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarThunderParody.Service", "WarThunderParody.Service\WarThunderParody.Service.csproj", "{B515B3F3-DBAF-4D1D-961E-09E3B16118CC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{19EB3F9B-5A38-447A-8708-CB30FF53FBD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19EB3F9B-5A38-447A-8708-CB30FF53FBD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19EB3F9B-5A38-447A-8708-CB30FF53FBD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19EB3F9B-5A38-447A-8708-CB30FF53FBD3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{206C0CB0-C6CA-4168-AA65-E56C4E6B2138}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{206C0CB0-C6CA-4168-AA65-E56C4E6B2138}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{206C0CB0-C6CA-4168-AA65-E56C4E6B2138}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{206C0CB0-C6CA-4168-AA65-E56C4E6B2138}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFF511C5-1AA6-49C6-904F-4CC2AED63A36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFF511C5-1AA6-49C6-904F-4CC2AED63A36}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFF511C5-1AA6-49C6-904F-4CC2AED63A36}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFF511C5-1AA6-49C6-904F-4CC2AED63A36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B515B3F3-DBAF-4D1D-961E-09E3B16118CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B515B3F3-DBAF-4D1D-961E-09E3B16118CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B515B3F3-DBAF-4D1D-961E-09E3B16118CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B515B3F3-DBAF-4D1D-961E-09E3B16118CC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{206C0CB0-C6CA-4168-AA65-E56C4E6B2138} = {9C01DF3F-5D23-4F89-8C10-A66181144B56}
+		{FFF511C5-1AA6-49C6-904F-4CC2AED63A36} = {026CB030-7BFA-4F4B-8C5F-C4AE2FE55C27}
+		{B515B3F3-DBAF-4D1D-961E-09E3B16118CC} = {8180B02A-E0EA-470F-A938-5991B978BBE1}
+	EndGlobalSection
+EndGlobal

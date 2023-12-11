@@ -1,0 +1,15 @@
+Z:\5SEM\WarThunderParody\WarThunderParody.DAL\bin\Debug\net7.0\WarThunderParody.DAL.deps.json
+Z:\5SEM\WarThunderParody\WarThunderParody.DAL\bin\Debug\net7.0\WarThunderParody.DAL.dll
+Z:\5SEM\WarThunderParody\WarThunderParody.DAL\bin\Debug\net7.0\WarThunderParody.DAL.pdb
+Z:\5SEM\WarThunderParody\WarThunderParody.DAL\bin\Debug\net7.0\WarThunderParody.Domain.dll
+Z:\5SEM\WarThunderParody\WarThunderParody.DAL\bin\Debug\net7.0\WarThunderParody.Domain.pdb
+Z:\5SEM\WarThunderParody\WarThunderParody.DAL\obj\Debug\net7.0\WarThunderParody.DAL.csproj.AssemblyReference.cache
+Z:\5SEM\WarThunderParody\WarThunderParody.DAL\obj\Debug\net7.0\WarThunderParody.DAL.GeneratedMSBuildEditorConfig.editorconfig
+Z:\5SEM\WarThunderParody\WarThunderParody.DAL\obj\Debug\net7.0\WarThunderParody.DAL.AssemblyInfoInputs.cache
+Z:\5SEM\WarThunderParody\WarThunderParody.DAL\obj\Debug\net7.0\WarThunderParody.DAL.AssemblyInfo.cs
+Z:\5SEM\WarThunderParody\WarThunderParody.DAL\obj\Debug\net7.0\WarThunderParody.DAL.csproj.CoreCompileInputs.cache
+Z:\5SEM\WarThunderParody\WarThunderParody.DAL\obj\Debug\net7.0\WarThunderParody.DAL.csproj.CopyComplete
+Z:\5SEM\WarThunderParody\WarThunderParody.DAL\obj\Debug\net7.0\WarThunderParody.DAL.dll
+Z:\5SEM\WarThunderParody\WarThunderParody.DAL\obj\Debug\net7.0\refint\WarThunderParody.DAL.dll
+Z:\5SEM\WarThunderParody\WarThunderParody.DAL\obj\Debug\net7.0\WarThunderParody.DAL.pdb
+Z:\5SEM\WarThunderParody\WarThunderParody.DAL\obj\Debug\net7.0\ref\WarThunderParody.DAL.dll

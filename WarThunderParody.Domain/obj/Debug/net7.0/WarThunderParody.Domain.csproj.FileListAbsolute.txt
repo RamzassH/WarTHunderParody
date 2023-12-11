@@ -1,0 +1,12 @@
+Z:\5SEM\WarThunderParody\WarThunderParody.Domain\bin\Debug\net7.0\WarThunderParody.Domain.deps.json
+Z:\5SEM\WarThunderParody\WarThunderParody.Domain\bin\Debug\net7.0\WarThunderParody.Domain.dll
+Z:\5SEM\WarThunderParody\WarThunderParody.Domain\bin\Debug\net7.0\WarThunderParody.Domain.pdb
+Z:\5SEM\WarThunderParody\WarThunderParody.Domain\obj\Debug\net7.0\WarThunderParody.Domain.csproj.AssemblyReference.cache
+Z:\5SEM\WarThunderParody\WarThunderParody.Domain\obj\Debug\net7.0\WarThunderParody.Domain.GeneratedMSBuildEditorConfig.editorconfig
+Z:\5SEM\WarThunderParody\WarThunderParody.Domain\obj\Debug\net7.0\WarThunderParody.Domain.AssemblyInfoInputs.cache
+Z:\5SEM\WarThunderParody\WarThunderParody.Domain\obj\Debug\net7.0\WarThunderParody.Domain.AssemblyInfo.cs
+Z:\5SEM\WarThunderParody\WarThunderParody.Domain\obj\Debug\net7.0\WarThunderParody.Domain.csproj.CoreCompileInputs.cache
+Z:\5SEM\WarThunderParody\WarThunderParody.Domain\obj\Debug\net7.0\WarThunderParody.Domain.dll
+Z:\5SEM\WarThunderParody\WarThunderParody.Domain\obj\Debug\net7.0\refint\WarThunderParody.Domain.dll
+Z:\5SEM\WarThunderParody\WarThunderParody.Domain\obj\Debug\net7.0\WarThunderParody.Domain.pdb
+Z:\5SEM\WarThunderParody\WarThunderParody.Domain\obj\Debug\net7.0\ref\WarThunderParody.Domain.dll

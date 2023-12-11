@@ -1,0 +1,17 @@
+Z:\5SEM\WarThunderParody\WarThunderParody.Service\bin\Debug\net7.0\WarThunderParody.Service.deps.json
+Z:\5SEM\WarThunderParody\WarThunderParody.Service\bin\Debug\net7.0\WarThunderParody.Service.dll
+Z:\5SEM\WarThunderParody\WarThunderParody.Service\bin\Debug\net7.0\WarThunderParody.Service.pdb
+Z:\5SEM\WarThunderParody\WarThunderParody.Service\bin\Debug\net7.0\WarThunderParody.DAL.dll
+Z:\5SEM\WarThunderParody\WarThunderParody.Service\bin\Debug\net7.0\WarThunderParody.Domain.dll
+Z:\5SEM\WarThunderParody\WarThunderParody.Service\bin\Debug\net7.0\WarThunderParody.DAL.pdb
+Z:\5SEM\WarThunderParody\WarThunderParody.Service\bin\Debug\net7.0\WarThunderParody.Domain.pdb
+Z:\5SEM\WarThunderParody\WarThunderParody.Service\obj\Debug\net7.0\WarThunderParody.Service.csproj.AssemblyReference.cache
+Z:\5SEM\WarThunderParody\WarThunderParody.Service\obj\Debug\net7.0\WarThunderParody.Service.GeneratedMSBuildEditorConfig.editorconfig
+Z:\5SEM\WarThunderParody\WarThunderParody.Service\obj\Debug\net7.0\WarThunderParody.Service.AssemblyInfoInputs.cache
+Z:\5SEM\WarThunderParody\WarThunderParody.Service\obj\Debug\net7.0\WarThunderParody.Service.AssemblyInfo.cs
+Z:\5SEM\WarThunderParody\WarThunderParody.Service\obj\Debug\net7.0\WarThunderParody.Service.csproj.CoreCompileInputs.cache
+Z:\5SEM\WarThunderParody\WarThunderParody.Service\obj\Debug\net7.0\WarThunderParody.Service.csproj.CopyComplete
+Z:\5SEM\WarThunderParody\WarThunderParody.Service\obj\Debug\net7.0\WarThunderParody.Service.dll
+Z:\5SEM\WarThunderParody\WarThunderParody.Service\obj\Debug\net7.0\refint\WarThunderParody.Service.dll
+Z:\5SEM\WarThunderParody\WarThunderParody.Service\obj\Debug\net7.0\WarThunderParody.Service.pdb
+Z:\5SEM\WarThunderParody\WarThunderParody.Service\obj\Debug\net7.0\ref\WarThunderParody.Service.dll
