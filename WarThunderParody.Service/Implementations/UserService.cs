@@ -17,7 +17,7 @@ public class UserService : IUserService
         throw new NotImplementedException();
     }
 
-    public Task<IBaseResponse<UserRoleViewModel>> Create(UserRoleViewModel UserRoleViewModel)
+    public Task<IBaseResponse<UserRoleViewModel>> Create(UserRoleViewModel userRoleViewModel)
     {
         throw new NotImplementedException();
     }
@@ -27,7 +27,7 @@ public class UserService : IUserService
         throw new NotImplementedException();
     }
 
-    public Task<IBaseResponse<UserRole>> Edit(int id, UserRoleViewModel UserRoleViewModel)
+    public Task<IBaseResponse<UserRole>> Edit(int id, UserRoleViewModel userRoleViewModel)
     {
         throw new NotImplementedException();
     }

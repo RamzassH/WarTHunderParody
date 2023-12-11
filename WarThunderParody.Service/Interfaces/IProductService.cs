@@ -10,9 +10,9 @@ public interface IProductService
     
     Task<IBaseResponse<bool>> DeleteProducts(int id);
     
-    Task<IBaseResponse<ProductViewModel>> Create(ProductViewModel ProductViewModel);
+    Task<IBaseResponse<ProductViewModel>> Create(ProductViewModel productViewModel);
     
     Task<IBaseResponse<Product>> GetProduct(int id);
 
-    Task<IBaseResponse<Product>> Edit(int id, ProductViewModel ProductViewModel);
+    Task<IBaseResponse<Product>> Edit(int id, ProductViewModel productViewModel);
 }

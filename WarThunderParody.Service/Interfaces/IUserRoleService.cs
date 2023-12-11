@@ -10,9 +10,9 @@ public interface IUserRoleService
     
     Task<IBaseResponse<bool>> DeleteUserAccount(int id);
     
-    Task<IBaseResponse<UserAccountViewModel>> Create(UserAccountViewModel UserAccountViewModel);
+    Task<IBaseResponse<UserAccountViewModel>> Create(UserAccountViewModel userAccountViewModel);
     
     Task<IBaseResponse<UserAccount>> GetUserAccount(int id);
 
-    Task<IBaseResponse<UserAccount>> Edit(int id, UserAccountViewModel UserAccountViewModel);
+    Task<IBaseResponse<UserAccount>> Edit(int id, UserAccountViewModel userAccountViewModel);
 }

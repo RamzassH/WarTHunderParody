@@ -21,8 +21,17 @@ builder.Services.AddDbContext<ApplicationDbContext>(opt =>
     opt.UseNpgsql(connection));
 
 builder.Services.AddScoped<IBaseRepository<Category>, CategoryRepository>();
-builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IBaseRepository<Nation>, NationRepository>();
+builder.Services.AddScoped<IBaseRepository<Order>, OrderRepository>();
+builder.Services.AddScoped<IBaseRepository<Product>, ProductRepository>();
+builder.Services.AddScoped<IBaseRepository<Roles>, RolesRepository>();
+builder.Services.AddScoped<IBaseRepository<UserRole>, UserRoleRepository>();
 
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<INationService, NationService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IRolesService, RolesService>();
 
 var app = builder.Build();
 

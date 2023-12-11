@@ -10,9 +10,9 @@ public interface IRolesService
     
     Task<IBaseResponse<bool>> DeleteRole(int id);
     
-    Task<IBaseResponse<RolesViewModel>> Create(RolesViewModel OrderViewModel);
+    Task<IBaseResponse<RolesViewModel>> Create(RolesViewModel orderViewModel);
     
     Task<IBaseResponse<Roles>> GetRole(int id);
 
-    Task<IBaseResponse<Roles>> Edit(int id, RolesViewModel OrderViewModel);
+    Task<IBaseResponse<Roles>> Edit(int id, RolesViewModel orderViewModel);
 }

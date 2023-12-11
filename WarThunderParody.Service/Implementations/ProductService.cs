@@ -17,7 +17,7 @@ public class ProductService : IProductService
         throw new NotImplementedException();
     }
 
-    public Task<IBaseResponse<ProductViewModel>> Create(ProductViewModel ProductViewModel)
+    public Task<IBaseResponse<ProductViewModel>> Create(ProductViewModel productViewModel)
     {
         throw new NotImplementedException();
     }
@@ -27,7 +27,7 @@ public class ProductService : IProductService
         throw new NotImplementedException();
     }
 
-    public Task<IBaseResponse<Product>> Edit(int id, ProductViewModel ProductViewModel)
+    public Task<IBaseResponse<Product>> Edit(int id, ProductViewModel productViewModel)
     {
         throw new NotImplementedException();
     }

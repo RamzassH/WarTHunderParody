@@ -17,7 +17,7 @@ public class RolesService : IRolesService
         throw new NotImplementedException();
     }
 
-    public Task<IBaseResponse<RolesViewModel>> Create(RolesViewModel OrderViewModel)
+    public Task<IBaseResponse<RolesViewModel>> Create(RolesViewModel orderViewModel)
     {
         throw new NotImplementedException();
     }
@@ -27,7 +27,7 @@ public class RolesService : IRolesService
         throw new NotImplementedException();
     }
 
-    public Task<IBaseResponse<Roles>> Edit(int id, RolesViewModel OrderViewModel)
+    public Task<IBaseResponse<Roles>> Edit(int id, RolesViewModel orderViewModel)
     {
         throw new NotImplementedException();
     }
