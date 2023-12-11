@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using WarThunderParody.DAL.Interfaces;
 using WarThunderParody.Domain.Entity;
 
@@ -16,8 +17,8 @@ public class GetNationsController : ControllerBase
     }
 
     [HttpGet(Name = "GetNations")]
-    public List<Nation> Get()
+    public async Task<List<Nation>> Get()
     {
-        return _nationRepository.GetAll().ToList();
+        return await _nationRepository.GetAll().ToListAsync();
     }
 }

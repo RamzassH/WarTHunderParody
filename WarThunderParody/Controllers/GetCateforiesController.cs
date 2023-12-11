@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using WarThunderParody.DAL.Interfaces;
 using WarThunderParody.Domain.Entity;
 
@@ -16,8 +17,8 @@ public class GetCategoriesController : ControllerBase
     }
 
     [HttpGet(Name = "GetCategories")]
-    public List<Category> Get()
+    public async Task<List<Category>> Get()
     {
-        return _categoryRepository.GetAll().ToList();
+        return await _categoryRepository.GetAll().ToListAsync();
     }
 }

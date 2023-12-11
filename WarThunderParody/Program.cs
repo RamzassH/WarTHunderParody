@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using WarThunderParody.DAL;
 using WarThunderParody.DAL.Interfaces;
 using WarThunderParody.DAL.Repositories;
@@ -32,6 +33,7 @@ builder.Services.AddScoped<INationService, NationService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IRolesService, RolesService>();
+builder.Services.AddScoped<IAccountService, AccountService>();
 
 var app = builder.Build();
 

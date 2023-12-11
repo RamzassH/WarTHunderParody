@@ -8,4 +8,5 @@ public class UserAccount
     public string email { get; set; }
     public decimal ballance { get; set; }
     public DateTime registration_date { get; set; }
+    public Roles role { get; set; }
 }
