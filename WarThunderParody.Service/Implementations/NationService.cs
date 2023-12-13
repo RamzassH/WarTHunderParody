@@ -10,11 +10,11 @@ namespace WarThunderParody.Service.Implementations;
 
 public class NationService : INationService
 {
-   private readonly IBaseRepository<Nation> _NationRepository;
+   private readonly IBaseRepository<Nation> _nationRepository;
 
-    public NationService(IBaseRepository<Nation> NationRepository)
+    public NationService(IBaseRepository<Nation> nationRepository)
     {
-        _NationRepository = NationRepository;
+        _nationRepository = nationRepository;
     }
 
     public async Task<IBaseResponse<Nation>> GetNation(int id)
@@ -22,15 +22,15 @@ public class NationService : INationService
         var baseResponse = new BaseResponse<Nation>();
         try
         {
-            var Nation = await _NationRepository.GetAll().FirstOrDefaultAsync(x => x.Id == id);
-            if (Nation is null)
+            var nation = await _nationRepository.GetAll().FirstOrDefaultAsync(x => x.Id == id);
+            if (nation is null)
             {
                 baseResponse.Description = "Nation not found";
                 baseResponse.StatusCode = StatusCode.NationNotFound;
                 return baseResponse;
             }
 
-            baseResponse.Data = Nation;
+            baseResponse.Data = nation;
             return baseResponse;
         }
         catch (Exception e)
@@ -42,21 +42,21 @@ public class NationService : INationService
         }
     }
 
-    public async Task<IBaseResponse<Nation>> Edit(int id, NationDBO nationDbo)
+    public async Task<IBaseResponse<Nation>> Edit(int id, NationDBO model)
     {
         var baseResponse = new BaseResponse<Nation>();
         try
         {
-            var Nation = await _NationRepository.GetAll().FirstOrDefaultAsync(x => x.Id == id);
-            if (Nation is null)
+            var nation = await _nationRepository.GetAll().FirstOrDefaultAsync(x => x.Id == id);
+            if (nation is null)
             {
                 baseResponse.Description = "Nation not found";
                 baseResponse.StatusCode = StatusCode.NationNotFound;
                 return baseResponse;
             }
 
-            Nation.Name = nationDbo.Name;
-            await _NationRepository.Update(Nation);
+            nation.Name = model.Name;
+            await _nationRepository.Update(nation);
             return baseResponse;
         }
         catch (Exception e)
@@ -73,15 +73,15 @@ public class NationService : INationService
         var baseResponse = new BaseResponse<Nation>();
         try
         {
-            var Nation = await _NationRepository.GetAll().FirstOrDefaultAsync(x => x.Name == name);
-            if (Nation is null)
+            var nation = await _nationRepository.GetAll().FirstOrDefaultAsync(x => x.Name == name);
+            if (nation is null)
             {
                 baseResponse.Description = "Nation not found";
                 baseResponse.StatusCode = StatusCode.NationNotFound;
                 return baseResponse;
             }
 
-            baseResponse.Data = Nation;
+            baseResponse.Data = nation;
             return baseResponse;
         }
         catch (Exception e)
@@ -93,29 +93,29 @@ public class NationService : INationService
         }
     }
 
-    public async Task<IBaseResponse<NationDBO>> Create(NationDBO nationDbo)
+    public async Task<IBaseResponse<bool>> Create(NationDBO model)
     {
-        var baseResponse = new BaseResponse<NationDBO>();
+        var baseResponse = new BaseResponse<bool>();
         try
         {
-            var Nation = new Nation()
+            var nation = new Nation()
             {
                 Name = "dada"
             };
-            await _NationRepository.Create(Nation);
-            if (Nation is null)
+            var result = await _nationRepository.Create(nation);
+            if (result == false)
             {
                 baseResponse.Description = "Nation not found";
                 baseResponse.StatusCode = StatusCode.NationNotFound;
                 return baseResponse;
             }
 
-            await _NationRepository.Delete(Nation);
+            await _nationRepository.Delete(nation);
             return baseResponse;
         }
         catch (Exception e)
         {
-            return new BaseResponse<NationDBO>()
+            return new BaseResponse<bool>()
             {
                 Description = $"[CreateNation] : {e.Message}"
             };
@@ -127,7 +127,7 @@ public class NationService : INationService
         var baseResponse = new BaseResponse<bool>();
         try
         {
-            var Nation = await _NationRepository.GetAll().FirstOrDefaultAsync(x => x.Id == id);
+            var Nation = await _nationRepository.GetAll().FirstOrDefaultAsync(x => x.Id == id);
             if (Nation is null)
             {
                 baseResponse.Description = "Nation not found";
@@ -135,7 +135,7 @@ public class NationService : INationService
                 return baseResponse;
             }
 
-            await _NationRepository.Delete(Nation);
+            await _nationRepository.Delete(Nation);
             return baseResponse;
         }
         catch (Exception e)
@@ -151,7 +151,7 @@ public class NationService : INationService
         var baseResponse = new BaseResponse<IEnumerable<Nation>>();
         try
         {
-            var categories = await _NationRepository.GetAll().ToListAsync();
+            var categories = await _nationRepository.GetAll().ToListAsync();
             if (categories.Count == 0)
             {
                 baseResponse.Description = "Найдено 0 элементов";

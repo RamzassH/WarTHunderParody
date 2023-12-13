@@ -10,9 +10,9 @@ public interface IOrderService
     
     Task<IBaseResponse<bool>> DeleteOrder(int id);
     
-    Task<IBaseResponse<OrderDBO>> Create(OrderDBO orderDbo);
+    Task<IBaseResponse<bool>> Create(OrderDBO model);
     
     Task<IBaseResponse<Order>> GetOrder(int id);
 
-    Task<IBaseResponse<Order>> Edit(int id, OrderDBO orderDbo);
+    Task<IBaseResponse<Order>> Edit(int id, OrderDBO model);
 }

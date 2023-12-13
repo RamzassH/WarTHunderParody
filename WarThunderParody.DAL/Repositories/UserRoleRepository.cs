@@ -1,4 +1,5 @@
-﻿using WarThunderParody.DAL.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using WarThunderParody.DAL.Interfaces;
 using WarThunderParody.Domain.Entity;
 
 namespace WarThunderParody.DAL.Repositories;

@@ -43,7 +43,7 @@ public class CategoryService : ICategoryService
         }
     }
 
-    public async Task<IBaseResponse<Category>> Edit(int id, CategoryDBO categoryDbo)
+    public async Task<IBaseResponse<Category>> Edit(int id, CategoryDBO model)
     {
         var baseResponse = new BaseResponse<Category>();
         try
@@ -56,7 +56,7 @@ public class CategoryService : ICategoryService
                 return baseResponse;
             }
 
-            category.Name = categoryDbo.Name;
+            category.Name = model.Name;
             await _categoryRepository.Update(category);
             return baseResponse;
         }
@@ -94,27 +94,28 @@ public class CategoryService : ICategoryService
         }
     }
 
-    public async Task<IBaseResponse<CategoryDBO>> Create(CategoryDBO categoryDbo)
+    public async Task<IBaseResponse<bool>> Create(CategoryDBO model)
     {
-        var baseResponse = new BaseResponse<CategoryDBO>();
+        var response = new BaseResponse<bool>();
         try
         {
             var category = new Category()
             {
-                Name = categoryDbo.Name
+                Name = model.Name
             };
-            if (category is null)
+            var result = await _categoryRepository.Create(category);
+            if (result == false)
             {
-                baseResponse.Description = "Category not found";
-                baseResponse.StatusCode = StatusCode.CategoryNotFound;
-                return baseResponse;
+                response.Description = "Не удалось создать категорию";
+                response.StatusCode = StatusCode.NotFound;
+                return response;
             }
-            await _categoryRepository.Create(category);
-            return baseResponse;
+
+            return response;
         }
         catch (Exception e)
         {
-            return new BaseResponse<CategoryDBO>()
+            return new BaseResponse<bool>()
             {
                 Description = $"[CreateCategory] : {e.Message}"
             };

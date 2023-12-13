@@ -1,4 +1,5 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
+using System.Runtime.InteropServices;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Authorization;
@@ -15,12 +16,14 @@ namespace WarThunderParody.Controllers;
 public class AuthController : ControllerBase
 {
     private readonly IAccountService _userAccountService;
+    private readonly IRolesService _rolesService;
     private readonly IConfiguration _configuration;
 
-    public AuthController(IConfiguration configuration, IAccountService userAccountService)
+    public AuthController(IConfiguration configuration, IAccountService userAccountService, IRolesService rolesService)
     {
         _configuration = configuration;
         _userAccountService = userAccountService;
+        _rolesService = rolesService;
     }
 
     [HttpPost("register")]
@@ -45,23 +48,40 @@ public class AuthController : ControllerBase
             return BadRequest("Invalid login attempt.");
         }
         
-        var tokenString = GenerateJwtToken(result.Data);
+        var tokenString = await GenerateJwtToken(result.Data);
     
         return Ok(new { Token = tokenString });
     }
+
+    [HttpPost("MakeUserAdmin")]
+    public async Task<IActionResult> CreateUserAdmin([FromBody] UserEmailDBO model)
+    {
+        var result = await _rolesService.MakeUserAdmin(model.Email);
+        if (result.StatusCode == Domain.Enum.StatusCode.NotFound)
+        {
+            return BadRequest(result.Description);
+        }
+
+        return Ok();
+    }
     
-    
-    private string GenerateJwtToken(Account user)
+    private async Task<string> GenerateJwtToken(Account user)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
         var key = Encoding.UTF8.GetBytes(_configuration["Jwt:Secret"]);
+        var roles = await _rolesService.GetUserRolesByUserId(user.Id);
+        
+        List<Claim> claims = new List<Claim>();
+        foreach (var role in roles.Data)
+        {
+            claims.Add(new Claim(ClaimTypes.Name, user.Name));
+            claims.Add( new Claim(ClaimTypes.Email, user.Email));
+            claims.Add(new Claim(ClaimTypes.Role, role.Name));
+        }
+        
         var tokenDescriptor = new SecurityTokenDescriptor
         {
-            Subject = new ClaimsIdentity(new Claim[]
-            {
-                new Claim(ClaimTypes.Name, user.Name),
-                new Claim(ClaimTypes.Email, user.Email),
-            }),
+            Subject = new ClaimsIdentity(claims),
             Expires = DateTime.UtcNow.AddDays(7),
             SigningCredentials =
                 new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

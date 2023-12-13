@@ -7,6 +7,7 @@ using WarThunderParody.Domain.Enum;
 using WarThunderParody.Domain.Helpers;
 using WarThunderParody.Domain.Response;
 using WarThunderParody.Domain.ViewModel.Auth;
+using WarThunderParody.Domain.ViewModel.UserAccount;
 using WarThunderParody.Service.Interfaces;
 
 namespace WarThunderParody.Service.Implementations;
@@ -81,5 +82,36 @@ namespace WarThunderParody.Service.Implementations;
         response.StatusCode = StatusCode.NotFound;
         response.Description = "Неверно указаны данные для входа, проверьте логин или пароль";
         return response;
+    }
+
+    public async Task<IBaseResponse<Account>> Edit(int id, UserAccountDBO model)
+    {
+        var response = new BaseResponse<Account>();
+        try
+        {
+            var account = await _userAccountRepository.GetAll().FirstOrDefaultAsync(x => x.Id == id);
+            if (account is null)
+            {
+                response.Description = "Аккаунт не найден";
+                response.StatusCode = StatusCode.CategoryNotFound;
+                return response;
+            }
+
+            account.Name = model.Name;
+            account.Balance = model.Ballance;
+            account.Email = account.Email;
+            account.RegistrationDate = model.RegistrationDate;
+            account.Password = HashPasswordHelper.HashPassword(model.Password);
+            
+            await _userAccountRepository.Update(account);
+            return response;
+        }
+        catch (Exception e)
+        {
+            return new BaseResponse<Account>()
+            {
+                Description = $"[Edit] : {e.Message}"
+            };
+        }
     }
  }

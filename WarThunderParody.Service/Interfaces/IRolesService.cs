@@ -10,9 +10,13 @@ public interface IRolesService
     
     Task<IBaseResponse<bool>> DeleteRole(int id);
     
-    Task<IBaseResponse<RolesDBO>> Create(RolesDBO orderDbo);
+    Task<IBaseResponse<bool>> Create(RolesDBO model);
+
+    Task<IBaseResponse<IEnumerable<Role>>> GetUserRolesByUserId(int id);
+
+    Task<IBaseResponse<bool>> MakeUserAdmin(string email);
     
     Task<IBaseResponse<Role>> GetRole(int id);
 
-    Task<IBaseResponse<Role>> Edit(int id, RolesDBO orderDbo);
+    Task<IBaseResponse<Role>> Edit(int id, RolesDBO model);
 }

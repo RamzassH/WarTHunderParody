@@ -10,9 +10,9 @@ public interface IProductService
     
     Task<IBaseResponse<bool>> DeleteProducts(int id);
     
-    Task<IBaseResponse<ProductDBO>> Create(ProductDBO productDbo);
+    Task<IBaseResponse<bool>> Create(ProductDBO model);
     
     Task<IBaseResponse<Product>> GetProduct(int id);
 
-    Task<IBaseResponse<Product>> Edit(int id, ProductDBO productDbo);
+    Task<IBaseResponse<Product>> Edit(int id, ProductDBO model);
 }

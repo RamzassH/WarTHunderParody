@@ -17,7 +17,7 @@ public class OrderService : IOrderService
         throw new NotImplementedException();
     }
 
-    public Task<IBaseResponse<OrderDBO>> Create(OrderDBO orderDbo)
+    public Task<IBaseResponse<bool>> Create(OrderDBO model)
     {
         throw new NotImplementedException();
     }
@@ -27,7 +27,7 @@ public class OrderService : IOrderService
         throw new NotImplementedException();
     }
 
-    public Task<IBaseResponse<Order>> Edit(int id, OrderDBO orderDbo)
+    public Task<IBaseResponse<Order>> Edit(int id, OrderDBO model)
     {
         throw new NotImplementedException();
     }

@@ -8,6 +8,8 @@ public class Product
 {
     [Column("id")]
     public int Id { get; set; }
+    [Column("description")]
+    public string Description { get; set; }
     [Column("category_id")]
     public int CategoryId { get; set; }
     [Column("nation_id")]
