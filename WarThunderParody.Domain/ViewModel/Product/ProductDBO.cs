@@ -1,10 +1,10 @@
 ﻿namespace WarThunderParody.Domain.ViewModel.Product;
 
-public class ProductViewModel
+public class ProductDBO
 {
-    public int id { get; set; }
-    public int category_id { get; set; }
-    public int? nation_id { get; set; }
+    public int Id { get; set; }
+    public int CategoryId { get; set; }
+    public int? NationId { get; set; }
     //public IFormFile Avatar { get; set; }
     public byte[]? Image { get; set; }
 }

@@ -13,26 +13,26 @@ public class NationRepository : IBaseRepository<Nation>
     }
     public async Task<bool> Create(Nation entity)
     {
-        await _db.nation.AddAsync(entity);
+        await _db.Nation.AddAsync(entity);
         await _db.SaveChangesAsync();
         return true;
     }
 
     public IQueryable<Nation> GetAll()
     {
-        return _db.nation;
+        return _db.Nation;
     }
 
     public async Task<Nation> Update(Nation entity)
     {
-        _db.nation.Update(entity);
+        _db.Nation.Update(entity);
         await _db.SaveChangesAsync();
         return entity;
     }
 
     public async Task<bool> Delete(Nation entity)
     {
-        _db.nation.Remove(entity);
+        _db.Nation.Remove(entity);
         await _db.SaveChangesAsync();
         return true;
     }

@@ -6,13 +6,13 @@ namespace WarThunderParody.Service.Interfaces;
 
 public interface IUserRoleService
 {
-    Task<IBaseResponse<IEnumerable<UserAccount>>> GetUserAccounts();
+    Task<IBaseResponse<IEnumerable<Account>>> GetUserAccounts();
     
     Task<IBaseResponse<bool>> DeleteUserAccount(int id);
     
-    Task<IBaseResponse<UserAccountViewModel>> Create(UserAccountViewModel userAccountViewModel);
+    Task<IBaseResponse<UserAccountDBO>> Create(UserAccountDBO userAccountDbo);
     
-    Task<IBaseResponse<UserAccount>> GetUserAccount(int id);
+    Task<IBaseResponse<Account>> GetUserAccount(int id);
 
-    Task<IBaseResponse<UserAccount>> Edit(int id, UserAccountViewModel userAccountViewModel);
+    Task<IBaseResponse<Account>> Edit(int id, UserAccountDBO userAccountDbo);
 }

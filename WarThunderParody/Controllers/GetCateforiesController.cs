@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using WarThunderParody.DAL.Interfaces;
 using WarThunderParody.Domain.Entity;
+using WarThunderParody.Domain.ViewModel.Category;
+using WarThunderParody.Service.Interfaces;
 
 namespace WarThunderParody.Controllers;
 
@@ -9,16 +11,17 @@ namespace WarThunderParody.Controllers;
 [Route("[controller]")]
 public class GetCategoriesController : ControllerBase
 {
-    private readonly IBaseRepository<Category> _categoryRepository;
+    private readonly ICategoryService _categoryService;
     
-    public GetCategoriesController(IBaseRepository<Category> categoryRepository)
+    public GetCategoriesController(ICategoryService categoryService)
     {
-        _categoryRepository = categoryRepository;
+        _categoryService = categoryService;
     }
 
-    [HttpGet(Name = "GetCategories")]
+    [HttpGet("GetCategories")]
     public async Task<List<Category>> Get()
     {
-        return await _categoryRepository.GetAll().ToListAsync();
+        var response = await _categoryService.GetCategories();
+        return (List<Category>)response.Data;
     }
 }

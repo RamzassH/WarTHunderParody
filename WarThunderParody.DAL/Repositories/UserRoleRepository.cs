@@ -15,26 +15,26 @@ public class UserRoleRepository : IBaseRepository<UserRole>
     
     public async Task<bool> Create(UserRole entity)
     {
-        await _db.user_role.AddAsync(entity);
+        await _db.UserRole.AddAsync(entity);
         await _db.SaveChangesAsync();
         return true;
     }
 
     public IQueryable<UserRole> GetAll()
     {
-        return _db.user_role;
+        return _db.UserRole;
     }
 
     public async Task<UserRole> Update(UserRole entity)
     {
-        _db.user_role.Update(entity);
+        _db.UserRole.Update(entity);
         await _db.SaveChangesAsync();
         return entity;
     }
 
     public async Task<bool> Delete(UserRole entity)
     {
-        _db.user_role.Remove(entity);
+        _db.UserRole.Remove(entity);
         await _db.SaveChangesAsync();
         return true;
     }

@@ -42,3 +42,10 @@ Z:\5SEM\WarThunderParody\WarThunderParody\bin\Debug\net7.0\WarThunderParody.DAL.
 Z:\5SEM\WarThunderParody\WarThunderParody\bin\Debug\net7.0\WarThunderParody.Domain.pdb
 Z:\5SEM\WarThunderParody\WarThunderParody\bin\Debug\net7.0\WarThunderParody.Service.dll
 Z:\5SEM\WarThunderParody\WarThunderParody\bin\Debug\net7.0\WarThunderParody.Service.pdb
+Z:\5SEM\WarThunderParody\WarThunderParody\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+Z:\5SEM\WarThunderParody\WarThunderParody\bin\Debug\net7.0\Microsoft.IdentityModel.JsonWebTokens.dll
+Z:\5SEM\WarThunderParody\WarThunderParody\bin\Debug\net7.0\Microsoft.IdentityModel.Logging.dll
+Z:\5SEM\WarThunderParody\WarThunderParody\bin\Debug\net7.0\Microsoft.IdentityModel.Protocols.dll
+Z:\5SEM\WarThunderParody\WarThunderParody\bin\Debug\net7.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+Z:\5SEM\WarThunderParody\WarThunderParody\bin\Debug\net7.0\Microsoft.IdentityModel.Tokens.dll
+Z:\5SEM\WarThunderParody\WarThunderParody\bin\Debug\net7.0\System.IdentityModel.Tokens.Jwt.dll

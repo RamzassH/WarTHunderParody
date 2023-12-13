@@ -10,10 +10,10 @@ public interface INationService
 {
     Task<IBaseResponse<IEnumerable<Nation>>> GetNations();
     Task<IBaseResponse<bool>> DeleteNation(int id);
-    Task<IBaseResponse<NationViewModel>> Create(NationViewModel categoryViewModel);
+    Task<IBaseResponse<NationDBO>> Create(NationDBO categoryDbo);
     Task<IBaseResponse<Nation>> GetNationByName(string name);
 
     Task<IBaseResponse<Nation>> GetNation(int id);
 
-    Task<IBaseResponse<Nation>> Edit(int id, NationViewModel categoryViewModel);
+    Task<IBaseResponse<Nation>> Edit(int id, NationDBO categoryDbo);
 }

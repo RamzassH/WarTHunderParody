@@ -6,13 +6,13 @@ namespace WarThunderParody.Service.Interfaces;
 
 public interface IRolesService
 {
-    Task<IBaseResponse<IEnumerable<Roles>>> GetRoles();
+    Task<IBaseResponse<IEnumerable<Role>>> GetRoles();
     
     Task<IBaseResponse<bool>> DeleteRole(int id);
     
-    Task<IBaseResponse<RolesViewModel>> Create(RolesViewModel orderViewModel);
+    Task<IBaseResponse<RolesDBO>> Create(RolesDBO orderDbo);
     
-    Task<IBaseResponse<Roles>> GetRole(int id);
+    Task<IBaseResponse<Role>> GetRole(int id);
 
-    Task<IBaseResponse<Roles>> Edit(int id, RolesViewModel orderViewModel);
+    Task<IBaseResponse<Role>> Edit(int id, RolesDBO orderDbo);
 }

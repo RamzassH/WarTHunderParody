@@ -1,7 +1,11 @@
-﻿namespace WarThunderParody.Domain.Entity;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace WarThunderParody.Domain.Entity;
 
 public class Nation
 {
-    public int id { get; set; }
-    public string name { get; set; }
+    [Column("id")]
+    public int Id { get; set; }
+    [Column("name")]
+    public string Name { get; set; }
 }

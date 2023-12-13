@@ -1,9 +1,12 @@
-﻿using WarThunderParody.Domain.Enum;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using WarThunderParody.Domain.Enum;
 
 namespace WarThunderParody.Domain.Entity;
 
 public class Category
 {
-    public int id { get; set; }
-    public string name { get; set; }
+    [Column("id")]
+    public int Id { get; set; }
+    [Column("name")]
+    public string Name { get; set; }
 }

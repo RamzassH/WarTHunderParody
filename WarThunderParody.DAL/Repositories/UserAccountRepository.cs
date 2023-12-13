@@ -3,7 +3,7 @@ using WarThunderParody.Domain.Entity;
 
 namespace WarThunderParody.DAL.Repositories;
 
-public class UserAccountRepository : IBaseRepository<UserAccount>
+public class UserAccountRepository : IBaseRepository<Account>
 {
     private readonly ApplicationDbContext _db;
 
@@ -12,28 +12,28 @@ public class UserAccountRepository : IBaseRepository<UserAccount>
         _db = db;
     }
 
-    public async Task<bool> Create(UserAccount entity)
+    public async Task<bool> Create(Account entity)
     {
-        await _db.user_account.AddAsync(entity);
+        await _db.UserAccount.AddAsync(entity);
         await _db.SaveChangesAsync();
         return true;
     }
 
-    public IQueryable<UserAccount> GetAll()
+    public IQueryable<Account> GetAll()
     {
-        return _db.user_account;
+        return _db.UserAccount;
     }
 
-    public async Task<UserAccount> Update(UserAccount entity)
+    public async Task<Account> Update(Account entity)
     {
-        _db.user_account.Update(entity);
+        _db.UserAccount.Update(entity);
         await _db.SaveChangesAsync();
         return entity;
     }
 
-    public async Task<bool> Delete(UserAccount entity)
+    public async Task<bool> Delete(Account entity)
     {
-        _db.user_account.Remove(entity);
+        _db.UserAccount.Remove(entity);
         await _db.SaveChangesAsync();
         return true;
     }

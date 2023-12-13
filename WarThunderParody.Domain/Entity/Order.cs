@@ -1,10 +1,17 @@
-﻿namespace WarThunderParody.Domain.Entity;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace WarThunderParody.Domain.Entity;
 
 public class Order
 {
-    public int id { get; set; }
-    public int user_id { get; set; }
-    public int product_id { get; set; }
-    public DateTime date { get; set; }
-    public decimal price { get; set; }
+    [Column("id")]
+    public int Id { get; set; }
+    [Column("user_id")]
+    public int UserId { get; set; }
+    [Column("product_id")]
+    public int ProductId { get; set; }
+    [Column("date")]
+    public DateTime Date { get; set; }
+    [Column("price")]
+    public decimal Price { get; set; }
 }

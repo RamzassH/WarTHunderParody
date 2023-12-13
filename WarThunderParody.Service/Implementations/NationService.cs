@@ -22,7 +22,7 @@ public class NationService : INationService
         var baseResponse = new BaseResponse<Nation>();
         try
         {
-            var Nation = await _NationRepository.GetAll().FirstOrDefaultAsync(x => x.id == id);
+            var Nation = await _NationRepository.GetAll().FirstOrDefaultAsync(x => x.Id == id);
             if (Nation is null)
             {
                 baseResponse.Description = "Nation not found";
@@ -42,12 +42,12 @@ public class NationService : INationService
         }
     }
 
-    public async Task<IBaseResponse<Nation>> Edit(int id, NationViewModel NationViewModel)
+    public async Task<IBaseResponse<Nation>> Edit(int id, NationDBO nationDbo)
     {
         var baseResponse = new BaseResponse<Nation>();
         try
         {
-            var Nation = await _NationRepository.GetAll().FirstOrDefaultAsync(x => x.id == id);
+            var Nation = await _NationRepository.GetAll().FirstOrDefaultAsync(x => x.Id == id);
             if (Nation is null)
             {
                 baseResponse.Description = "Nation not found";
@@ -55,7 +55,7 @@ public class NationService : INationService
                 return baseResponse;
             }
 
-            Nation.name = NationViewModel.name;
+            Nation.Name = nationDbo.Name;
             await _NationRepository.Update(Nation);
             return baseResponse;
         }
@@ -73,7 +73,7 @@ public class NationService : INationService
         var baseResponse = new BaseResponse<Nation>();
         try
         {
-            var Nation = await _NationRepository.GetAll().FirstOrDefaultAsync(x => x.name == name);
+            var Nation = await _NationRepository.GetAll().FirstOrDefaultAsync(x => x.Name == name);
             if (Nation is null)
             {
                 baseResponse.Description = "Nation not found";
@@ -93,14 +93,14 @@ public class NationService : INationService
         }
     }
 
-    public async Task<IBaseResponse<NationViewModel>> Create(NationViewModel NationViewModel)
+    public async Task<IBaseResponse<NationDBO>> Create(NationDBO nationDbo)
     {
-        var baseResponse = new BaseResponse<NationViewModel>();
+        var baseResponse = new BaseResponse<NationDBO>();
         try
         {
             var Nation = new Nation()
             {
-                name = "dada"
+                Name = "dada"
             };
             await _NationRepository.Create(Nation);
             if (Nation is null)
@@ -115,7 +115,7 @@ public class NationService : INationService
         }
         catch (Exception e)
         {
-            return new BaseResponse<NationViewModel>()
+            return new BaseResponse<NationDBO>()
             {
                 Description = $"[CreateNation] : {e.Message}"
             };
@@ -127,7 +127,7 @@ public class NationService : INationService
         var baseResponse = new BaseResponse<bool>();
         try
         {
-            var Nation = await _NationRepository.GetAll().FirstOrDefaultAsync(x => x.id == id);
+            var Nation = await _NationRepository.GetAll().FirstOrDefaultAsync(x => x.Id == id);
             if (Nation is null)
             {
                 baseResponse.Description = "Nation not found";

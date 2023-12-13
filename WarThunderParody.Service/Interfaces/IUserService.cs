@@ -10,9 +10,9 @@ public interface IUserService
     
     Task<IBaseResponse<bool>> DeleteUserRole(int id);
     
-    Task<IBaseResponse<UserRoleViewModel>> Create(UserRoleViewModel userRoleViewModel);
+    Task<IBaseResponse<UserRoleDBO>> Create(UserRoleDBO userRoleDbo);
     
     Task<IBaseResponse<UserRole>> GetUserRole(int id);
 
-    Task<IBaseResponse<UserRole>> Edit(int id, UserRoleViewModel userRoleViewModel);
+    Task<IBaseResponse<UserRole>> Edit(int id, UserRoleDBO userRoleDbo);
 }

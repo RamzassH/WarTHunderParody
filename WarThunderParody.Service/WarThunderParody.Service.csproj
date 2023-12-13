@@ -11,4 +11,8 @@
       <ProjectReference Include="..\WarThunderParody.Domain\WarThunderParody.Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.14" />
+    </ItemGroup>
+
 </Project>

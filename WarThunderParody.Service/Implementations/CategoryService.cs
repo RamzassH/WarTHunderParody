@@ -23,7 +23,7 @@ public class CategoryService : ICategoryService
         var baseResponse = new BaseResponse<Category>();
         try
         {
-            var category = await _categoryRepository.GetAll().FirstOrDefaultAsync(x => x.id == id);
+            var category = await _categoryRepository.GetAll().FirstOrDefaultAsync(x => x.Id == id);
             if (category is null)
             {
                 baseResponse.Description = "Category not found";
@@ -43,12 +43,12 @@ public class CategoryService : ICategoryService
         }
     }
 
-    public async Task<IBaseResponse<Category>> Edit(int id, CategoryViewModel categoryViewModel)
+    public async Task<IBaseResponse<Category>> Edit(int id, CategoryDBO categoryDbo)
     {
         var baseResponse = new BaseResponse<Category>();
         try
         {
-            var category = await _categoryRepository.GetAll().FirstOrDefaultAsync(x => x.id == id);
+            var category = await _categoryRepository.GetAll().FirstOrDefaultAsync(x => x.Id == id);
             if (category is null)
             {
                 baseResponse.Description = "Category not found";
@@ -56,7 +56,7 @@ public class CategoryService : ICategoryService
                 return baseResponse;
             }
 
-            category.name = categoryViewModel.name;
+            category.Name = categoryDbo.Name;
             await _categoryRepository.Update(category);
             return baseResponse;
         }
@@ -74,7 +74,7 @@ public class CategoryService : ICategoryService
         var baseResponse = new BaseResponse<Category>();
         try
         {
-            var category = await _categoryRepository.GetAll().FirstOrDefaultAsync(x => x.name == name);
+            var category = await _categoryRepository.GetAll().FirstOrDefaultAsync(x => x.Name == name);
             if (category is null)
             {
                 baseResponse.Description = "Category not found";
@@ -94,29 +94,27 @@ public class CategoryService : ICategoryService
         }
     }
 
-    public async Task<IBaseResponse<CategoryViewModel>> Create(CategoryViewModel categoryViewModel)
+    public async Task<IBaseResponse<CategoryDBO>> Create(CategoryDBO categoryDbo)
     {
-        var baseResponse = new BaseResponse<CategoryViewModel>();
+        var baseResponse = new BaseResponse<CategoryDBO>();
         try
         {
             var category = new Category()
             {
-                name = "dada"
+                Name = categoryDbo.Name
             };
-            await _categoryRepository.Create(category);
             if (category is null)
             {
                 baseResponse.Description = "Category not found";
                 baseResponse.StatusCode = StatusCode.CategoryNotFound;
                 return baseResponse;
             }
-
-            await _categoryRepository.Delete(category);
+            await _categoryRepository.Create(category);
             return baseResponse;
         }
         catch (Exception e)
         {
-            return new BaseResponse<CategoryViewModel>()
+            return new BaseResponse<CategoryDBO>()
             {
                 Description = $"[CreateCategory] : {e.Message}"
             };
@@ -128,7 +126,7 @@ public class CategoryService : ICategoryService
         var baseResponse = new BaseResponse<bool>();
         try
         {
-            var category = await _categoryRepository.GetAll().FirstOrDefaultAsync(x => x.id == id);
+            var category = await _categoryRepository.GetAll().FirstOrDefaultAsync(x => x.Id == id);
             if (category is null)
             {
                 baseResponse.Description = "Category not found";

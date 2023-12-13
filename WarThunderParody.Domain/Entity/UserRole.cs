@@ -1,7 +1,11 @@
-﻿namespace WarThunderParody.Domain.Entity;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace WarThunderParody.Domain.Entity;
 
 public class UserRole
 {
-    public int user_id { get; set; }
-    public int role_id { get; set; }
+    [Column("user_id")]
+    public int UserId { get; set; }
+    [Column("role_id")]
+    public int RoleId { get; set; }
 }

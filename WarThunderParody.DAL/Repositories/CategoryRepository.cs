@@ -16,38 +16,38 @@ public class CategoryRepository : IBaseRepository<Category>
 
     public async Task<bool> Create(Category entity)
     {
-        await _db.category.AddAsync(entity);
+        await _db.Category.AddAsync(entity);
         await _db.SaveChangesAsync();
         return true;
     }
 
     public IQueryable<Category> GetAll()
     {
-        return _db.category;
+        return _db.Category;
     }
 
     public List<Category> Select()
     {
-        return _db.category.ToList();
+        return _db.Category.ToList();
     }
 
 
     public async Task<Category> Update(Category entity)
     {
-        _db.category.Update(entity);
+        _db.Category.Update(entity);
         await _db.SaveChangesAsync();
         return entity;
     }
 
     public async Task<bool> Delete(Category entity)
     {
-        _db.category.Remove(entity);
+        _db.Category.Remove(entity);
         await _db.SaveChangesAsync();
         return true;
     }
 
     public Task<Category?> GetByName(string name)
     {
-        return _db.category.FirstOrDefaultAsync(x => x.name == name);
+        return _db.Category.FirstOrDefaultAsync(x => x.Name == name);
     }
 }

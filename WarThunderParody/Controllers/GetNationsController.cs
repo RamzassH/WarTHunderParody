@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using WarThunderParody.DAL.Interfaces;
 using WarThunderParody.Domain.Entity;
+using WarThunderParody.Service.Interfaces;
 
 namespace WarThunderParody.Controllers;
 
@@ -9,16 +10,17 @@ namespace WarThunderParody.Controllers;
 [Route("[controller]")]
 public class GetNationsController : ControllerBase
 {
-    private readonly IBaseRepository<Nation> _nationRepository;
+    private readonly INationService _nationService;
     
-    public GetNationsController(IBaseRepository<Nation> nationRepository)
+    public GetNationsController(INationService nationService)
     {
-        _nationRepository = nationRepository;
+        _nationService = nationService;
     }
 
-    [HttpGet(Name = "GetNations")]
+    [HttpGet("GetNations")]
     public async Task<List<Nation>> Get()
     {
-        return await _nationRepository.GetAll().ToListAsync();
+        var response = await _nationService.GetNations();
+        return (List<Nation>)response.Data;
     }
 }
