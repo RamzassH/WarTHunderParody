@@ -20,19 +20,28 @@ const Main = () => {
 
     const [categories, setCategories] = useState([])
 
+    const [token, setToken] = useState("");
+
     const [fetchCategories, isPostsLoading, postError] = useFetching(async () => {
         const response = await BackService.getCategory();
+        console.log(response.data)
         setCategories([...categories, ...response.data])
+    })
+    const [getToken, isLoading, tokenError] = useFetching(async (userData) => {
+        await BackService.login(userData.login, userData.password, setToken)
+
     })
 
     useEffect(() => {
         fetchCategories()
-        console.log(categories)
+        //console.log(categories)
     }, []);
 
+    useEffect(() => {
+        console.log(token)
+    }, [token]);
     function loginUser(userData) {
-        console.log(userData)
-
+        getToken(userData)
         setModalLogin(false)
     }
 
