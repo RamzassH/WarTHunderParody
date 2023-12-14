@@ -1,0 +1,9 @@
+.myInput {
+    display: flex;
+    margin-bottom: 24px;
+    align-items: center;
+    column-gap: 16px;
+    font-size: 14px;
+    font-family: "Fira Sans",Arial,sans-serif;
+    color: #abacae;
+}

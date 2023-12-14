@@ -1,0 +1,10 @@
+.Section {
+    display: flex;
+    justify-content: flex-start;
+    min-height: 440px;
+    margin: 0 12px;
+    width: 63%;
+    min-width: 1000px;
+    padding: 0;
+    border: 0;
+}

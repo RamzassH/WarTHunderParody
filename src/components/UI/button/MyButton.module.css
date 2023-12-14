@@ -1,0 +1,9 @@
+.myBtn {
+    display:block;
+    position:relative;
+    height:42px;
+    flex-grow:0;
+    flex-shrink:0;
+    color:var(--gcm-color-font-main);
+    text-decoration:none
+}

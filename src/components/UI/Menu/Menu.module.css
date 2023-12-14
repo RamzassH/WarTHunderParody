@@ -1,0 +1,17 @@
+.Menu {
+    display: flex;
+    width: 63%;
+    height: 42px;
+    min-width: 1000px;
+
+    align-items: center;
+    border-width: 1px;
+    border-color: black;
+    border-style: solid;
+    background-color: rgba(2, 12, 21, 0.9);
+    position: relative;
+    z-index: 9999;
+    font: inherit;
+    vertical-align: baseline;
+
+}

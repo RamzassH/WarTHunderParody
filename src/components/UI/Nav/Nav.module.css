@@ -1,0 +1,14 @@
+.Nav {
+    display: flex;
+    gap: 8px 16px;
+    align-items: center;
+    position: relative;
+    z-index: 350;
+    width: 63%;
+    min-width: 1000px;
+    margin: 0 auto 16px;
+    padding-right: 70px;
+    font-family: "PTRootUI",sans-serif;
+    top: 22px;
+    height: 40px;
+}

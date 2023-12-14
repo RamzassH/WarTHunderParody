@@ -1,0 +1,6 @@
+.ListWidget {
+    flex-shrink: 0;
+    display: flex;
+    flex-wrap: wrap;
+    width: 390px;
+}

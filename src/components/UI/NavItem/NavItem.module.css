@@ -1,0 +1,18 @@
+.NavItem {
+    display: flex;
+    align-items: center;
+    height: 24px;
+    padding: 0 2px;
+    color: #c0c4c8;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: all .3s ease;
+    background-color: rgba(0,0,0,0);
+    -webkit-tap-highlight-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.NavItem:hover {
+    color: white;
+}
