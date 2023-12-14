@@ -1,39 +1,37 @@
 ﻿using WarThunderParody.DAL.Interfaces;
-using WarThunderParody.Domain.Entity;
-
 namespace WarThunderParody.DAL.Repositories;
 
-public class UserAccountRepository : IBaseRepository<Account>
+public class AccountRepository : IBaseRepository<Account>
 {
-    private readonly ApplicationDbContext _db;
+    private readonly WarThunderShopContext _db;
 
-    public UserAccountRepository(ApplicationDbContext db)
+    public AccountRepository(WarThunderShopContext db)
     {
         _db = db;
     }
 
     public async Task<bool> Create(Account entity)
     {
-        await _db.UserAccount.AddAsync(entity);
+        await _db.Accounts.AddAsync(entity);
         await _db.SaveChangesAsync();
         return true;
     }
 
     public IQueryable<Account> GetAll()
     {
-        return _db.UserAccount;
+        return _db.Accounts;
     }
 
     public async Task<Account> Update(Account entity)
     {
-        _db.UserAccount.Update(entity);
+        _db.Accounts.Update(entity);
         await _db.SaveChangesAsync();
         return entity;
     }
 
     public async Task<bool> Delete(Account entity)
     {
-        _db.UserAccount.Remove(entity);
+        _db.Accounts.Remove(entity);
         await _db.SaveChangesAsync();
         return true;
     }

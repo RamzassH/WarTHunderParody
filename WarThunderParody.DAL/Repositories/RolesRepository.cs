@@ -1,12 +1,11 @@
 ﻿using WarThunderParody.DAL.Interfaces;
-using WarThunderParody.Domain.Entity;
 
 namespace WarThunderParody.DAL.Repositories;
 
 public class RolesRepository : IBaseRepository<Role>
 {
-    private readonly ApplicationDbContext _db;
-    public RolesRepository(ApplicationDbContext db)
+    private readonly WarThunderShopContext _db;
+    public RolesRepository(WarThunderShopContext db)
     {
         _db = db;
     }

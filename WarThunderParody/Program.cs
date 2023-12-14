@@ -1,14 +1,9 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-using WarThunderParody.DAL;
+using WarThunderParody;
 using WarThunderParody.DAL.Interfaces;
 using WarThunderParody.DAL.Repositories;
-using WarThunderParody.Domain.Entity;
 using WarThunderParody.Service.Implementations;
 using WarThunderParody.Service.Interfaces;
 
@@ -22,7 +17,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var connection = builder.Configuration.GetConnectionString("WebApiDatabase");
-builder.Services.AddDbContext<ApplicationDbContext>(opt =>
+builder.Services.AddDbContext<WarThunderShopContext>(opt =>
     opt.UseNpgsql(connection));
 builder.Services.AddAuthentication();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(
@@ -44,14 +39,14 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
             ValidateIssuerSigningKey = true,
         };
     });
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 builder.Services.AddScoped<IBaseRepository<Category>, CategoryRepository>();
 builder.Services.AddScoped<IBaseRepository<Nation>, NationRepository>();
 builder.Services.AddScoped<IBaseRepository<Order>, OrderRepository>();
 builder.Services.AddScoped<IBaseRepository<Product>, ProductRepository>();
 builder.Services.AddScoped<IBaseRepository<Role>, RolesRepository>();
-builder.Services.AddScoped<IBaseRepository<UserRole>, UserRoleRepository>();
-builder.Services.AddScoped<IBaseRepository<Account>, UserAccountRepository>();
+builder.Services.AddScoped<IBaseRepository<Account>, AccountRepository>();
 
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<INationService, NationService>();

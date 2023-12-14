@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WarThunderParody.DAL.Interfaces;
-using WarThunderParody.Domain.Entity;
 using WarThunderParody.Domain.Enum;
 using WarThunderParody.Domain.Response;
 using WarThunderParody.Domain.ViewModel.Nation;

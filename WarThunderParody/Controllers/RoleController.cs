@@ -1,6 +1,4 @@
-﻿using System.Security.Claims;
-using Microsoft.AspNetCore.Mvc;
-using WarThunderParody.Domain.Entity;
+﻿using Microsoft.AspNetCore.Mvc;
 using WarThunderParody.Domain.ViewModel.Roles;
 using WarThunderParody.Service.Interfaces;
 

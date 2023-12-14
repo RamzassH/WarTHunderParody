@@ -1,4 +1,4 @@
-﻿using WarThunderParody.Domain.Entity;
+﻿
 
 namespace WarThunderParody.DAL.Interfaces;
 

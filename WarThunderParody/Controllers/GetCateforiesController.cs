@@ -1,8 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using WarThunderParody.DAL.Interfaces;
-using WarThunderParody.Domain.Entity;
-using WarThunderParody.Domain.ViewModel.Category;
 using WarThunderParody.Service.Interfaces;
 
 namespace WarThunderParody.Controllers;

@@ -1,6 +1,4 @@
-﻿using System.Security.Claims;
-using WarThunderParody.Domain.Entity;
-using WarThunderParody.Domain.Response;
+﻿using WarThunderParody.Domain.Response;
 using WarThunderParody.Domain.ViewModel.Auth;
 using WarThunderParody.Domain.ViewModel.UserAccount;
 

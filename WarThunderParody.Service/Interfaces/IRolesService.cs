@@ -1,5 +1,4 @@
-﻿using WarThunderParody.Domain.Entity;
-using WarThunderParody.Domain.Response;
+﻿using WarThunderParody.Domain.Response;
 using WarThunderParody.Domain.ViewModel.Roles;
 
 namespace WarThunderParody.Service.Interfaces;
@@ -14,7 +13,7 @@ public interface IRolesService
 
     Task<IBaseResponse<IEnumerable<Role>>> GetUserRolesByUserId(int id);
 
-    Task<IBaseResponse<bool>> MakeUserAdmin(string email);
+    Task<IBaseResponse<Account>> MakeUserAdmin(string email);
     
     Task<IBaseResponse<Role>> GetRole(int id);
 

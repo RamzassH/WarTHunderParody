@@ -1,7 +1,4 @@
-﻿using WarThunderParody.Domain.Entity;
-using WarThunderParody.Domain.Enum;
-using WarThunderParody.Domain.Response;
-using WarThunderParody.Domain.ViewModel.Category;
+﻿using WarThunderParody.Domain.Response;
 using WarThunderParody.Domain.ViewModel.Nation;
 
 namespace WarThunderParody.Service.Interfaces;

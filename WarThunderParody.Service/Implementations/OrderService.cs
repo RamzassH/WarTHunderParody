@@ -1,5 +1,4 @@
-﻿using WarThunderParody.Domain.Entity;
-using WarThunderParody.Domain.Response;
+﻿using WarThunderParody.Domain.Response;
 using WarThunderParody.Domain.ViewModel.Order;
 using WarThunderParody.Service.Interfaces;
 

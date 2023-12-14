@@ -1,12 +1,10 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
-using System.Runtime.InteropServices;
 using System.Security.Claims;
 using System.Text;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using WarThunderParody.Domain.Entity;
 using WarThunderParody.Domain.ViewModel.Auth;
+using WarThunderParody.Domain.ViewModel.UserAccount;
 using WarThunderParody.Service.Interfaces;
 
 namespace WarThunderParody.Controllers;

@@ -8,4 +8,6 @@ public class UserAccountDBO
     public string Email { get; set; }
     public decimal Ballance { get; set; }
     public DateTime RegistrationDate { get; set; }
+    
+    public virtual ICollection<Role> Roles { get; set; } = new List<Role>();
 }

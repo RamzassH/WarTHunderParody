@@ -1,38 +1,37 @@
 ﻿using WarThunderParody.DAL.Interfaces;
-using WarThunderParody.Domain.Entity;
 
 namespace WarThunderParody.DAL.Repositories;
 
 public class NationRepository : IBaseRepository<Nation>
 {
-    private readonly ApplicationDbContext _db;
+    private readonly WarThunderShopContext _db;
 
-    public NationRepository(ApplicationDbContext db)
+    public NationRepository(WarThunderShopContext db)
     {
         _db = db;
     }
     public async Task<bool> Create(Nation entity)
     {
-        await _db.Nation.AddAsync(entity);
+        await _db.Nations.AddAsync(entity);
         await _db.SaveChangesAsync();
         return true;
     }
 
     public IQueryable<Nation> GetAll()
     {
-        return _db.Nation;
+        return _db.Nations;
     }
 
     public async Task<Nation> Update(Nation entity)
     {
-        _db.Nation.Update(entity);
+        _db.Nations.Update(entity);
         await _db.SaveChangesAsync();
         return entity;
     }
 
     public async Task<bool> Delete(Nation entity)
     {
-        _db.Nation.Remove(entity);
+        _db.Nations.Remove(entity);
         await _db.SaveChangesAsync();
         return true;
     }

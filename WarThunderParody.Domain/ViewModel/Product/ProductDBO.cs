@@ -7,5 +7,5 @@ public class ProductDBO
     public int CategoryId { get; set; }
     public int? NationId { get; set; }
     //public IFormFile Avatar { get; set; }
-    public byte[]? Image { get; set; }
+    public string? Image { get; set; }
 }

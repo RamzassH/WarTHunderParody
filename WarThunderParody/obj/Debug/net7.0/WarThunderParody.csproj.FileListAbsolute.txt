@@ -49,3 +49,8 @@ Z:\5SEM\WarThunderParody\WarThunderParody\bin\Debug\net7.0\Microsoft.IdentityMod
 Z:\5SEM\WarThunderParody\WarThunderParody\bin\Debug\net7.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 Z:\5SEM\WarThunderParody\WarThunderParody\bin\Debug\net7.0\Microsoft.IdentityModel.Tokens.dll
 Z:\5SEM\WarThunderParody\WarThunderParody\bin\Debug\net7.0\System.IdentityModel.Tokens.Jwt.dll
+Z:\5SEM\WarThunderParody\WarThunderParody\bin\Debug\net7.0\Humanizer.dll
+Z:\5SEM\WarThunderParody\WarThunderParody\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Design.dll
+Z:\5SEM\WarThunderParody\WarThunderParody\bin\Debug\net7.0\Microsoft.Extensions.DependencyModel.dll
+Z:\5SEM\WarThunderParody\WarThunderParody\bin\Debug\net7.0\Mono.TextTemplating.dll
+Z:\5SEM\WarThunderParody\WarThunderParody\bin\Debug\net7.0\System.CodeDom.dll

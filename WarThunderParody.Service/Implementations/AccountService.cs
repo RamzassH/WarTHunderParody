@@ -1,8 +1,5 @@
-﻿using System.Security.Claims;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.EntityFrameworkCore;
 using WarThunderParody.DAL.Interfaces;
-using WarThunderParody.Domain.Entity;
 using WarThunderParody.Domain.Enum;
 using WarThunderParody.Domain.Helpers;
 using WarThunderParody.Domain.Response;
@@ -15,11 +12,12 @@ namespace WarThunderParody.Service.Implementations;
  public class AccountService : IAccountService
  {
      private readonly IBaseRepository<Account> _userAccountRepository;
-     private readonly ILogger<AccountService> _logger;
+     private readonly IBaseRepository<Role> _userRoleRepository;
 
-     public AccountService(IBaseRepository<Account> userRepository)
+     public AccountService(IBaseRepository<Account> userRepository, IBaseRepository<Role> userRoleRepository)
      {
          _userAccountRepository = userRepository;
+         _userRoleRepository = userRoleRepository;
      }
 
     public async Task<BaseResponse<bool>> Register(RegisterDBO model)
@@ -31,34 +29,35 @@ namespace WarThunderParody.Service.Implementations;
              {
                  return new BaseResponse<bool>()
                  {
+                     
                      StatusCode = StatusCode.UserAccountNotFound,
                      Description = "Пользователь с таким логином уже есть",
                  };
              }
-             
+
+             var userRole = await _userRoleRepository.GetAll().FirstOrDefaultAsync(x => x.Name == "User");
+             List<Role> newRole = new List<Role>();
+             if (userRole != null) newRole.Add(userRole);
+
              var newUser = new Account
              {
                  Name = model.Name,
                  Email = model.Email,
                  Balance = 0,
-                 RegistrationDate = DateTime.UtcNow,
-                 Password = HashPasswordHelper.HashPassword(model.Password)
+                 RegistrationDate = DateTime.Now,
+                 Password = HashPasswordHelper.HashPassword(model.Password),
+                 Roles = newRole
              };
 
              var result = await _userAccountRepository.Create(newUser);
+             
              var response = new BaseResponse<bool>();
              response.Data = result;
              response.StatusCode = StatusCode.OK;
-             // var userRole = new UserRole
-             // {
-             //     RoleId = _rolesRepository.GetAll().FirstOrDefaultAsync(x => x.Name == "User");
-             // }
-             //await _userRoleRepository.Create();
              return response;
          }
          catch (Exception ex)
          {
-             _logger.LogError(ex, $"[Register]: {ex.Message}");
              return new BaseResponse<bool>()
              {
                  Description = ex.Message,
@@ -102,6 +101,7 @@ namespace WarThunderParody.Service.Implementations;
             account.Email = account.Email;
             account.RegistrationDate = model.RegistrationDate;
             account.Password = HashPasswordHelper.HashPassword(model.Password);
+            account.Roles = model.Roles;
             
             await _userAccountRepository.Update(account);
             return response;

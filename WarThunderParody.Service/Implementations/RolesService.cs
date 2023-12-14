@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using WarThunderParody.DAL.Interfaces;
-using WarThunderParody.Domain.Entity;
 using WarThunderParody.Domain.Enum;
 using WarThunderParody.Domain.Response;
 using WarThunderParody.Domain.ViewModel.Roles;
@@ -12,16 +11,13 @@ namespace WarThunderParody.Service.Implementations;
 public class RolesService : IRolesService
 {
     private readonly IBaseRepository<Role> _rolesRepository;
-    private readonly IBaseRepository<UserRole> _userRolesRepository;
     private readonly IBaseRepository<Account> _accountRepository;
     
     
     public RolesService(IBaseRepository<Role> userRepository,
-        IBaseRepository<UserRole> userRolesRepository, 
         IBaseRepository<Account> accountRepository)
     {
         _rolesRepository = userRepository;
-        _userRolesRepository = userRolesRepository;
         _accountRepository = accountRepository;
     }
 
@@ -112,27 +108,16 @@ public class RolesService : IRolesService
         var response = new BaseResponse<IEnumerable<Role>>();
         try
         {
-            var userRolesId = await _userRolesRepository.GetAll().Where(x => x.UserId == id).ToListAsync();
+            var user = await _accountRepository.GetAll().FirstOrDefaultAsync(x => x.Id == id);
 
-            List<Role> roles = new List<Role>();
-            foreach (var userRoleId in userRolesId)
+            if (user == null)
             {
-                var role =  await _rolesRepository.GetAll().FirstOrDefaultAsync(x => x.Id == userRoleId.RoleId);
-                if (role == null)
-                {
-                    continue;
-                } 
-                roles.Add(role);
-            }
-
-            if (!roles.Any())
-            {
-                response.Description = "Роли для пользователя не найдены";
+                response.Description = "Пользователь не найден";
                 response.StatusCode = StatusCode.NotFound;
                 return response;
             }
 
-            response.Data = roles;
+            response.Data = user.Roles; 
             response.StatusCode = StatusCode.OK;
             return response;
         }
@@ -145,48 +130,42 @@ public class RolesService : IRolesService
         }
     }
 
-    public async Task<IBaseResponse<bool>> MakeUserAdmin(string email)
-    {
-        var response = new BaseResponse<bool>();
-        try
-        {
-            var user = await _accountRepository.GetAll().FirstOrDefaultAsync(x => x.Email == email);
-            if (user == null)
-            {
-                response.Description = "Пользователь не найден";
-                response.StatusCode = StatusCode.NotFound;
-                return response;
-            }
+     public async Task<IBaseResponse<Account>> MakeUserAdmin(string email)
+     {
+         var response = new BaseResponse<Account>();
+         try
+         {
+             var user = await _accountRepository.GetAll().FirstOrDefaultAsync(x => x.Email == email);
+             if (user == null)
+             {
+                 response.Description = "Пользователь не найден";
+                 response.StatusCode = StatusCode.NotFound;
+                 return response;
+             }
+    
+             var adminRole = await _rolesRepository.GetAll().FirstOrDefaultAsync(x => x.Name == "Admin");
+             if (adminRole == null)
+             {
+                 response.Description = "Роль не найдена";
+                 response.StatusCode = StatusCode.NotFound;
+                 return response;
+             }
 
-            var adminRole = await _rolesRepository.GetAll().FirstOrDefaultAsync(x => x.Name == "Admin");
-            if (adminRole == null)
-            {
-                response.Description = "Роль не найдена";
-                response.StatusCode = StatusCode.NotFound;
-                return response;
-            }
-            var newUserRole = new UserRole
-            {
-                UserId = user.Id,
-                RoleId = adminRole.Id
-            };
-            response.Data = await _userRolesRepository.Create(newUserRole);
-
-            if (response.Data == false)
-            {
-                response.Description = "Не удалось добавить роль пользователя";
-                response.StatusCode = StatusCode.NotFound;
-                return response;
-            }
             
-            response.StatusCode = StatusCode.OK;
-            return response;
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw;
-        }
+             user.Roles.Add(adminRole);
+             adminRole.Users.Add(user);
+             
+
+             await _rolesRepository.Update(adminRole);
+             response.Data = await _accountRepository.Update(user);
+             response.StatusCode = StatusCode.OK;
+             return response;
+         }
+         catch (Exception e)
+         {
+             Console.WriteLine(e);
+             throw;
+         }
     }
 
 
