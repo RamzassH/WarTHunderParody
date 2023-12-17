@@ -7,10 +7,10 @@ public interface ICategoryService
 {
     Task<IBaseResponse<IEnumerable<Category>>> GetCategories();
     Task<IBaseResponse<bool>> DeleteCategory(int id);
-    Task<IBaseResponse<bool>> Create(CategoryDBO model);
+    Task<IBaseResponse<bool>> Create(CategoryDTO model);
     Task<IBaseResponse<Category>> GetCategoryByName(string name);
 
     Task<IBaseResponse<Category>> GetCategory(int id);
 
-    Task<IBaseResponse<Category>> Edit(int id, CategoryDBO model);
+    Task<IBaseResponse<Category>> Edit(int id, CategoryDTO model);
 }

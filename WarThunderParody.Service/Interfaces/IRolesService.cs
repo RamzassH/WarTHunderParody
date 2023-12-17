@@ -9,7 +9,7 @@ public interface IRolesService
     
     Task<IBaseResponse<bool>> DeleteRole(int id);
     
-    Task<IBaseResponse<bool>> Create(RolesDBO model);
+    Task<IBaseResponse<bool>> Create(RolesDTO model);
 
     Task<IBaseResponse<IEnumerable<Role>>> GetUserRolesByUserId(int id);
 
@@ -17,5 +17,5 @@ public interface IRolesService
     
     Task<IBaseResponse<Role>> GetRole(int id);
 
-    Task<IBaseResponse<Role>> Edit(int id, RolesDBO model);
+    Task<IBaseResponse<Role>> Edit(int id, RolesDTO model);
 }

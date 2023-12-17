@@ -2,7 +2,7 @@
 
 namespace WarThunderParody.Domain.ViewModel.Auth;
 
-public class RegisterDBO
+public class RegisterDTO
 {
     [Required(ErrorMessage = "Введите e-mail")]
     public string Email { get; set; }

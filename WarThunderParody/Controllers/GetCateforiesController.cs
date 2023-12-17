@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
 using WarThunderParody.Service.Interfaces;
 
 namespace WarThunderParody.Controllers;
@@ -13,11 +14,14 @@ public class GetCategoriesController : ControllerBase
     {
         _categoryService = categoryService;
     }
-
+    
     [HttpGet("GetCategories")]
-    public async Task<List<Category>> Get()
+    public async Task<IEnumerable<Category>> Get()
     {
         var response = await _categoryService.GetCategories();
+        
+        Response.Headers.Add("Total-Count-Categories", response.Data.Count().ToString());
+        
         return (List<Category>)response.Data;
     }
 }

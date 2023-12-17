@@ -7,10 +7,10 @@ namespace WarThunderParody.Service.Interfaces;
 
 public interface IAccountService
 {
-    Task<BaseResponse<bool>> Register(RegisterDBO model);
+    Task<BaseResponse<bool>> Register(RegisterDTO model);
 
-    Task<BaseResponse<Account>> Login(LoginDBO model);
+    Task<BaseResponse<Account>> Login(LoginDTO model);
     
-    Task<IBaseResponse<Account>> Edit(int id, UserAccountDBO model);
+    Task<IBaseResponse<Account>> Edit(int id, UserAccountDTO model);
 
 }

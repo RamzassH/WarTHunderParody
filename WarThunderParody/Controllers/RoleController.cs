@@ -24,7 +24,7 @@ public class RoleController : ControllerBase
     }
     
     [HttpPost("AddRole")]
-    public async Task<IActionResult> AddRole([FromBody] RolesDBO model)
+    public async Task<IActionResult> AddRole([FromBody] RolesDTO model)
     {
         var response = await _rolesService.Create(model);
         if (response.StatusCode == Domain.Enum.StatusCode.OK)
@@ -36,7 +36,7 @@ public class RoleController : ControllerBase
     }
     
     [HttpPost( "DeleteRole")]
-    public async Task<IActionResult> DeleteRole([FromBody] RolesDBO model)
+    public async Task<IActionResult> DeleteRole([FromBody] RolesDTO model)
     {
         var response = await _rolesService.DeleteRole(model.Id);
         if (response.StatusCode == Domain.Enum.StatusCode.OK)

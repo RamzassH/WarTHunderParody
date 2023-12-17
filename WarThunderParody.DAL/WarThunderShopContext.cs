@@ -135,6 +135,9 @@ public partial class WarThunderShopContext : DbContext
             entity.Property(e => e.Image)
                 .HasMaxLength(256)
                 .HasColumnName("image");
+            entity.Property(e => e.Name)
+                .HasMaxLength(256)
+                .HasColumnName("name");
             entity.Property(e => e.NationId).HasColumnName("nation_id");
             entity.Property(e => e.Price)
                 .HasColumnType("money")

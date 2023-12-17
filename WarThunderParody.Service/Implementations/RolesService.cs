@@ -75,7 +75,7 @@ public class RolesService : IRolesService
         }
     }
 
-    public async Task<IBaseResponse<bool>> Create(RolesDBO model)
+    public async Task<IBaseResponse<bool>> Create(RolesDTO model)
     {
         var response = new BaseResponse<bool>();
         try
@@ -178,7 +178,7 @@ public class RolesService : IRolesService
         throw new NotImplementedException();
     }
 
-    public Task<IBaseResponse<Role>> Edit(int id, RolesDBO model)
+    public Task<IBaseResponse<Role>> Edit(int id, RolesDTO model)
     {
         throw new NotImplementedException();
     }

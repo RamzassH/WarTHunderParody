@@ -54,3 +54,9 @@ Z:\5SEM\WarThunderParody\WarThunderParody\bin\Debug\net7.0\Microsoft.EntityFrame
 Z:\5SEM\WarThunderParody\WarThunderParody\bin\Debug\net7.0\Microsoft.Extensions.DependencyModel.dll
 Z:\5SEM\WarThunderParody\WarThunderParody\bin\Debug\net7.0\Mono.TextTemplating.dll
 Z:\5SEM\WarThunderParody\WarThunderParody\bin\Debug\net7.0\System.CodeDom.dll
+Z:\5SEM\WarThunderParody\WarThunderParody\bin\Debug\net7.0\System.Web.Cors.dll
+Z:\5SEM\WarThunderParody\WarThunderParody\bin\Debug\net7.0\System.Net.Http.Formatting.dll
+Z:\5SEM\WarThunderParody\WarThunderParody\bin\Debug\net7.0\System.Web.Http.dll
+Z:\5SEM\WarThunderParody\WarThunderParody\bin\Debug\net7.0\System.Web.Http.Cors.dll
+Z:\5SEM\WarThunderParody\WarThunderParody\bin\Debug\net7.0\Newtonsoft.Json.dll
+Z:\5SEM\WarThunderParody\WarThunderParody\bin\Debug\net7.0\Newtonsoft.Json.Bson.dll

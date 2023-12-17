@@ -1,6 +1,8 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Web.Http;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using WarThunderParody.Domain.ViewModel.Auth;
@@ -9,7 +11,7 @@ using WarThunderParody.Service.Interfaces;
 
 namespace WarThunderParody.Controllers;
 
-[Route("api/[controller]")]
+[Microsoft.AspNetCore.Mvc.Route("api/[controller]")]
 [ApiController]
 public class AuthController : ControllerBase
 {
@@ -24,8 +26,8 @@ public class AuthController : ControllerBase
         _rolesService = rolesService;
     }
 
-    [HttpPost("register")]
-    public async Task<IActionResult> Register([FromBody] RegisterDBO model)
+    [Microsoft.AspNetCore.Mvc.HttpPost("register")]
+    public async Task<IActionResult> Register([Microsoft.AspNetCore.Mvc.FromBody] RegisterDTO model)
     {
         var response = await _userAccountService.Register(model);
         if (response.StatusCode == Domain.Enum.StatusCode.OK)
@@ -36,8 +38,8 @@ public class AuthController : ControllerBase
         return BadRequest(response.Description);
     }
 
-    [HttpPost("login")]
-    public async Task<IActionResult> Login([FromBody] LoginDBO model)
+    [Microsoft.AspNetCore.Mvc.HttpPost("login")]
+    public async Task<IActionResult> Login([Microsoft.AspNetCore.Mvc.FromBody] LoginDTO model)
     {
         var result = await _userAccountService.Login(model);
         
@@ -51,8 +53,10 @@ public class AuthController : ControllerBase
         return Ok(new { Token = tokenString });
     }
 
-    [HttpPost("MakeUserAdmin")]
-    public async Task<IActionResult> CreateUserAdmin([FromBody] UserEmailDBO model)
+    
+    [Authorize(Roles = "Admin")]
+    [Microsoft.AspNetCore.Mvc.HttpPost("MakeUserAdmin")]
+    public async Task<IActionResult> CreateUserAdmin([Microsoft.AspNetCore.Mvc.FromBody] UserEmailDTO model)
     {
         var result = await _rolesService.MakeUserAdmin(model.Email);
         if (result.StatusCode == Domain.Enum.StatusCode.NotFound)

@@ -2,8 +2,7 @@
 
 namespace WarThunderParody.Domain.ViewModel.Category;
 
-public class CategoryDBO
-{
-    public int Id { get; set; }
+public class CategoryDTO
+{ 
     public string Name { get; set; }
 }

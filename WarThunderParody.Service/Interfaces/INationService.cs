@@ -7,10 +7,10 @@ public interface INationService
 {
     Task<IBaseResponse<IEnumerable<Nation>>> GetNations();
     Task<IBaseResponse<bool>> DeleteNation(int id);
-    Task<IBaseResponse<bool>> Create(NationDBO model);
+    Task<IBaseResponse<bool>> Create(NationDTO model);
     Task<IBaseResponse<Nation>> GetNationByName(string name);
 
     Task<IBaseResponse<Nation>> GetNation(int id);
 
-    Task<IBaseResponse<Nation>> Edit(int id, NationDBO model);
+    Task<IBaseResponse<Nation>> Edit(int id, NationDTO model);
 }

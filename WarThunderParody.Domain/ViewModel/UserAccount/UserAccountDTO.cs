@@ -1,6 +1,6 @@
 ﻿namespace WarThunderParody.Domain.ViewModel.UserAccount;
 
-public class UserAccountDBO
+public class UserAccountDTO
 {
     public int Id { get; set; }
     public string Name { get; set; }

@@ -20,7 +20,7 @@ namespace WarThunderParody.Service.Implementations;
          _userRoleRepository = userRoleRepository;
      }
 
-    public async Task<BaseResponse<bool>> Register(RegisterDBO model)
+    public async Task<BaseResponse<bool>> Register(RegisterDTO model)
     {
          try
          {
@@ -66,7 +66,7 @@ namespace WarThunderParody.Service.Implementations;
          }
      }
 
-    public async Task<BaseResponse<Account>> Login(LoginDBO model)
+    public async Task<BaseResponse<Account>> Login(LoginDTO model)
     {
         var result = await _userAccountRepository.GetAll().FirstOrDefaultAsync(x => 
             x.Password == HashPasswordHelper.HashPassword(model.Password) && x.Email == model.Email);
@@ -83,7 +83,7 @@ namespace WarThunderParody.Service.Implementations;
         return response;
     }
 
-    public async Task<IBaseResponse<Account>> Edit(int id, UserAccountDBO model)
+    public async Task<IBaseResponse<Account>> Edit(int id, UserAccountDTO model)
     {
         var response = new BaseResponse<Account>();
         try

@@ -42,7 +42,7 @@ public class CategoryService : ICategoryService
         }
     }
 
-    public async Task<IBaseResponse<Category>> Edit(int id, CategoryDBO model)
+    public async Task<IBaseResponse<Category>> Edit(int id, CategoryDTO model)
     {
         var baseResponse = new BaseResponse<Category>();
         try
@@ -93,7 +93,7 @@ public class CategoryService : ICategoryService
         }
     }
 
-    public async Task<IBaseResponse<bool>> Create(CategoryDBO model)
+    public async Task<IBaseResponse<bool>> Create(CategoryDTO model)
     {
         var response = new BaseResponse<bool>();
         try

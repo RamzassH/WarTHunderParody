@@ -41,7 +41,7 @@ public class NationService : INationService
         }
     }
 
-    public async Task<IBaseResponse<Nation>> Edit(int id, NationDBO model)
+    public async Task<IBaseResponse<Nation>> Edit(int id, NationDTO model)
     {
         var baseResponse = new BaseResponse<Nation>();
         try
@@ -92,7 +92,7 @@ public class NationService : INationService
         }
     }
 
-    public async Task<IBaseResponse<bool>> Create(NationDBO model)
+    public async Task<IBaseResponse<bool>> Create(NationDTO model)
     {
         var baseResponse = new BaseResponse<bool>();
         try

@@ -1,7 +1,6 @@
 ﻿namespace WarThunderParody.Domain.ViewModel.Nation;
 
-public class NationDBO
-{
-    public int Id { get; set; }
+public class NationDTO
+{ 
     public string Name { get; set; }
 }
