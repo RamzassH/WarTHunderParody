@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using WarThunderParody.DAL.Interfaces;
+﻿using WarThunderParody.DAL.Interfaces;
 using WarThunderParody.Domain.Enum;
 using WarThunderParody.Domain.Response;
 using WarThunderParody.Domain.ViewModel.Nation;
@@ -9,9 +8,9 @@ namespace WarThunderParody.Service.Implementations;
 
 public class NationService : INationService
 {
-   private readonly IBaseRepository<Nation> _nationRepository;
+   private readonly INationRepository _nationRepository;
 
-    public NationService(IBaseRepository<Nation> nationRepository)
+    public NationService(INationRepository nationRepository)
     {
         _nationRepository = nationRepository;
     }
@@ -21,7 +20,7 @@ public class NationService : INationService
         var baseResponse = new BaseResponse<Nation>();
         try
         {
-            var nation = await _nationRepository.GetAll().FirstOrDefaultAsync(x => x.Id == id);
+            var nation = await _nationRepository.GetById(id);
             if (nation is null)
             {
                 baseResponse.Description = "Nation not found";
@@ -36,7 +35,8 @@ public class NationService : INationService
         {
             return new BaseResponse<Nation>()
             {
-                Description = $"[GetNation] : {e.Message}"
+                Description = e.Message,
+                StatusCode = StatusCode.InternalServerError
             };
         }
     }
@@ -46,7 +46,7 @@ public class NationService : INationService
         var baseResponse = new BaseResponse<Nation>();
         try
         {
-            var nation = await _nationRepository.GetAll().FirstOrDefaultAsync(x => x.Id == id);
+            var nation = await _nationRepository.GetById(id);
             if (nation is null)
             {
                 baseResponse.Description = "Nation not found";
@@ -62,7 +62,8 @@ public class NationService : INationService
         {
             return new BaseResponse<Nation>()
             {
-                Description = $"[Edit] : {e.Message}"
+                Description = e.Message,
+                StatusCode = StatusCode.InternalServerError
             };
         }
     }
@@ -72,7 +73,7 @@ public class NationService : INationService
         var baseResponse = new BaseResponse<Nation>();
         try
         {
-            var nation = await _nationRepository.GetAll().FirstOrDefaultAsync(x => x.Name == name);
+            var nation = await _nationRepository.GetByName(name);
             if (nation is null)
             {
                 baseResponse.Description = "Nation not found";
@@ -87,7 +88,8 @@ public class NationService : INationService
         {
             return new BaseResponse<Nation>()
             {
-                Description = $"[GetNationByName] : {e.Message}"
+                Description = e.Message,
+                StatusCode = StatusCode.InternalServerError
             };
         }
     }
@@ -116,7 +118,8 @@ public class NationService : INationService
         {
             return new BaseResponse<bool>()
             {
-                Description = $"[CreateNation] : {e.Message}"
+                Description = e.Message,
+                StatusCode = StatusCode.InternalServerError
             };
         }
     }
@@ -126,22 +129,23 @@ public class NationService : INationService
         var baseResponse = new BaseResponse<bool>();
         try
         {
-            var Nation = await _nationRepository.GetAll().FirstOrDefaultAsync(x => x.Id == id);
-            if (Nation is null)
+            var nation = await _nationRepository.GetById(id);
+            if (nation is null)
             {
                 baseResponse.Description = "Nation not found";
                 baseResponse.StatusCode = StatusCode.NationNotFound;
                 return baseResponse;
             }
 
-            await _nationRepository.Delete(Nation);
+            await _nationRepository.Delete(nation);
             return baseResponse;
         }
         catch (Exception e)
         {
             return new BaseResponse<bool>()
             {
-                Description = $"[DeleteNation] : {e.Message}"
+                Description = e.Message,
+                StatusCode = StatusCode.InternalServerError
             };
         }
     }
@@ -150,7 +154,7 @@ public class NationService : INationService
         var baseResponse = new BaseResponse<IEnumerable<Nation>>();
         try
         {
-            var categories = await _nationRepository.GetAll().ToListAsync();
+            var categories = await _nationRepository.GetAllNations();
             if (categories.Count == 0)
             {
                 baseResponse.Description = "Найдено 0 элементов";
@@ -167,7 +171,8 @@ public class NationService : INationService
         {
             return new BaseResponse<IEnumerable<Nation>>()
             {
-                Description = $"[GetNations] : {e.Message}"
+                Description = e.Message,
+                StatusCode = StatusCode.InternalServerError
             };
         }
     }

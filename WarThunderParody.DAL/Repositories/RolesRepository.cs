@@ -40,4 +40,24 @@ public class RolesRepository : IRolesRepository
         await _db.SaveChangesAsync();
         return true;
     }
+
+    public async Task<Role?> GetByName(string name)
+    {
+        return await _db.Roles.FirstOrDefaultAsync(x => x.Name == name);
+    }
+
+    public async Task<List<Role>> GetAllRoles()
+    {
+        return await _db.Roles.ToListAsync();
+    }
+
+    public async  Task<List<Role>>GetRolesByUserId(int id)
+    {
+        var user = await _db.Accounts.Include(x => x.Roles).FirstOrDefaultAsync(x => x.Id == id);
+        if (user == null)
+        {
+            return new List<Role>();
+        }
+        return user.Roles.ToList();
+    }
 }

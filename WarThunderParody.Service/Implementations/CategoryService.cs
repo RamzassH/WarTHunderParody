@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using WarThunderParody.DAL.Interfaces;
+﻿using WarThunderParody.DAL.Interfaces;
 using WarThunderParody.Domain.Enum;
 using WarThunderParody.Domain.Response;
 using WarThunderParody.Domain.ViewModel.Category;
@@ -10,9 +9,9 @@ namespace WarThunderParody.Service.Implementations;
 
 public class CategoryService : ICategoryService
 {
-    private readonly IBaseRepository<Category> _categoryRepository;
+    private readonly ICategoryRepository _categoryRepository;
 
-    public CategoryService(IBaseRepository<Category> categoryRepository)
+    public CategoryService(ICategoryRepository categoryRepository)
     {
         _categoryRepository = categoryRepository;
     }
@@ -37,7 +36,8 @@ public class CategoryService : ICategoryService
         {
             return new BaseResponse<Category>()
             {
-                Description = $"[GetCategory] : {e.Message}"
+                Description = e.Message,
+                StatusCode = StatusCode.InternalServerError
             };
         }
     }
@@ -63,7 +63,8 @@ public class CategoryService : ICategoryService
         {
             return new BaseResponse<Category>()
             {
-                Description = $"[Edit] : {e.Message}"
+                Description = e.Message,
+                StatusCode = StatusCode.InternalServerError
             };
         }
     }
@@ -73,7 +74,7 @@ public class CategoryService : ICategoryService
         var baseResponse = new BaseResponse<Category>();
         try
         {
-            var category = await _categoryRepository.GetAll().FirstOrDefaultAsync(x => x.Name == name);
+            var category = await _categoryRepository.GetByName(name);
             if (category is null)
             {
                 baseResponse.Description = "Category not found";
@@ -88,7 +89,8 @@ public class CategoryService : ICategoryService
         {
             return new BaseResponse<Category>()
             {
-                Description = $"[GetCategoryByName] : {e.Message}"
+                Description = e.Message,
+                StatusCode = StatusCode.InternalServerError
             };
         }
     }
@@ -116,7 +118,8 @@ public class CategoryService : ICategoryService
         {
             return new BaseResponse<bool>()
             {
-                Description = $"[CreateCategory] : {e.Message}"
+                Description = e.Message,
+                StatusCode = StatusCode.InternalServerError
             };
         }
     }
@@ -126,7 +129,7 @@ public class CategoryService : ICategoryService
         var baseResponse = new BaseResponse<bool>();
         try
         {
-            var category = await _categoryRepository.GetAll().FirstOrDefaultAsync(x => x.Id == id);
+            var category = await _categoryRepository.GetById(id);
             if (category is null)
             {
                 baseResponse.Description = "Category not found";
@@ -141,7 +144,8 @@ public class CategoryService : ICategoryService
         {
             return new BaseResponse<bool>()
             {
-                Description = $"[DeleteCategory] : {e.Message}"
+                Description = e.Message,
+                StatusCode = StatusCode.InternalServerError
             };
         }
     }
@@ -150,7 +154,7 @@ public class CategoryService : ICategoryService
         var baseResponse = new BaseResponse<IEnumerable<Category>>();
         try
         {
-            var categories = await _categoryRepository.GetAll().ToListAsync();
+            var categories = await _categoryRepository.GetAllCategories();
             if (categories.Count == 0)
             {
                 baseResponse.Description = "Найдено 0 элементов";
@@ -167,7 +171,8 @@ public class CategoryService : ICategoryService
         {
             return new BaseResponse<IEnumerable<Category>>()
             {
-                Description = $"[GetCategories] : {e.Message}"
+                Description = e.Message,
+                StatusCode = StatusCode.InternalServerError
             };
         }
     }

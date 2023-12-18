@@ -51,6 +51,8 @@ public partial class WarThunderShopContext : DbContext
 
     public virtual DbSet<Category> Categories { get; set; }
 
+    public virtual DbSet<History> Histories { get; set; }
+
     public virtual DbSet<Nation> Nations { get; set; }
 
     public virtual DbSet<Order> Orders { get; set; }
@@ -120,6 +122,27 @@ public partial class WarThunderShopContext : DbContext
                 .HasColumnName("name");
         });
 
+        modelBuilder.Entity<History>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("history_pkey");
+
+            entity.ToTable("history");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.AccountId).HasColumnName("account_id");
+            entity.Property(e => e.ProductId).HasColumnName("product_id");
+
+            entity.HasOne(d => d.Account).WithMany(p => p.Histories)
+                .HasForeignKey(d => d.AccountId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("history_account_id_fkey");
+
+            entity.HasOne(d => d.Product).WithMany(p => p.Histories)
+                .HasForeignKey(d => d.ProductId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("history_product_id_fkey");
+        });
+
         modelBuilder.Entity<Nation>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("nation_pkey");
@@ -146,10 +169,12 @@ public partial class WarThunderShopContext : DbContext
 
             entity.HasOne(d => d.Product).WithMany(p => p.Orders)
                 .HasForeignKey(d => d.ProductId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("order_product_id_fkey");
 
             entity.HasOne(d => d.User).WithMany(p => p.Orders)
                 .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("order_user_id_fkey");
         });
 
@@ -177,6 +202,7 @@ public partial class WarThunderShopContext : DbContext
 
             entity.HasOne(d => d.Category).WithMany(p => p.Products)
                 .HasForeignKey(d => d.CategoryId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("product_category_fkey");
 
             entity.HasOne(d => d.Nation).WithMany(p => p.Products)
@@ -197,11 +223,7 @@ public partial class WarThunderShopContext : DbContext
         });
 
         OnModelCreatingPartial(modelBuilder);
-        
-        
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
- 
-
 }

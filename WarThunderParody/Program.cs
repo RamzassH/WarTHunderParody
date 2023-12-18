@@ -35,17 +35,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
     {
         options.TokenValidationParameters = new TokenValidationParameters
         {
-            // указывает, будет ли валидироваться издатель при валидации токена
             ValidateIssuer = false,
-            // строка, представляющая издателя
             ValidIssuer = "Issuer",
-            // будет ли валидироваться потребитель токена
             ValidateAudience = false,
-            // установка потребителя токена
             ValidAudience = "Audience",
-            // будет ли валидироваться время существования
             ValidateLifetime = false,
-            // валидация ключа безопасности
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Secret"]))
         };
@@ -54,12 +48,12 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
-builder.Services.AddScoped<IBaseRepository<Category>, CategoryRepository>();
-builder.Services.AddScoped<IBaseRepository<Nation>, NationRepository>();
-builder.Services.AddScoped<IBaseRepository<Order>, OrderRepository>();
-builder.Services.AddScoped<IBaseRepository<Product>, ProductRepository>();
-builder.Services.AddScoped<IBaseRepository<Role>, RolesRepository>();
-builder.Services.AddScoped<IBaseRepository<Account>, AccountRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<INationRepository, NationRepository>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IRolesRepository, RolesRepository>();
+builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<INationService, NationService>();
@@ -78,7 +72,6 @@ builder.Services.AddCors(options =>
                 .AllowAnyHeader();
         });
 });
-//WarThunderShopContext.BackupDatabase();
 
 BackupScheduler backupScheduler = new BackupScheduler();
 backupScheduler.Start();
@@ -133,3 +126,4 @@ public class BackupScheduler
         WarThunderShopContext.BackupDatabase();
     }
 }
+

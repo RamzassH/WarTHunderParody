@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using WarThunderParody.DAL.Interfaces;
+﻿using WarThunderParody.DAL.Interfaces;
 using WarThunderParody.Domain.Enum;
 using WarThunderParody.Domain.Response;
 using WarThunderParody.Domain.ViewModel.Roles;
@@ -10,12 +8,12 @@ namespace WarThunderParody.Service.Implementations;
 
 public class RolesService : IRolesService
 {
-    private readonly IBaseRepository<Role> _rolesRepository;
-    private readonly IBaseRepository<Account> _accountRepository;
+    private readonly IRolesRepository _rolesRepository;
+    private readonly IAccountRepository _accountRepository;
     
     
-    public RolesService(IBaseRepository<Role> userRepository,
-        IBaseRepository<Account> accountRepository)
+    public RolesService(IRolesRepository userRepository,
+        IAccountRepository accountRepository)
     {
         _rolesRepository = userRepository;
         _accountRepository = accountRepository;
@@ -26,7 +24,7 @@ public class RolesService : IRolesService
         var response = new BaseResponse<IEnumerable<Role>>();
         try
         {
-            var roles = await _rolesRepository.GetAll().ToListAsync();
+            var roles = await _rolesRepository.GetAllRoles();
             if (roles.Count == 0)
             {
                 response.Description = "Найдено 0 элементов";
@@ -42,7 +40,8 @@ public class RolesService : IRolesService
         {
             return new BaseResponse<IEnumerable<Role>>()
             {
-                Description = $"[GetRoles] : {e.Message}"
+                Description = e.Message,
+                StatusCode = StatusCode.InternalServerError
             };
         }
     }
@@ -52,8 +51,7 @@ public class RolesService : IRolesService
         var response = new BaseResponse<bool>();
         try
         {
-            var roles = _rolesRepository.GetAll();
-            var roleToDelete = await roles.FirstOrDefaultAsync(x => x.Id == id);
+            var roleToDelete = await _rolesRepository.GetById(id);
 
             if (roleToDelete == null)
             {
@@ -70,7 +68,8 @@ public class RolesService : IRolesService
         {
             return new BaseResponse<bool>()
             {
-                Description = $"[DeleteRole] : {e.Message}"
+                Description = e.Message,
+                StatusCode = StatusCode.InternalServerError
             };
         }
     }
@@ -98,7 +97,8 @@ public class RolesService : IRolesService
         {
             return new BaseResponse<bool>()
             {
-                Description = $"[CreateRole] : {e.Message}"
+                Description = e.Message,
+                StatusCode = StatusCode.InternalServerError
             };
         }
     }
@@ -108,9 +108,9 @@ public class RolesService : IRolesService
         var response = new BaseResponse<IEnumerable<Role>>();
         try
         {
-            var user = await _accountRepository.GetAll().Include(x => x.Roles).FirstOrDefaultAsync(x => x.Id == id);
-
-            if (user == null)
+            var roles = await _rolesRepository.GetRolesByUserId(id);
+            
+            if (!roles.Any())
             {
                 response.Description = "Пользователь не найден";
                 response.StatusCode = StatusCode.NotFound;
@@ -118,7 +118,7 @@ public class RolesService : IRolesService
             }
             
 
-            response.Data = user.Roles; 
+            response.Data = roles; 
             response.StatusCode = StatusCode.OK;
             return response;
         }
@@ -126,7 +126,8 @@ public class RolesService : IRolesService
         {
             return new BaseResponse<IEnumerable<Role>>()
             {
-                Description = $"[CreateRole] : {e.Message}"
+                Description = e.Message,
+                StatusCode = StatusCode.InternalServerError
             };
         }
     }
@@ -136,27 +137,25 @@ public class RolesService : IRolesService
          var response = new BaseResponse<Account>();
          try
          {
-             var user = await _accountRepository.GetAll().FirstOrDefaultAsync(x => x.Email == email);
+             var user = await _accountRepository.GetByEmail(email);
              if (user == null)
              {
                  response.Description = "Пользователь не найден";
                  response.StatusCode = StatusCode.NotFound;
                  return response;
              }
-    
-             var adminRole = await _rolesRepository.GetAll().FirstOrDefaultAsync(x => x.Name == "Admin");
+
+             var adminRole = await _rolesRepository.GetByName("Admin");
              if (adminRole == null)
              {
                  response.Description = "Роль не найдена";
                  response.StatusCode = StatusCode.NotFound;
                  return response;
              }
-
             
              user.Roles.Add(adminRole);
              adminRole.Users.Add(user);
              
-
              await _rolesRepository.Update(adminRole);
              response.Data = await _accountRepository.Update(user);
              response.StatusCode = StatusCode.OK;
@@ -164,8 +163,11 @@ public class RolesService : IRolesService
          }
          catch (Exception e)
          {
-             Console.WriteLine(e);
-             throw;
+             return new BaseResponse<Account>
+             {
+                 Description = e.Message,
+                 StatusCode = StatusCode.InternalServerError
+             };
          }
     }
 

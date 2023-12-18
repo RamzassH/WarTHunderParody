@@ -1,9 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using WarThunderParody.DAL.Interfaces;
+﻿using WarThunderParody.DAL.Interfaces;
 using WarThunderParody.Domain.Enum;
 using WarThunderParody.Domain.Response;
-using WarThunderParody.Domain.ViewModel.Category;
-using WarThunderParody.Domain.ViewModel.Nation;
 using WarThunderParody.Domain.ViewModel.Product;
 using WarThunderParody.Service.Interfaces;
 
@@ -11,12 +8,12 @@ namespace WarThunderParody.Service.Implementations;
 
 public class ProductService : IProductService
 {
-    private readonly IBaseRepository<Product> _productRepository;
-    private readonly IBaseRepository<Nation> _nationRepository;
-    private readonly IBaseRepository<Category> _categoryRepository;
+    private readonly IProductRepository _productRepository;
+    private readonly INationRepository _nationRepository;
+    private readonly ICategoryRepository _categoryRepository;
 
-    public ProductService(IBaseRepository<Product> productRepository,
-        IBaseRepository<Nation> nationRepository, IBaseRepository<Category> categoryRepository)
+    public ProductService(IProductRepository productRepository,
+        INationRepository nationRepository, ICategoryRepository categoryRepository)
     {
         _productRepository = productRepository;
         _nationRepository = nationRepository;
@@ -28,7 +25,7 @@ public class ProductService : IProductService
         var response = new BaseResponse<IEnumerable<Product>>();
         try
         {
-            var products = await _productRepository.GetAll().ToListAsync();
+            var products = await _productRepository.GetAllProducts();
             if (!products.Any())
             {
                 response.Description = "Товары не найдены";
@@ -44,7 +41,8 @@ public class ProductService : IProductService
         {
             return new BaseResponse<IEnumerable<Product>>()
             {
-                Description = $"[GetProducts] : {e.Message}"
+                Description = e.Message,
+                StatusCode = StatusCode.InternalServerError
             };
         }
     }
@@ -54,7 +52,7 @@ public class ProductService : IProductService
         var response = new BaseResponse<bool>();
         try
         {
-            var productToDelete = await _productRepository.GetAll().FirstOrDefaultAsync(x => x.Id == id);
+            var productToDelete = await _productRepository.GetById(id);
             if (productToDelete == null)
             {
                 response.Description = "Товар не найден";
@@ -70,7 +68,8 @@ public class ProductService : IProductService
         {
             return new BaseResponse<bool>()
             {
-                Description = $"[GetProducts] : {e.Message}"
+                Description = e.Message,
+                StatusCode = StatusCode.InternalServerError
             };
         }
     }
@@ -102,7 +101,8 @@ public class ProductService : IProductService
         {
             return new BaseResponse<bool>()
             {
-                Description = $"[CreateProduct] : {e.Message}"
+                Description = e.Message,
+                StatusCode = StatusCode.InternalServerError
             };
         }
     }
@@ -112,7 +112,7 @@ public class ProductService : IProductService
         var response = new BaseResponse<Product>();
         try
         {
-            var result = await _productRepository.GetAll().FirstOrDefaultAsync(x => x.Id == id);
+            var result = await _productRepository.GetById(id);
             if (result == null)
             {
                 response.Description = "Не удалось найти продукт";
@@ -128,7 +128,8 @@ public class ProductService : IProductService
         {
             return new BaseResponse<Product>()
             {
-                Description = $"[CreateProduct] : {e.Message}"
+                Description = e.Message,
+                StatusCode = StatusCode.InternalServerError
             };
         }
     }
@@ -143,17 +144,7 @@ public class ProductService : IProductService
         var response = new BaseResponse<IEnumerable<ProductDTO>>();
         try
         {
-            var premiumCurrency =
-                await _categoryRepository.GetAll().FirstOrDefaultAsync(x => x.Name == "Premium currency");
-            if (premiumCurrency == null)
-            {
-                response.StatusCode = StatusCode.CategoryNotFound;
-                response.Description = "Категория не найдена";
-                return response;
-            }
-
-            var products = await _productRepository.GetAll().Where(x => x.CategoryId == premiumCurrency.Id)
-                .Skip((page - 1) * limit).Take(limit).ToListAsync();
+            var products = await _productRepository.GetPremiumCurrencyBaPage(limit, page);
 
             if (!products.Any())
             {
@@ -184,7 +175,8 @@ public class ProductService : IProductService
         {
             return new BaseResponse<IEnumerable<ProductDTO>>()
             {
-                Description = $"[GetPremiumCurrencyByPage] : {e.Message}"
+                Description = e.Message,
+                StatusCode = StatusCode.InternalServerError
             };
         }
     }
@@ -194,17 +186,7 @@ public class ProductService : IProductService
         var response = new BaseResponse<List<ProductDTO>>();
         try
         {
-            var premiumAccount =
-                await _categoryRepository.GetAll().FirstOrDefaultAsync(x => x.Name == "Premium account");
-            if (premiumAccount == null)
-            {
-                response.StatusCode = StatusCode.CategoryNotFound;
-                response.Description = "Категория не найдена";
-                return response;
-            }
-
-            var products = await _productRepository.GetAll().Where(x => x.CategoryId == premiumAccount.Id)
-                .Skip((page - 1) * limit).Take(limit).ToListAsync();
+            var products = await _productRepository.GetPremiumAccountByPage(limit, page);
 
             if (!products.Any())
             {
@@ -235,7 +217,8 @@ public class ProductService : IProductService
         {
             return new BaseResponse<List<ProductDTO>>()
             {
-                Description = $"[GetPremiumCurrencyByPage] : {e.Message}"
+                Description = e.Message,
+                StatusCode = StatusCode.InternalServerError
             };
         }
     }
@@ -249,26 +232,26 @@ public class ProductService : IProductService
         {
             if (!nations.Any())
             {
-                nations = await _nationRepository.GetAll().ToListAsync();
+                nations = await _nationRepository.GetAllNations();
             }
-            
+
             if (!categories.Any())
             {
-                categories = await _categoryRepository.GetAll().ToListAsync();
+                categories = await _categoryRepository.GetAllCategories();
             }
 
             List<int> nationsId = new List<int>();
             foreach (var nation in nations)
             {
-                nationsId.Add(_nationRepository.GetAll().FirstOrDefault(x => x.Name == nation.Name)!.Id);
+                nationsId.Add(_nationRepository.GetByName(nation.Name).Id);
             }
-            
+
             List<int> categoriesId = new List<int>();
             foreach (var category in categories)
             {
-                categoriesId.Add(_categoryRepository.GetAll().FirstOrDefault(x => x.Name == category.Name)!.Id);
+                categoriesId.Add(_categoryRepository.GetByName(category.Name).Id);
             }
-            
+
             if (!nationsId.Any() || !categoriesId.Any())
             {
                 response.Description = "Категории или нации не найдены";
@@ -276,10 +259,8 @@ public class ProductService : IProductService
                 return response;
             }
 
-            var products = await _productRepository.GetAll().
-                Where(x => nationsId.Contains(x.NationId ?? -1) && categoriesId.Contains(x.CategoryId ?? -1)).
-                Skip((page - 1) * limit).Take(limit).ToListAsync();
-            
+            var products = await _productRepository.GetTechniqueByPage(limit, page, categoriesId, nationsId);
+
             if (!products.Any())
             {
                 response.Description = "Продукты не найдены";
@@ -309,7 +290,8 @@ public class ProductService : IProductService
         {
             return new BaseResponse<IEnumerable<ProductDTO>>()
             {
-                Description = $"[GetTechnique] : {e.Message}"
+                Description = e.Message,
+                StatusCode = StatusCode.InternalServerError
             };
         }
     }
@@ -341,8 +323,11 @@ public class ProductService : IProductService
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            throw;
+            return new BaseResponse<bool>
+            {
+                Description = e.Message,
+                StatusCode = StatusCode.InternalServerError
+            };
         }
     }
 }

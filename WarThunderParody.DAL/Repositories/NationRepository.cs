@@ -11,6 +11,7 @@ public class NationRepository : INationRepository
     {
         _db = db;
     }
+
     public async Task<bool> Create(Nation entity)
     {
         await _db.Nations.AddAsync(entity);
@@ -23,9 +24,14 @@ public class NationRepository : INationRepository
         return await _db.Nations.FirstOrDefaultAsync(x => x.Id == id);
     }
 
-    public async Task<Nation> GetByName(string name)
+    public async Task<Nation?> GetByName(string name)
     {
         return await _db.Nations.FirstOrDefaultAsync(x => x.Name == name);
+    }
+
+    public async Task<List<Nation>> GetAllNations()
+    {
+        return await _db.Nations.ToListAsync();
     }
 
     public IQueryable<Nation> GetAll()

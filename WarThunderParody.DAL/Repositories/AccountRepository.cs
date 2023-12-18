@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WarThunderParody.DAL.Interfaces;
+
 namespace WarThunderParody.DAL.Repositories;
 
 public class AccountRepository : IAccountRepository
@@ -23,9 +24,19 @@ public class AccountRepository : IAccountRepository
         return await _db.Accounts.FirstOrDefaultAsync(x => x.Id == id);
     }
 
-    public async Task<Account> GetByName(string name)
+    public async Task<Account?> GetByName(string name)
     {
         return await _db.Accounts.FirstOrDefaultAsync(x => x.Name == name);
+    }
+
+    public async Task<Account?> GetByEmail(string email)
+    {
+        return await _db.Accounts.FirstOrDefaultAsync(x => x.Email == email);
+    }
+
+    public async Task<Account?> CheckLoginAccount(string password, string email)
+    {
+        return await _db.Accounts.FirstOrDefaultAsync(x => x.Email == email && x.Password == password);
     }
 
     public IQueryable<Account> GetAll()
