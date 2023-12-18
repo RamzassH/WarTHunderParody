@@ -313,4 +313,36 @@ public class ProductService : IProductService
             };
         }
     }
+
+    public async Task<IBaseResponse<bool>> CreateProduct(ProductDTO model)
+    {
+        var response = new BaseResponse<bool>();
+        try
+        {
+            var newProduct = new Product
+            {
+                Name = model.Name,
+                Image = model.Image,
+                Description = model.Description,
+                CategoryId = model.CategoryId,
+                NationId = model.NationId
+            };
+            response.Data = await _productRepository.Create(newProduct);
+            if (response.Data)
+            {
+                response.StatusCode = StatusCode.OK;
+            }
+            else
+            {
+                response.StatusCode = StatusCode.NotFound;
+            }
+
+            return response;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
 }

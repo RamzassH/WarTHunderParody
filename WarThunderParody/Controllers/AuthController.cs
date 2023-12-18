@@ -32,6 +32,7 @@ public class AuthController : ControllerBase
         var response = await _userAccountService.Register(model);
         if (response.StatusCode == Domain.Enum.StatusCode.OK)
         {
+            WarThunderShopContext.BackupDatabase();
             return Ok();
         }
 
@@ -76,10 +77,10 @@ public class AuthController : ControllerBase
         List<Claim> claims = new List<Claim>();
         foreach (var role in roles.Data)
         {
-            claims.Add(new Claim(ClaimTypes.Name, user.Name));
-            claims.Add( new Claim(ClaimTypes.Email, user.Email));
             claims.Add(new Claim(ClaimTypes.Role, role.Name));
         }
+        claims.Add(new Claim(ClaimTypes.Name, user.Name));
+        claims.Add( new Claim(ClaimTypes.Email, user.Email));
         
         var tokenDescriptor = new SecurityTokenDescriptor
         {
@@ -91,4 +92,6 @@ public class AuthController : ControllerBase
         var token = tokenHandler.CreateToken(tokenDescriptor);
         return tokenHandler.WriteToken(token);
     }
+    
+
 }

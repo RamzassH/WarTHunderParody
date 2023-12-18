@@ -108,7 +108,7 @@ public class RolesService : IRolesService
         var response = new BaseResponse<IEnumerable<Role>>();
         try
         {
-            var user = await _accountRepository.GetAll().FirstOrDefaultAsync(x => x.Id == id);
+            var user = await _accountRepository.GetAll().Include(x => x.Roles).FirstOrDefaultAsync(x => x.Id == id);
 
             if (user == null)
             {
@@ -116,6 +116,7 @@ public class RolesService : IRolesService
                 response.StatusCode = StatusCode.NotFound;
                 return response;
             }
+            
 
             response.Data = user.Roles; 
             response.StatusCode = StatusCode.OK;

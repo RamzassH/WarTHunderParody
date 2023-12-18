@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 
 namespace WarThunderParody;
@@ -15,6 +16,37 @@ public partial class WarThunderShopContext : DbContext
     {
     }
 
+    public static void BackupDatabase()
+    {
+        ProcessStartInfo info = new ProcessStartInfo();
+        info.FileName = "C:\\Program Files\\PostgreSQL\\16\\bin\\pg_dump.exe";
+        info.Arguments = "-U postgres -F c -b -v -f \"Z:\\ICloud\\iCloudDrive\\Backups\\pg_dump.dump\" war_thunder_shop";
+        info.UseShellExecute = false;
+        info.RedirectStandardOutput = true;
+
+        Process process = new Process();
+        process.StartInfo = info;
+        process.Start();
+
+        string output = process.StandardOutput.ReadToEnd();
+        process.WaitForExit();
+    }
+    public static void RestoreDatabase()
+    {
+        ProcessStartInfo info = new ProcessStartInfo();
+        info.FileName = "C:\\Program Files\\PostgreSQL\\16\\bin\\pg_restore.exe";
+        info.Arguments = "-U postgres -d war_thunder_shop -v \"Z:\\ICloud\\iCloudDrive\\Backups\\pg_dump.dump\"";
+        info.UseShellExecute = false;
+        info.RedirectStandardOutput = true;
+
+        Process process = new Process();
+        process.StartInfo = info;
+        process.Start();
+
+        string output = process.StandardOutput.ReadToEnd();
+        process.WaitForExit();
+    }
+    
     public virtual DbSet<Account> Accounts { get; set; }
 
     public virtual DbSet<Category> Categories { get; set; }
@@ -165,7 +197,11 @@ public partial class WarThunderShopContext : DbContext
         });
 
         OnModelCreatingPartial(modelBuilder);
+        
+        
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+ 
+
 }

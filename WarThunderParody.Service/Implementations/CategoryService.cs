@@ -22,7 +22,7 @@ public class CategoryService : ICategoryService
         var baseResponse = new BaseResponse<Category>();
         try
         {
-            var category = await _categoryRepository.GetAll().FirstOrDefaultAsync(x => x.Id == id);
+            var category = await _categoryRepository.GetById(id);
             if (category is null)
             {
                 baseResponse.Description = "Category not found";
@@ -47,7 +47,7 @@ public class CategoryService : ICategoryService
         var baseResponse = new BaseResponse<Category>();
         try
         {
-            var category = await _categoryRepository.GetAll().FirstOrDefaultAsync(x => x.Id == id);
+            var category = await _categoryRepository.GetById(id);
             if (category is null)
             {
                 baseResponse.Description = "Category not found";

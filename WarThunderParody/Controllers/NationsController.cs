@@ -5,11 +5,11 @@ namespace WarThunderParody.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class GetNationsController : ControllerBase
+public class NationsController : ControllerBase
 {
     private readonly INationService _nationService;
     
-    public GetNationsController(INationService nationService)
+    public NationsController(INationService nationService)
     {
         _nationService = nationService;
     }

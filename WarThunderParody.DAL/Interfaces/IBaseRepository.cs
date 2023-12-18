@@ -6,9 +6,11 @@ public interface IBaseRepository<T>
 {
     public Task<bool> Create(T entity);
 
-    IQueryable<T> GetAll();
+    public Task<T?> GetById(int id);
     
-    Task<T> Update(T entity);
+    public IQueryable<T> GetAll();
     
-    Task<bool> Delete(T entity);
+    public Task<T> Update(T entity);
+    
+    public Task<bool> Delete(T entity);
 }

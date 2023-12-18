@@ -1,8 +1,9 @@
-﻿using WarThunderParody.DAL.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using WarThunderParody.DAL.Interfaces;
 
 namespace WarThunderParody.DAL.Repositories;
 
-public class OrderRepository : IBaseRepository<Order>
+public class OrderRepository : IOrderRepository
 {
     private readonly WarThunderShopContext _db;
     public OrderRepository(WarThunderShopContext db)
@@ -16,6 +17,11 @@ public class OrderRepository : IBaseRepository<Order>
         return true;
     }
 
+    public async Task<Order?> GetById(int id)
+    {
+        return await _db.Orders.FirstOrDefaultAsync(x => x.Id == id);
+    }
+    
     public IQueryable<Order> GetAll()
     {
         return _db.Orders;

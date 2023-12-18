@@ -1,8 +1,9 @@
-﻿using WarThunderParody.DAL.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using WarThunderParody.DAL.Interfaces;
 
 namespace WarThunderParody.DAL.Repositories;
 
-public class NationRepository : IBaseRepository<Nation>
+public class NationRepository : INationRepository
 {
     private readonly WarThunderShopContext _db;
 
@@ -15,6 +16,16 @@ public class NationRepository : IBaseRepository<Nation>
         await _db.Nations.AddAsync(entity);
         await _db.SaveChangesAsync();
         return true;
+    }
+
+    public async Task<Nation?> GetById(int id)
+    {
+        return await _db.Nations.FirstOrDefaultAsync(x => x.Id == id);
+    }
+
+    public async Task<Nation> GetByName(string name)
+    {
+        return await _db.Nations.FirstOrDefaultAsync(x => x.Name == name);
     }
 
     public IQueryable<Nation> GetAll()

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Cors;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using WarThunderParody.Service.Interfaces;
 
@@ -6,16 +7,17 @@ namespace WarThunderParody.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class GetCategoriesController : ControllerBase
+public class CategoriesController : ControllerBase
 {
     private readonly ICategoryService _categoryService;
     
-    public GetCategoriesController(ICategoryService categoryService)
+    public CategoriesController(ICategoryService categoryService)
     {
         _categoryService = categoryService;
     }
     
     [HttpGet("GetCategories")]
+    [Authorize]
     public async Task<IEnumerable<Category>> Get()
     {
         var response = await _categoryService.GetCategories();

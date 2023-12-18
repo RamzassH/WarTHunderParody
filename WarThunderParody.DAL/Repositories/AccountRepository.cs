@@ -1,7 +1,8 @@
-﻿using WarThunderParody.DAL.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using WarThunderParody.DAL.Interfaces;
 namespace WarThunderParody.DAL.Repositories;
 
-public class AccountRepository : IBaseRepository<Account>
+public class AccountRepository : IAccountRepository
 {
     private readonly WarThunderShopContext _db;
 
@@ -15,6 +16,16 @@ public class AccountRepository : IBaseRepository<Account>
         await _db.Accounts.AddAsync(entity);
         await _db.SaveChangesAsync();
         return true;
+    }
+
+    public async Task<Account?> GetById(int id)
+    {
+        return await _db.Accounts.FirstOrDefaultAsync(x => x.Id == id);
+    }
+
+    public async Task<Account> GetByName(string name)
+    {
+        return await _db.Accounts.FirstOrDefaultAsync(x => x.Name == name);
     }
 
     public IQueryable<Account> GetAll()

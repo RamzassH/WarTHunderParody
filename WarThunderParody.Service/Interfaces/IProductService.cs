@@ -22,4 +22,5 @@ public interface IProductService
     Task<IBaseResponse<IEnumerable<ProductDTO>>> GetTechnique(int limit, int page, List<Category> categories,
         List<Nation> nations);
 
+    Task<IBaseResponse<bool>> CreateProduct(ProductDTO model);
 }

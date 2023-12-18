@@ -3,7 +3,7 @@ using WarThunderParody.DAL.Interfaces;
 
 namespace WarThunderParody.DAL.Repositories;
 
-public class CategoryRepository : IBaseRepository<Category>
+public class CategoryRepository : ICategoryRepository
 {
     private readonly WarThunderShopContext _db;
 
@@ -19,17 +19,16 @@ public class CategoryRepository : IBaseRepository<Category>
         return true;
     }
 
+    public async Task<Category?> GetById(int id)
+    {
+        return await _db.Categories.FirstOrDefaultAsync(x => x.Id == id);
+    }
+
     public IQueryable<Category> GetAll()
     {
         return _db.Categories;
     }
-
-    public List<Category> Select()
-    {
-        return _db.Categories.ToList();
-    }
-
-
+    
     public async Task<Category> Update(Category entity)
     {
         _db.Categories.Update(entity);
@@ -44,7 +43,7 @@ public class CategoryRepository : IBaseRepository<Category>
         return true;
     }
 
-    public Task<Category?> GetByName(string name)
+    public Task<Category> GetByName(string name)
     {
         return _db.Categories.FirstOrDefaultAsync(x => x.Name == name);
     }
