@@ -110,8 +110,7 @@ public class NationService : INationService
                 baseResponse.StatusCode = StatusCode.NationNotFound;
                 return baseResponse;
             }
-
-            await _nationRepository.Delete(nation);
+            
             return baseResponse;
         }
         catch (Exception e)

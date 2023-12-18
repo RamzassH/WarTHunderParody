@@ -11,7 +11,7 @@ public partial class Order
 
     public int ProductId { get; set; }
 
-    public DateOnly Date { get; set; }
+    public DateTime Date { get; set; }
 
     public decimal Price { get; set; }
 

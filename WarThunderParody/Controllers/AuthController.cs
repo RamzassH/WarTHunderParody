@@ -2,11 +2,9 @@
 using System.Security.Claims;
 using System.Text;
 using System.Web.Http;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using WarThunderParody.Domain.ViewModel.Auth;
-using WarThunderParody.Domain.ViewModel.UserAccount;
 using WarThunderParody.Service.Interfaces;
 
 namespace WarThunderParody.Controllers;
