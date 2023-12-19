@@ -1,0 +1,11 @@
+.Showcase {
+    width: 1200px;
+    margin: 0 auto 48px;
+    display: block;
+}
+
+.ShowcaseContent {
+    display: flex;
+    flex-wrap: wrap;
+    width: calc( 100% + 24px);
+}

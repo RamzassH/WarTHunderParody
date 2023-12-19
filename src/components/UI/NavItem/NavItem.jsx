@@ -1,9 +1,9 @@
 import React from 'react';
 import classes from "./NavItem.module.css";
 
-const NavItem = ({children, ...props}) => {
+const NavItem = ({children, isActiveItem = false, ...props}) => {
     return (
-        <button {...props} className={classes.NavItem}>
+        <button {...props} className={!isActiveItem ? classes.NavItem : classes.NavItemCurrentActive}>
             {children}
         </button>
     );

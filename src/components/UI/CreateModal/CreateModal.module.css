@@ -1,0 +1,29 @@
+.CreateModal {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    display: none;
+    background: rgba(0,0,0, 0.5);
+    z-index: 9999;
+}
+
+.CreateModalContent {
+    position: relative;
+    overflow: hidden;
+    background: #27323f;
+    box-shadow: 0 0 72px 24px rgba(0, 0, 0, .45), 0 0 16px rgba(0, 0, 0, .3);
+    border-radius: 4px;
+    max-width: 980px !important;
+    padding: 30px 0;
+    width: 100%;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.CreateModal.active {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

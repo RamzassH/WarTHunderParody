@@ -3,7 +3,7 @@ import MyInput from "../input/MyInput";
 import MyButton from "../button/MyButton";
 import classes from "./LoginForm.module.css";
 
-const LoginForm = ({login}) => {
+const LoginForm = ({login, create}) => {
     const [userData, setUserData] = useState({login: '', password: ''})
 
 
@@ -16,6 +16,11 @@ const LoginForm = ({login}) => {
         setUserData({login: '', password: ''})
     }
 
+    const createUser = (e) => {
+        e.preventDefault()
+        create()
+    }
+
     return (
         <div className={classes.LoginModal}>
             <div className={classes.LoginModalTitle}>
@@ -23,34 +28,55 @@ const LoginForm = ({login}) => {
                     Войти в аккаунт
                 </div>
             </div>
-            {/*Управляемый компонент*/}
-
             <div className={classes.LoginModalTable}>
                 <div className={classes.LoginModalColumn}>
                     <div className={classes.LoginModalInputForm}>
-                        <MyInput
-                            value={userData.login}
-                            onChange={e => setUserData({...userData, login: e.target.value})}
-                            type="text"
-                            placeholder="Логин"
+                        <div className={classes.LoginFormRow}>
+                            <MyInput
+                                id="email"
+                                value={userData.login}
+                                onChange={e => setUserData({...userData, login: e.target.value})}
+                                type="text"
+                                placeholder="Логин"
+                            />
+                        </div>
+                        <div className={classes.LoginFormRow}>
+                            <MyInput
+                                id="password"
+                                value={userData.password}
+                                onChange={e => setUserData({...userData, password: e.target.value})}
+                                type="text"
+                                placeholder="Пароль"
+                            />
+                        </div>
+                        <div className={classes.LoginFormRow}>
+                            <MyButton
+                                onClick={loginUser}
+                            >
+                                Войти
+                            </MyButton>
+                        </div>
+
+                    </div>
+                </div>
+                <div className={classes.LoginModalColumn}>
+                    <div className={classes.LoginFormCenter}>
+                        <p>
+                            Создать учётную запись Gay Web Site -
+                            <br/>
+                            просто, быстро и бесплатно(ПОКА).
+                            <br/>
+                            По ссылке в описании
+                        </p>
+                        <input
+                            className={classes.LoginFormCreateButton}
+                            type="submit"
+                            value="Продать очко"
+                            onClick={createUser}
                         />
-                        {/*Неуправляемый\Неконтролируемый компонент*/}
-                        <MyInput
-                            value={userData.password}
-                            onChange={e => setUserData({...userData, password: e.target.value})}
-                            type="text"
-                            placeholder="Пароль"
-                        />
-                        <MyButton
-                            className={classes.LoginModalButton}
-                            onClick={loginUser}
-                        >
-                            Войти
-                        </MyButton>
                     </div>
                 </div>
             </div>
-
         </div>
     );
 };

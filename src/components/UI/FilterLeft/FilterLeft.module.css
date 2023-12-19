@@ -1,0 +1,11 @@
+.FilterLeft {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.FilterMobilePopup {
+    display: flex;
+    text-transform: uppercase;
+    transition: all .3s ease;
+}

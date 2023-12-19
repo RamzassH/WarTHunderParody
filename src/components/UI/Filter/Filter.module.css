@@ -1,0 +1,19 @@
+.Filter {
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    width: 1200px;
+    padding: 0;
+    border: 0;
+    font: inherit;
+    vertical-align: baseline;
+    -webkit-tap-highlight-color: transparent
+}
+
+.FilterWrapper {
+    display: flex;
+    column-gap: 16px;
+    align-items: center;
+    border: 1px #525b65 solid;
+    border-width: 1px 0;
+}

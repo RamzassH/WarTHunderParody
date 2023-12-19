@@ -13,13 +13,15 @@ import {useFetching} from "../hooks/useFetching";
 import PostService from "../API/PostService";
 import {getPageCount} from "../utils/pages";
 import BackService from "../API/BackService";
+import CreateModal from "../components/UI/CreateModal/CreateModal";
+import CreateForm from "../components/UI/CreateForm/CreateForm";
+import {useNavigate} from "react-router-dom";
 
 const Main = () => {
+    let navigate = useNavigate()
     const [modalLogin, setModalLogin] = useState(false)
     const [modalCreateUser, setModalCreateUser] = useState(false)
-
     const [categories, setCategories] = useState([])
-
     const [token, setToken] = useState("");
 
     const [fetchCategories, isPostsLoading, postError] = useFetching(async () => {
@@ -40,9 +42,16 @@ const Main = () => {
     useEffect(() => {
         console.log(token)
     }, [token]);
+
+
     function loginUser(userData) {
         getToken(userData)
         setModalLogin(false)
+    }
+
+    function createUser(userData) {
+        console.log(userData)
+        setModalCreateUser(false)
     }
 
     return (
@@ -80,20 +89,23 @@ const Main = () => {
             </Menu>
 
             <LoginModal visible={modalLogin} setVisible={setModalLogin}>
-                <LoginForm login={loginUser}/>
+                <LoginForm login={loginUser} create={() => {setModalLogin(false); setModalCreateUser(true)}}/>
             </LoginModal>
+            <CreateModal visible={modalCreateUser} setVisible={setModalCreateUser}>
+                <CreateForm create={createUser}/>
+            </CreateModal>
 
             <Nav>
-                <NavItem>
+                <NavItem onClick={() => navigate("/")}>
                     H
-                </NavItem>
-                <NavItem>
+                </NavItem >
+                <NavItem onClick={() => navigate("/premium_currency")}>
                     Золотые Орлы
                 </NavItem>
-                <NavItem>
+                <NavItem onClick={() => navigate("/technic")}>
                     Техника
                 </NavItem>
-                <NavItem>
+                <NavItem onClick={() => navigate("/premium_account")}>
                     Премиум аккаунт
                 </NavItem>
                 <NavItem>
@@ -122,6 +134,7 @@ const Main = () => {
 
                 <ListWidget>
                     <Widget
+                        onClick={() => navigate("/technic")}
                         src="https://static-store.gaijin.net/templates/shop/assets/img/jpg/Categories/wt_packs.jpg"
                         style={{
                             marginBottom: "24px"
@@ -130,6 +143,7 @@ const Main = () => {
                         Техника
                     </Widget>
                     <Widget
+                        onClick={() => navigate("/premium_currency")}
                         src="https://static-store.gaijin.net/templates/shop/assets/img/jpg/Categories/wt_golden_eagles.jpg"
                         style={{
                             marginBottom: "0",
@@ -140,6 +154,7 @@ const Main = () => {
                         Золотые орлы
                     </Widget>
                     <Widget
+                        onClick={() => navigate("/premium_account")}
                         src="https://static-store.gaijin.net/templates/shop/assets/img/jpg/Categories/wt_premium.jpg"
                         style={{
                             marginBottom: "0",

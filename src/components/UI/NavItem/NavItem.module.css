@@ -16,3 +16,22 @@
 .NavItem:hover {
     color: white;
 }
+
+.NavItemCurrentActive {
+    display: flex;
+    align-items: center;
+    height: 24px;
+    padding: 0 2px;
+    color: #31eeda;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: all .3s ease;
+    background-color: rgba(0,0,0,0);
+    -webkit-tap-highlight-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.NavItemCurrentActive:hover {
+    color: white;
+}
