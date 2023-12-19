@@ -73,11 +73,26 @@ const Store = ({isTechnic = false, isPremiumCurrency = false, isPremiumAccount =
     const [getToken, isLoading, tokenError] = useFetching(async (userData) => {
         await BackService.login(userData.login, userData.password, setToken)
     })
-    const [getTechnic, isLoadingTechnic, errorTechnic] = useFetching(async (limit, page)=> {
-        const response = await BackService.getTechnic(limit, page)
+    const [getTechnique, isLoadingTechnique, errorTechnique] = useFetching(async (limit, page)=> {
+        const response = await BackService.getTechnique(limit, page)
         setProductList(response.data)
         //const totalCount = response.headers['total-count-categories']
         //setTotalPages(getPageCount(totalCount, limit));
+    })
+    const [getPremiumAccounts, isLoadingAccounts, errorAccounts] = useFetching(async (limit, page)=> {
+        const response = await BackService.getPremiumAccounts(limit, page)
+        setProductList(response.data)
+        //const totalCount = response.headers['total-count-categories']
+        //setTotalPages(getPageCount(totalCount, limit));
+    })
+    const [getPremiumCurrency, isLoadingCurrency, errorCurrency] = useFetching(async (limit, page)=> {
+        const response = await BackService.getPremiumCurrency(limit, page)
+        setProductList(response.data)
+        //const totalCount = response.headers['total-count-categories']
+        //setTotalPages(getPageCount(totalCount, limit));
+    })
+    const [register, IsRegistration, errorRegistration] = useFetching(async (data)=> {
+        const response = await BackService.register(data.login, data.username, data.password)
     })
 
     useEffect(() => {
@@ -91,7 +106,15 @@ const Store = ({isTechnic = false, isPremiumCurrency = false, isPremiumAccount =
     }, [token]);
 
     useEffect(() => {
-        getTechnic(limit, page)
+        if (isTechnic) {
+            getTechnique(limit, page)
+        }
+        else if (isPremiumAccount) {
+            getPremiumAccounts(limit, page)
+        }
+        else if (isPremiumCurrency) {
+            getPremiumCurrency(limit, page)
+        }
     }, [limit, page]);
 
     useEffect(() => {
@@ -115,6 +138,7 @@ const Store = ({isTechnic = false, isPremiumCurrency = false, isPremiumAccount =
 
     function createUser(userData) {
         console.log(userData)
+        register(userData)
         setModalCreateUser(false)
     }
 
@@ -168,19 +192,22 @@ const Store = ({isTechnic = false, isPremiumCurrency = false, isPremiumAccount =
                     H
                 </NavItem >
                 <NavItem
-                    onClick={() => navigate("/premium_currency")}
+                    onClick={() => {navigate("/premium_currency");
+                    setProductList([])}}
                     isActiveItem={isPremiumCurrency}
                 >
                     Золотые Орлы
                 </NavItem>
                 <NavItem
-                    onClick={() => navigate("/technic")}
+                    onClick={() => {navigate("/technic");
+                    setProductList([])}}
                     isActiveItem={isTechnic}
                 >
                     Техника
                 </NavItem>
                 <NavItem
-                    onClick={() => navigate("/premium_account")}
+                    onClick={() => {navigate("/premium_account");
+                        setProductList([])}}
                     isActiveItem={isPremiumAccount}
                 >
                     Премиум аккаунт
@@ -237,17 +264,17 @@ const Store = ({isTechnic = false, isPremiumCurrency = false, isPremiumAccount =
                     buyFunction={buy}
                     idProduct={1}
                 />*/}
-                {/*productList.map(product =>
+                {productList.map(product =>
                     <ShowcaseItem
+                        key = {product.id}
                         imageLink={product.image}
                         title={product.name}
-                        nation={nationCategory[product.nationId]}
                         description={product.description}
                         price={product.price}
                         buyFunction={buy}
                         idProduct={product.id}
                     />
-                )*/}
+                )}
             </Showcase>
 
         </div>

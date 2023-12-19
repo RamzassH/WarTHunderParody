@@ -13,7 +13,7 @@ export default class BackService {
     }
 
     static async getCategory() {
-        const response = await axios.get('https://aed1-62-76-92-39.ngrok-free.app/Categories/GetCategories')
+        const response = await axios.get('http://localhost:5283/Categories/GetCategories')
         return response
     }
 
@@ -24,8 +24,30 @@ export default class BackService {
         return response;
     }
 
-    static async getTechnic(limit, page) {
-        const response = await axios.get(`https://aed1-62-76-92-39.ngrok-free.app/api/Product/GetTechnique?Limit=10&Page=1`)
+    //TODO фильтры
+    static async getTechnique(limit, page) {
+        const response = await axios.
+        get(`http://localhost:5283/api/Product/GetTechnique?Limit=${limit}&Page=${[page]}`)
         return response
     }
+
+    static async getPremiumAccounts(limit, page) {
+        const response = await axios.
+        get(`http://localhost:5283/api/Product/GetPremiumAccounts?Limit=${limit}&Page=${[page]}`)
+        return response
+    }
+
+    static async getPremiumCurrency(limit, page) {
+        const response = await axios.
+        get(`http://localhost:5283/api/Product/GetPremiumCurrency?Limit=${limit}&Page=${[page]}`)
+        return response
+    }
+
+    static async register(login, username, password) {
+        const article = {email:login, name:username, password:password}
+        console.log(article)
+        const response = await axios.post('http://localhost:5283/api/Auth/register',article)
+        return response;
+    }
+
 }
