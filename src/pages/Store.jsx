@@ -19,6 +19,7 @@ import iconClasses from "../components/UI/FilterSelectItem/FilterSelectItem.modu
 import iconNation from "../styles/NationIcon.module.css"
 import Showcase from "../components/UI/Showcase/Showcase";
 import ShowcaseItem from "../components/UI/ShowcaseItem/ShowcaseItem";
+import {getPageCount} from "../utils/pages";
 
 const Store = ({isTechnic = false, isPremiumCurrency = false, isPremiumAccount = false}) => {
     const technicCategory = [
@@ -58,19 +59,25 @@ const Store = ({isTechnic = false, isPremiumCurrency = false, isPremiumAccount =
         {name: "Шведция", value: false},
         {name: "Моиши", value: false}
     ]
-
     let navigate = useNavigate()
+
+
+    const [productList, setProductList] = useState([])
     const [modalLogin, setModalLogin] = useState(false)
     const [modalCreateUser, setModalCreateUser] = useState(false)
     const [categories, setCategories] = useState([])
     const [token, setToken] = useState("");
-    const [fetchCategories, isPostsLoading, postError] = useFetching(async () => {
-        const response = await BackService.getCategory();
-        console.log(response.data)
-        setCategories([...categories, ...response.data])
-    })
+    const [totalPages, setTotalPages] = useState(0);
+    const [limit, setLimit] = useState("10");
+    const [page, setPage] = useState("1");
     const [getToken, isLoading, tokenError] = useFetching(async (userData) => {
         await BackService.login(userData.login, userData.password, setToken)
+    })
+    const [getTechnic, isLoadingTechnic, errorTechnic] = useFetching(async (limit, page)=> {
+        const response = await BackService.getTechnic(limit, page)
+        setProductList(response.data)
+        //const totalCount = response.headers['total-count-categories']
+        //setTotalPages(getPageCount(totalCount, limit));
     })
 
     useEffect(() => {
@@ -82,6 +89,14 @@ const Store = ({isTechnic = false, isPremiumCurrency = false, isPremiumAccount =
     useEffect(() => {
         console.log(token)
     }, [token]);
+
+    useEffect(() => {
+        getTechnic(limit, page)
+    }, [limit, page]);
+
+    useEffect(() => {
+        console.log(productList)
+    }, [productList]);
 
     const setTechnicCategory = (value, index) => {
         filterTechnicValue[index].value = value
@@ -213,7 +228,7 @@ const Store = ({isTechnic = false, isPremiumCurrency = false, isPremiumAccount =
             }
 
             <Showcase>
-                <ShowcaseItem
+                {/*<ShowcaseItem
                     imageLink="https://static-store.gaijin.net/img/items/063B7FA8-7355-404E-AA64-BFE725D90DC6.jpg"
                     title="Набор 'Я твой рот ебал'"
                     nation="USA"
@@ -221,7 +236,18 @@ const Store = ({isTechnic = false, isPremiumCurrency = false, isPremiumAccount =
                     price="Бесплатно"
                     buyFunction={buy}
                     idProduct={1}
-                />
+                />*/}
+                {/*productList.map(product =>
+                    <ShowcaseItem
+                        imageLink={product.image}
+                        title={product.name}
+                        nation={nationCategory[product.nationId]}
+                        description={product.description}
+                        price={product.price}
+                        buyFunction={buy}
+                        idProduct={product.id}
+                    />
+                )*/}
             </Showcase>
 
         </div>

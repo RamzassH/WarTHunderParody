@@ -13,15 +13,19 @@ export default class BackService {
     }
 
     static async getCategory() {
-        const response = await axios.get('http://localhost:5283/GetCategories/GetCategories')
+        const response = await axios.get('https://aed1-62-76-92-39.ngrok-free.app/Categories/GetCategories')
         return response
     }
 
-    static async login(login, password, setToken) {
+    static async login(login, password) {
         const article = {email:login, password:password}
         console.log(article)
         const response = await axios.post('http://localhost:5283/api/Auth/login',article)
-        setToken(response.data.token)
+        return response;
+    }
 
+    static async getTechnic(limit, page) {
+        const response = await axios.get(`https://aed1-62-76-92-39.ngrok-free.app/api/Product/GetTechnique?Limit=10&Page=1`)
+        return response
     }
 }

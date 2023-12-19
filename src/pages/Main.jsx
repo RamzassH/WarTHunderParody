@@ -26,8 +26,7 @@ const Main = () => {
 
     const [fetchCategories, isPostsLoading, postError] = useFetching(async () => {
         const response = await BackService.getCategory();
-        console.log(response.data)
-        setCategories([...categories, ...response.data])
+        setCategories([...response.data])
     })
     const [getToken, isLoading, tokenError] = useFetching(async (userData) => {
         await BackService.login(userData.login, userData.password, setToken)

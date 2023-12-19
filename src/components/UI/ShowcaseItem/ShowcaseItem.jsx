@@ -3,7 +3,7 @@ import classes from "./ShowcaseItem.module.css"
 
 const ShowcaseItem = ({imageLink, title, nation, description, price, buyFunction, idProduct, ...props}) => {
     return (
-        <div className={classes.ShowcaseItem}>
+        <div className={classes.ShowcaseItem} data-cart-item-id={idProduct}>
             <div className={classes.ShowcaseItemBody}>
                 <div className={classes.ShowcaseItemPoster}>
                     <img className={classes.ShowcaseItemPosterImage} src={imageLink}/>
@@ -18,7 +18,7 @@ const ShowcaseItem = ({imageLink, title, nation, description, price, buyFunction
                         <tbody>
                             <tr>
                                 <td>
-                                    <div className={classes.ShowcaseItem_Description__ShortDescription}>
+                                    <div className={classes.ShowcaseItem_Description__ShortDescription_Text}>
                                         {description}
                                     </div>
                                 </td>
