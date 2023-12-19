@@ -16,8 +16,10 @@ public class CategoriesController : ControllerBase
         _categoryService = categoryService;
     }
     
+    
+    [EnableCors("AllowAllMethods")]
     [HttpGet("GetCategories")]
-    [Authorize]
+    //[Authorize]
     public async Task<IEnumerable<Category>> Get()
     {
         var response = await _categoryService.GetCategories();

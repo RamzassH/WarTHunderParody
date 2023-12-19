@@ -243,13 +243,13 @@ public class ProductService : IProductService
             List<int> nationsId = new List<int>();
             foreach (var nation in nations)
             {
-                nationsId.Add(_nationRepository.GetByName(nation.Name).Id);
+                nationsId.Add((await _nationRepository.GetByName(nation.Name)).Id);
             }
 
             List<int> categoriesId = new List<int>();
             foreach (var category in categories)
             {
-                categoriesId.Add(_categoryRepository.GetByName(category.Name).Id);
+                 categoriesId.Add((await _categoryRepository.GetByName(category.Name)).Id);
             }
 
             if (!nationsId.Any() || !categoriesId.Any())

@@ -64,7 +64,7 @@ builder.Services.AddScoped<IAccountService, AccountService>();
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAllOrigins",
+    options.AddPolicy("AllowAllMethods",
         builder =>
         {
             builder.AllowAnyOrigin()
@@ -80,8 +80,15 @@ backupScheduler.Start();
 var app = builder.Build();
 
 
-app.UseCors("AllowAllOrigins");
 app.UseRouting();
+
+app.UseCors("AllowAllMethods");
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+});
+
 
 app.UseAuthentication();
 
@@ -126,4 +133,3 @@ public class BackupScheduler
         WarThunderShopContext.BackupDatabase();
     }
 }
-

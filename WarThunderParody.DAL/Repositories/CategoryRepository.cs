@@ -43,10 +43,12 @@ public class CategoryRepository : ICategoryRepository
         return true;
     }
 
-    public Task<Category?> GetByName(string name)
+    public async Task<Category?> GetByName(string name)
     {
-        return _db.Categories.FirstOrDefaultAsync(x => x.Name == name);
+        return await _db.Categories.FirstOrDefaultAsync(x => x.Name == name);
     }
+   
+
 
     public async Task<List<Category>> GetAllCategories()
     {

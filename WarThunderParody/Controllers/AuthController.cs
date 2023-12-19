@@ -27,6 +27,7 @@ public class AuthController : ControllerBase
     [Microsoft.AspNetCore.Mvc.HttpPost("register")]
     public async Task<IActionResult> Register([Microsoft.AspNetCore.Mvc.FromBody] RegisterDTO model)
     {
+        HttpContext.Response.Headers.Add("ngrok-skip-browser-warning", "true");
         var response = await _userAccountService.Register(model);
         if (response.StatusCode == Domain.Enum.StatusCode.OK)
         {
@@ -40,6 +41,7 @@ public class AuthController : ControllerBase
     [Microsoft.AspNetCore.Mvc.HttpPost("login")]
     public async Task<IActionResult> Login([Microsoft.AspNetCore.Mvc.FromBody] LoginDTO model)
     {
+        HttpContext.Response.Headers.Add("ngrok-skip-browser-warning", "true");
         var result = await _userAccountService.Login(model);
         
         if (result.StatusCode == Domain.Enum.StatusCode.NotFound)
