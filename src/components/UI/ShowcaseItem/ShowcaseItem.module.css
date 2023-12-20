@@ -16,7 +16,7 @@
     flex-direction: column;
     position: relative;
     z-index: 100;
-    width: 286.5px;
+    width: 282px;
     height: 344px;
     overflow: hidden;
     border-radius: 3px;
@@ -31,6 +31,7 @@
     height: 100%;
     overflow: hidden;
     margin-bottom: 32px;
+    cursor: pointer;
 }
 
 .ShowcaseItemPoster {

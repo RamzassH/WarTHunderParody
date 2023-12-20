@@ -50,4 +50,9 @@ export default class BackService {
         return response;
     }
 
+    static async getProduct(id) {
+        const response = await  axios.post(`http://localhost:5283/api/Product/GetProduct?id=${id}`)
+        return response;
+    }
+
 }

@@ -1,10 +1,10 @@
 import React from 'react';
 import classes from "./ShowcaseItem.module.css"
 
-const ShowcaseItem = ({imageLink, title, nation, description, price, buyFunction, idProduct, ...props}) => {
+const ShowcaseItem = ({imageLink, title, nation, description, price, buyFunction, idProduct, navigateProductPage, ...props}) => {
     return (
         <div className={classes.ShowcaseItem} data-cart-item-id={idProduct}>
-            <div className={classes.ShowcaseItemBody}>
+            <div className={classes.ShowcaseItemBody} onClick={() => {navigateProductPage(idProduct)}}>
                 <div className={classes.ShowcaseItemPoster}>
                     <img className={classes.ShowcaseItemPosterImage} src={imageLink}/>
                 </div>

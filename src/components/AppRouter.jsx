@@ -5,6 +5,7 @@ import {AuthContext} from "../context";
 import Loader from "./UI/Loader/Loader";
 import Main from "../pages/Main";
 import Store from "../pages/Store";
+import Product from "../pages/Product";
 
 const AppRouter = () => {
     const {isAuth, isLoading} = useContext(AuthContext);
@@ -21,18 +22,20 @@ const AppRouter = () => {
             <Routes>
                 <Route path="/">
                     <Route index element={<Main/>} />
-                    <Route path="/technic" element={<Store isTechnic={true}/>} />
-                    <Route path="/premium_currency" element={<Store isPremiumCurrency={true}/>}/>
-                    <Route path="/premium_account" element={<Store isPremiumAccount={true}/>}/>
+                    <Route index path="/technic" element={<Store isTechnic={true}/>} />
+                    <Route index path="/premium_currency" element={<Store isPremiumCurrency={true}/>}/>
+                    <Route index path="/premium_account" element={<Store isPremiumAccount={true}/>}/>
+                    <Route index path="/:category/:id" element={<Product/>}/>
                 </Route>
             </Routes>
             :
             <Routes>
                 <Route path="/">
                     <Route index element={<Main/>} />
-                    <Route path="/technic" element={<Store isTechnic={true}/>} />
-                    <Route path="/premium_currency" element={<Store isPremiumCurrency={true}/>}/>
-                    <Route path="/premium_account" element={<Store isPremiumAccount={true}/>}/>
+                    <Route index path="/technic" element={<Store isTechnic={true}/>} />
+                    <Route index path="/premium_currency" element={<Store isPremiumCurrency={true}/>}/>
+                    <Route index path="/premium_account" element={<Store isPremiumAccount={true}/>}/>
+                    <Route index path="/:category/:id" element={<Product/>}/>
                 </Route>
             </Routes>
     );

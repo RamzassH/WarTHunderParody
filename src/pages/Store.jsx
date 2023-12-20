@@ -78,18 +78,21 @@ const Store = ({isTechnic = false, isPremiumCurrency = false, isPremiumAccount =
     const [getTechnique, isLoadingTechnique, errorTechnique] = useFetching(async (limit, page)=> {
         const response = await BackService.getTechnique(limit, page)
         setProductList(response.data)
+        //setProductList([{},{},{},{},{}])
         //const totalCount = response.headers['total-count-categories']
         //setTotalPages(getPageCount(totalCount, limit));
     })
     const [getPremiumAccounts, isLoadingAccounts, errorAccounts] = useFetching(async (limit, page)=> {
         const response = await BackService.getPremiumAccounts(limit, page)
         setProductList(response.data)
+        //setProductList([{}, {}])
         //const totalCount = response.headers['total-count-categories']
         //setTotalPages(getPageCount(totalCount, limit));
     })
     const [getPremiumCurrency, isLoadingCurrency, errorCurrency] = useFetching(async (limit, page)=> {
         const response = await BackService.getPremiumCurrency(limit, page)
         setProductList(response.data)
+        //setProductList([{},{},{},{}])
         //const totalCount = response.headers['total-count-categories']
         //setTotalPages(getPageCount(totalCount, limit));
     })
@@ -142,6 +145,19 @@ const Store = ({isTechnic = false, isPremiumCurrency = false, isPremiumAccount =
         console.log(userData)
         register(userData)
         setModalCreateUser(false)
+    }
+
+    const navigateProductPage = (idProduct) => {
+        let type = ''
+        if (isTechnic) {
+            type = 'technic'
+        } else if (isPremiumAccount) {
+            type = 'premium_account'
+        } else {
+            type = 'premium_currency'
+        }
+
+        navigate(`/${type}/${idProduct}`)
     }
 
     const buy = (id) => {
@@ -209,21 +225,21 @@ const Store = ({isTechnic = false, isPremiumCurrency = false, isPremiumAccount =
                 </NavItem >
                 <NavItem
                     onClick={() => {navigate("/premium_currency");
-                    setProductList([])}}
+                    getPremiumCurrency()}}
                     isActiveItem={isPremiumCurrency}
                 >
                     Золотые Орлы
                 </NavItem>
                 <NavItem
                     onClick={() => {navigate("/technic");
-                    setProductList([])}}
+                    getTechnique()}}
                     isActiveItem={isTechnic}
                 >
                     Техника
                 </NavItem>
                 <NavItem
                     onClick={() => {navigate("/premium_account");
-                        setProductList([])}}
+                    getPremiumAccounts()}}
                     isActiveItem={isPremiumAccount}
                 >
                     Премиум аккаунт
@@ -289,8 +305,9 @@ const Store = ({isTechnic = false, isPremiumCurrency = false, isPremiumAccount =
                     buyFunction={buy}
                     idProduct={1}
                 />*/}
-                {productList.map(product =>
+                {productList.map((product, index) =>
                     <ShowcaseItem
+                        navigateProductPage={navigateProductPage}
                         key = {product.id}
                         imageLink={product.image}
                         title={product.name}
@@ -304,6 +321,15 @@ const Store = ({isTechnic = false, isPremiumCurrency = false, isPremiumAccount =
 
         </div>
     );
+    /*
+                        key = {product.id}
+                        imageLink={product.image}
+                        title={product.name}
+                        description={product.description}
+                        price={product.price}
+                        buyFunction={buy}
+                        idProduct={product.id}
+    */
 };
 
 export default Store;

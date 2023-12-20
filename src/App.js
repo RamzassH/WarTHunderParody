@@ -8,6 +8,7 @@ import AppRouter from "./components/AppRouter";
 function App() {
     const [isAuth, setIsAuth] = useState(false);
     const [isLoading, setLoading] = useState(true);
+    const [token, setToken] = useState('')
 
     useEffect(() => {
         if (localStorage.getItem('auth')) {
@@ -22,7 +23,8 @@ function App() {
         <AuthContext.Provider value={{
             isAuth,
             setIsAuth,
-            isLoading
+            isLoading,
+            token
         }}>
             <BrowserRouter>
                 <AppRouter/>
