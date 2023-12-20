@@ -1,0 +1,126 @@
+.ProductForm {
+    justify-content: space-between;
+    align-items: flex-start;
+    display: grid;
+    grid-template-columns: 804px 390px;
+    grid-template-rows: auto;
+    grid-row-gap: 16px;
+    grid-column-gap: 16px;
+    grid-template-areas:
+        "title   title"
+        "content aside";
+    position: relative;
+
+    width: 1218px;
+    margin: 0 auto 48px;
+}
+
+.ProductForm_Title {
+    grid-area: title;
+    width: 100%;
+    font-family: "PTRootUI",sans-serif;
+    font-size: 42px;
+    font-weight: bold;
+    line-height: 1.17;
+    color: #fff;
+}
+
+.ProductForm_ContentWrapper {
+    grid-area: content;
+    flex-shrink: 0;
+    width: 100%;
+}
+
+.ProductForm_Gallery {
+    position: relative;
+    margin: 0 auto 48px;
+}
+
+.ProductForm_SpLide{
+    visibility: visible;
+    position: relative;
+    z-index: 100;
+}
+
+.ProductForm_image {
+    position: absolute;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: opacity .3s linear;
+    border-style: none;
+}
+
+.ProductForm_Article_Wrapper {
+    display: block;
+    width: 100%;
+    margin-bottom: 48px;
+
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.ProductForm_Article {
+    font-family: "PTRootUI",sans-serif;
+    font-weight: normal;
+    color: #c0c4c8;
+}
+
+.ProductForm_Article::after {
+    content: "";
+    display: table;
+    width: 100%;
+    height: 0;
+    overflow: hidden;
+}
+
+.ProductForm_ASide {
+    grid-area: aside;
+    flex-shrink: 0;
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.ProductForm_ASide_Sticky {
+    position: absolute;
+    top: auto;
+    bottom: 0;
+    width: 390px;
+}
+
+.ProductForm_ShopBuy {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    background: rgba(3,12,21,.4);
+    margin-bottom: 8px;
+}
+
+.ProductForm_ShopBuy_Wrapper {
+    width: 100%;
+    padding: 24px 40px 10px;
+}
+
+.ProductForm_ShopBuy_Price {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    font-family: "PTRootUI",sans-serif;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 1;
+
+    margin-bottom: 16px;
+    color: #fff;
+}
+
+.ProductForm_ShopBuy_Price__ {
+    display: inline-block;
+    margin: 0 6px;
+    color: #ffe8aa;
+}
