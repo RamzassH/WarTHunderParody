@@ -1,8 +1,7 @@
 import React, {useState} from 'react';
 import classes from "./FilterSelect.module.css";
 
-const FilterSelect = ({nameSelect="" ,children, isTwoColumn = false, ...props}) => {
-    let [isActive, setIsActive] = useState(false)
+const FilterSelect = ({nameSelect="" ,children, onClickButton, isActive, setActive, isTwoColumn = false, ...props}) => {
     let [isNotEmpty, setIsNotEmpty] = useState(false)
     let rootClasses = [classes.FilterSelect]
     let dropListClasses = [classes.FilterSelectDropdownList]
@@ -18,7 +17,7 @@ const FilterSelect = ({nameSelect="" ,children, isTwoColumn = false, ...props}) 
     }
 
     return (
-        <div className={rootClasses.join(" ")} onClick={() => setIsActive(!isActive)}>
+        <div className={rootClasses.join(" ")} onClick={() => setActive()}>
             <div className={classes.FilterSelectLabel}>
                 {nameSelect}
             </div>
@@ -33,6 +32,12 @@ const FilterSelect = ({nameSelect="" ,children, isTwoColumn = false, ...props}) 
                 <ul className={dropListClasses.join(" ")}>
                     {children}
                 </ul>
+                <div
+                    className={[classes.FilterSelect_Button_1, classes.FilterSelect_Button_2, classes.FilterSelect_Button_3].join(" ")}
+                    onClick={() => onClickButton()}
+                >
+                    Применить
+                </div>
             </div>
 
         </div>

@@ -70,6 +70,8 @@ const Store = ({isTechnic = false, isPremiumCurrency = false, isPremiumAccount =
     const [totalPages, setTotalPages] = useState(0);
     const [limit, setLimit] = useState("10");
     const [page, setPage] = useState("1");
+    const [isActiveFirstFilter, setActiveFilter1] = useState(false)
+    const [isActiveSecondFilter, setActiveFilter2] = useState(false)
     const [getToken, isLoading, tokenError] = useFetching(async (userData) => {
         await BackService.login(userData.login, userData.password, setToken)
     })
@@ -144,6 +146,20 @@ const Store = ({isTechnic = false, isPremiumCurrency = false, isPremiumAccount =
 
     const buy = (id) => {
         console.log(id)
+    }
+
+    const clickFirstFilter = () => {
+        if (isActiveSecondFilter) {
+            setActiveFilter2(!isActiveSecondFilter)
+        }
+        setActiveFilter1(!isActiveFirstFilter)
+    }
+
+    const clickSecondFilter = () => {
+        if (isActiveFirstFilter) {
+            setActiveFilter1(!isActiveFirstFilter)
+        }
+        setActiveFilter2(!isActiveSecondFilter)
     }
 
     return (
@@ -224,7 +240,11 @@ const Store = ({isTechnic = false, isPremiumCurrency = false, isPremiumAccount =
                 ?
                 <Filter>
                     <FilterLeft>
-                        <FilterSelect nameSelect="Техника">
+                        <FilterSelect
+                            isActive={isActiveFirstFilter}
+                            setActive={clickFirstFilter}
+                            nameSelect="Техника"
+                        >
                             {technicCategory.map((technic, index) =>
                                 <FilterSelectItem
                                     key={index}
@@ -236,7 +256,12 @@ const Store = ({isTechnic = false, isPremiumCurrency = false, isPremiumAccount =
                                 </FilterSelectItem>
                             )}
                         </FilterSelect>
-                        <FilterSelect nameSelect="Нации" isTwoColumn={true}>
+                        <FilterSelect
+                            isActive={isActiveSecondFilter}
+                            setActive={clickSecondFilter}
+                            nameSelect="Нации"
+                            isTwoColumn={true}
+                        >
                             {nationCategory.map((nation, index) =>
                                 <FilterSelectItem
                                     key={index}
