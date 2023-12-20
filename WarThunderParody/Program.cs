@@ -76,13 +76,14 @@ builder.Services.AddCors(options =>
 BackupScheduler backupScheduler = new BackupScheduler();
 backupScheduler.Start();
 
-
 var app = builder.Build();
 
 
 app.UseRouting();
 
 app.UseCors("AllowAllMethods");
+
+
 
 app.UseEndpoints(endpoints =>
 {
@@ -128,8 +129,9 @@ public class BackupScheduler
         backupTimer.Stop();
     }
 
-    private void OnBackupTimerElapsed(object sender, ElapsedEventArgs e)
+    private async void OnBackupTimerElapsed(object sender, ElapsedEventArgs e)
     {
-        WarThunderShopContext.BackupDatabase();
+        WarThunderShopContext bd = new WarThunderShopContext(); 
+        bd.BackupDatabase();
     }
 }

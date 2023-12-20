@@ -757,6 +757,23 @@
           "lib/netcoreapp2.1/_._": {}
         }
       },
+      "YandexDisk.Client/1.3.27": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.WebApi.Client": "5.2.9",
+          "Newtonsoft.Json": "13.0.1"
+        },
+        "compile": {
+          "lib/net6.0/YandexDisk.Client.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/YandexDisk.Client.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "WarThunderParody.DAL/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v7.0",
@@ -765,7 +782,8 @@
           "Microsoft.AspNetCore.Authentication.JwtBearer": "7.0.14",
           "Microsoft.EntityFrameworkCore": "7.0.14",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "7.0.11",
-          "WarThunderParody.Domain": "1.0.0"
+          "WarThunderParody.Domain": "1.0.0",
+          "YandexDisk.Client": "1.3.27"
         },
         "compile": {
           "bin/placeholder/WarThunderParody.DAL.dll": {}
@@ -2193,6 +2211,21 @@
         "system.threading.tasks.extensions.nuspec",
         "useSharedDesignerContext.txt",
         "version.txt"
+      ]
+    },
+    "YandexDisk.Client/1.3.27": {
+      "sha512": "5wuSVS33Z6adfJJc4KZHfAgz85ARgeEAflnsk2Z573g8nb9BqJnH2gXFPUixLQNzyOKyj2ETPj9VelbOLrydFA==",
+      "type": "package",
+      "path": "yandexdisk.client/1.3.27",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net6.0/YandexDisk.Client.dll",
+        "lib/net6.0/YandexDisk.Client.xml",
+        "lib/netstandard2.0/YandexDisk.Client.dll",
+        "lib/netstandard2.0/YandexDisk.Client.xml",
+        "yandexdisk.client.1.3.27.nupkg.sha512",
+        "yandexdisk.client.nuspec"
       ]
     },
     "WarThunderParody.DAL/1.0.0": {

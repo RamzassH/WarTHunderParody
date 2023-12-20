@@ -41,32 +41,32 @@ public class ProductController : ControllerBase
     public async Task<IEnumerable<ProductDTO>> GetTechnique([FromQuery] GetTechniqueDTO model)
     {
         HttpContext.Response.Headers.Add("ngrok-skip-browser-warning", "true");
-        List<Category> categories = new List<Category>();
-        if (model.Categories != null)
-        {
-            foreach (var category in model.Categories)
-            {
-                categories.Add(new Category
-                {
-                    Name = category.Name
-                });
-            }
-        }
-      
-        List<Nation> nations= new List<Nation>();
-        if (model.Nations != null)
-        {
-            foreach (var nation in model.Nations)
-            {
-                nations.Add(new Nation
-                {
-                    Name = nation.Name
-                });
-            }
-        }
+        //List<Category> categories = new List<Category>();
+        // if (model.CategoriesId != null)
+        // {
+        //     foreach (var category in model.Categories)
+        //     {
+        //         categories.Add(new Category
+        //         {
+        //             Name = category.Name
+        //         });
+        //     }
+        // }
+        //
+        // List<Nation> nations= new List<Nation>();
+        // if (model.NationsId != null)
+        // {
+        //     foreach (var nation in model.Nations)
+        //     {
+        //         nations.Add(new Nation
+        //         {
+        //             Name = nation.Name
+        //         });
+        //     }
+        // }
       
         var products = await _productService.GetTechnique(model.Limit, model.Page,
-            categories, nations);
+            model.CategoriesId, model.NationsId);
         
         Response.Headers.Add("Total-Count-Products", products.Data.Count().ToString());
         return products.Data;

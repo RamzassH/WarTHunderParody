@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using WarThunderParody.Service.Interfaces;
 
 namespace WarThunderParody.Controllers;
@@ -28,4 +29,5 @@ public class CategoriesController : ControllerBase
         
         return (List<Category>)response.Data;
     }
+    
 }

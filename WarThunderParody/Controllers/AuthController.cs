@@ -27,15 +27,13 @@ public class AuthController : ControllerBase
     [Microsoft.AspNetCore.Mvc.HttpPost("register")]
     public async Task<IActionResult> Register([Microsoft.AspNetCore.Mvc.FromBody] RegisterDTO model)
     {
-        HttpContext.Response.Headers.Add("ngrok-skip-browser-warning", "true");
         var response = await _userAccountService.Register(model);
         if (response.StatusCode == Domain.Enum.StatusCode.OK)
         {
-            WarThunderShopContext.BackupDatabase();
-            return Ok();
+            return Ok("Succesfull");
         }
 
-        return BadRequest(response.Description);
+        return BadRequest(response.StatusCode);
     }
 
     [Microsoft.AspNetCore.Mvc.HttpPost("login")]

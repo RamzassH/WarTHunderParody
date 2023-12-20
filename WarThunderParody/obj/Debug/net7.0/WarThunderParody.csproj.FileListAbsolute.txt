@@ -60,3 +60,4 @@ Z:\5SEM\WarThunderParody\WarThunderParody\bin\Debug\net7.0\System.Web.Http.dll
 Z:\5SEM\WarThunderParody\WarThunderParody\bin\Debug\net7.0\System.Web.Http.Cors.dll
 Z:\5SEM\WarThunderParody\WarThunderParody\bin\Debug\net7.0\Newtonsoft.Json.dll
 Z:\5SEM\WarThunderParody\WarThunderParody\bin\Debug\net7.0\Newtonsoft.Json.Bson.dll
+Z:\5SEM\WarThunderParody\WarThunderParody\bin\Debug\net7.0\YandexDisk.Client.dll
