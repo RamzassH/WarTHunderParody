@@ -42,24 +42,23 @@ const Store = ({isTechnic = false, isPremiumCurrency = false, isPremiumAccount =
         {name: "Моиши", icon: iconNation.Israel, value: false},
     ]
 
-    let filterTechnicValue = [
-        {name: "Танки", value: false},
-        {name: "Авиация", value: false},
-        {name: "Флот", value: false},
-        {name: "Вертолёты", value: false}
-    ]
-    let filterNationValue = [
-        {name: "СССР", value: false},
-        {name: "Германия", value: false},
-        {name: "Пендосия", value: false},
-        {name: "Великобритания", value: false},
-        {name: "Япония", value: false},
-        {name: "Италия", value: false},
-        {name: "Франция", value: false},
-        {name: "Китай", value: false},
-        {name: "Шведция", value: false},
-        {name: "Моиши", value: false}
-    ]
+    const [filterTechnicValue, setFilterTechnicValue] = useState([{id: 1, value: false},
+        {id: 2, value: false},
+        {id: 3, value: false},
+        {id: 4, value: false}])
+    const [filterNationValue, setFilterNationValue] = useState([
+        {id: 1, value: false},
+        {id: 2, value: false},
+        {id: 3, value: false},
+        {id: 4, value: false},
+        {id: 6, value: false},
+        {id: 7, value: false},
+        {id: 5, value: false},
+        {id: 8, value: false},
+        {id: 9, value: false},
+        {id: 10, value: false}
+    ])
+
     let navigate = useNavigate()
 
 
@@ -77,39 +76,46 @@ const Store = ({isTechnic = false, isPremiumCurrency = false, isPremiumAccount =
         await BackService.login(userData.login, userData.password, setToken)
 
     })
-    const [getTechnique, isLoadingTechnique, errorTechnique] = useFetching(async (limit, page)=> {
+    const [getTechnique, isLoadingTechnique, errorTechnique] = useFetching(async (limit, page) => {
         const response = await BackService.getTechnique(limit, page)
         setProductList(response.data)
         //setProductList([{},{},{},{},{}])
         //const totalCount = response.headers['total-count-categories']
         //setTotalPages(getPageCount(totalCount, limit));
     })
-    const [getPremiumAccounts, isLoadingAccounts, errorAccounts] = useFetching(async (limit, page)=> {
+    const [getPremiumAccounts, isLoadingAccounts, errorAccounts] = useFetching(async (limit, page) => {
         const response = await BackService.getPremiumAccounts(limit, page)
         setProductList(response.data)
         //setProductList([{}, {}])
         //const totalCount = response.headers['total-count-categories']
         //setTotalPages(getPageCount(totalCount, limit));
     })
-    const [getPremiumCurrency, isLoadingCurrency, errorCurrency] = useFetching(async (limit, page)=> {
+    const [getPremiumCurrency, isLoadingCurrency, errorCurrency] = useFetching(async (limit, page) => {
         const response = await BackService.getPremiumCurrency(limit, page)
         setProductList(response.data)
         //setProductList([{},{},{},{}])
         //const totalCount = response.headers['total-count-categories']
         //setTotalPages(getPageCount(totalCount, limit));
     })
-    const [register, IsRegistration, errorRegistration] = useFetching(async (data)=> {
+    const [getTechnicByFilter, isLoadingByFilter, errorByFilter] = useFetching(async (limit, page) => {
+        const response = await BackService.GetTechnicByFilter(limit, page, filterTechnicValue, filterNationValue)
+        setProductList(response.data)
+    })
+    const [register, IsRegistration, errorRegistration] = useFetching(async (data) => {
         const response = await BackService.register(data.login, data.username, data.password)
     })
 
     useEffect(() => {
+        console.log(filterTechnicValue)
+        console.log(filterNationValue)
+    }, [filterTechnicValue,filterNationValue]);
+
+    useEffect(() => {
         if (isTechnic) {
             getTechnique(limit, page)
-        }
-        else if (isPremiumAccount) {
+        } else if (isPremiumAccount) {
             getPremiumAccounts(limit, page)
-        }
-        else if (isPremiumCurrency) {
+        } else if (isPremiumCurrency) {
             getPremiumCurrency(limit, page)
         }
     }, [isTechnic, isPremiumCurrency, isPremiumAccount]);
@@ -122,23 +128,23 @@ const Store = ({isTechnic = false, isPremiumCurrency = false, isPremiumAccount =
     useEffect(() => {
         if (isTechnic) {
             getTechnique(limit, page)
-        }
-        else if (isPremiumAccount) {
+        } else if (isPremiumAccount) {
             getPremiumAccounts(limit, page)
-        }
-        else if (isPremiumCurrency) {
+        } else if (isPremiumCurrency) {
             getPremiumCurrency(limit, page)
         }
     }, [limit, page]);
 
     const setTechnicCategory = (value, index) => {
-        filterTechnicValue[index].value = value
-        console.log(filterTechnicValue)
+        let tmp = [...filterTechnicValue]
+        tmp[index] = {...tmp[index], value: value}
+        setFilterTechnicValue(tmp)
     }
 
     const setNationCategory = (value, index) => {
-        filterNationValue[index].value = value
-        console.log(filterNationValue)
+        let tmp = [...filterNationValue]
+        tmp[index] = {...tmp[index], value: value}
+        setFilterNationValue(tmp)
     }
 
     function loginUser(userData) {
@@ -167,6 +173,15 @@ const Store = ({isTechnic = false, isPremiumCurrency = false, isPremiumAccount =
 
     const buy = (id) => {
         console.log(id)
+    }
+
+    const applyFilter = () => {
+        console.log(filterTechnicValue)
+        console.log(filterNationValue)
+        getTechnicByFilter(limit, page)
+        if (errorByFilter) {
+            setProductList([]);
+        }
     }
 
     const clickFirstFilter = () => {
@@ -207,12 +222,12 @@ const Store = ({isTechnic = false, isPremiumCurrency = false, isPremiumAccount =
                 </MenuItem>
 
 
-                    <MenuItem
-                        onClick={() => setModalLogin(true)}
-                        style={{color: "#ffe8aa"}}
-                    >
-                        Войти
-                    </MenuItem>
+                <MenuItem
+                    onClick={() => setModalLogin(true)}
+                    style={{color: "#ffe8aa"}}
+                >
+                    Войти
+                </MenuItem>
 
                 <MenuItem>
                     Ru
@@ -220,7 +235,10 @@ const Store = ({isTechnic = false, isPremiumCurrency = false, isPremiumAccount =
             </Menu>
 
             <LoginModal visible={modalLogin} setVisible={setModalLogin}>
-                <LoginForm login={loginUser} create={() => {setModalLogin(false); setModalCreateUser(true)}}/>
+                <LoginForm login={loginUser} create={() => {
+                    setModalLogin(false);
+                    setModalCreateUser(true)
+                }}/>
             </LoginModal>
             <CreateModal visible={modalCreateUser} setVisible={setModalCreateUser}>
                 <CreateForm create={createUser}/>
@@ -229,21 +247,27 @@ const Store = ({isTechnic = false, isPremiumCurrency = false, isPremiumAccount =
             <Nav>
                 <NavItem onClick={() => navigate("/")}>
                     H
-                </NavItem >
+                </NavItem>
                 <NavItem
-                    onClick={() => {navigate("/premium_currency");}}
+                    onClick={() => {
+                        navigate("/premium_currency");
+                    }}
                     isActiveItem={isPremiumCurrency}
                 >
                     Золотые Орлы
                 </NavItem>
                 <NavItem
-                    onClick={() => {navigate("/technic");}}
+                    onClick={() => {
+                        navigate("/technic");
+                    }}
                     isActiveItem={isTechnic}
                 >
                     Техника
                 </NavItem>
                 <NavItem
-                    onClick={() => {navigate("/premium_account");}}
+                    onClick={() => {
+                        navigate("/premium_account");
+                    }}
                     isActiveItem={isPremiumAccount}
                 >
                     Премиум аккаунт
@@ -262,11 +286,13 @@ const Store = ({isTechnic = false, isPremiumCurrency = false, isPremiumAccount =
                     <FilterLeft>
                         <FilterSelect
                             isActive={isActiveFirstFilter}
+                            onClickButton={applyFilter}
                             setActive={clickFirstFilter}
                             nameSelect="Техника"
                         >
                             {technicCategory.map((technic, index) =>
                                 <FilterSelectItem
+                                    check={filterTechnicValue[index].value}
                                     key={index}
                                     idItem={index}
                                     setFilter={setTechnicCategory}
@@ -278,12 +304,14 @@ const Store = ({isTechnic = false, isPremiumCurrency = false, isPremiumAccount =
                         </FilterSelect>
                         <FilterSelect
                             isActive={isActiveSecondFilter}
+                            onClickButton={applyFilter}
                             setActive={clickSecondFilter}
                             nameSelect="Нации"
                             isTwoColumn={true}
                         >
                             {nationCategory.map((nation, index) =>
                                 <FilterSelectItem
+                                    check={filterNationValue[index].value}
                                     key={index}
                                     styleForIcon={nation.icon}
                                     idItem={index}
@@ -312,7 +340,7 @@ const Store = ({isTechnic = false, isPremiumCurrency = false, isPremiumAccount =
                 {productList.map((product, index) =>
                     <ShowcaseItem
                         navigateProductPage={navigateProductPage}
-                        key = {product.id}
+                        key={product.id}
                         imageLink={product.image}
                         title={product.name}
                         description={product.description}

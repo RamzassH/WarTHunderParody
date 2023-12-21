@@ -1,4 +1,5 @@
 import axios from "axios";
+import {forEach} from "react-bootstrap/ElementChildren";
 
 
 export default class BackService {
@@ -27,19 +28,19 @@ export default class BackService {
     //TODO фильтры
     static async getTechnique(limit, page) {
         const response = await axios.
-        get(`http://localhost:5283/api/Product/GetTechnique?Limit=${limit}&Page=${[page]}`)
+        get(`http://localhost:5283/api/Product/GetTechnique?Limit=${limit}&Page=${page}`)
         return response
     }
 
     static async getPremiumAccounts(limit, page) {
         const response = await axios.
-        get(`http://localhost:5283/api/Product/GetPremiumAccounts?Limit=${limit}&Page=${[page]}`)
+        get(`http://localhost:5283/api/Product/GetPremiumAccounts?Limit=${limit}&Page=${page}`)
         return response
     }
 
     static async getPremiumCurrency(limit, page) {
         const response = await axios.
-        get(`http://localhost:5283/api/Product/GetPremiumCurrency?Limit=${limit}&Page=${[page]}`)
+        get(`http://localhost:5283/api/Product/GetPremiumCurrency?Limit=${limit}&Page=${page}`)
         return response
     }
 
@@ -51,8 +52,23 @@ export default class BackService {
     }
 
     static async getProduct(id) {
-        const response = await  axios.post(`http://localhost:5283/api/Product/GetProduct?id=${id}`)
+        const response = await  axios.get(`http://localhost:5283/api/Product/GetProduct?id=${id}`)
         return response;
     }
 
+
+    static async GetTechnicByFilter(limit, page, categories, nations) {
+        let stringCategories = '';
+        categories.forEach((element) => {if (element.value){
+            stringCategories += "&CategoriesId=" + element.id
+        }})
+        let stringNations = '';
+         nations.forEach((element) => {if (element.value){
+            stringNations += "&NationsId=" + element.id
+        }})
+        const response = await axios.
+        get(`http://localhost:5283/api/Product/GetTechnique?Limit=${limit}&Page=${page}${stringCategories}${stringNations}`)
+
+        return response;
+    }
 }

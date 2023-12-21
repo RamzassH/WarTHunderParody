@@ -34,7 +34,7 @@ const FilterSelect = ({nameSelect="" ,children, onClickButton, isActive, setActi
                 </ul>
                 <div
                     className={[classes.FilterSelect_Button_1, classes.FilterSelect_Button_2, classes.FilterSelect_Button_3].join(" ")}
-                    onClick={() => onClickButton()}
+                    onClick={(event) => {event.preventDefault();onClickButton();setActive()}}
                 >
                     Применить
                 </div>
