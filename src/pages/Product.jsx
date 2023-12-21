@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useNavigate, useParams} from "react-router-dom";
 import Background from "../components/UI/Background/Background";
 import Menu from "../components/UI/Menu/Menu";
@@ -41,15 +41,25 @@ const Product = () => {
         const response = await BackService.register(data.login, data.username, data.password)
     })
     const [getProduct, isLoadingProduct, errorProduct] = useFetching(async () => {
-        const response = await BackService.getProduct(params.id)
+        /*const response = await BackService.getProduct(params.id)
         setData({
             title: response.data.name,
             image: response.data.image,
             description: response.data.description,
             price: response.data.price
+        })*/
+        setData({
+            title: "Титульник",
+            image: "https://static-store.gaijin.net/img/screenshots/6673008D-A324-48CF-869A-2A67E9F7656A/big/1.jpg",
+            description: "Описание",
+            price: "1000 у.е."
         })
     })
     let navigate = useNavigate()
+
+    useEffect(() => {
+        getProduct()
+    }, []);
 
     function loginUser(userData) {
         getToken(userData)

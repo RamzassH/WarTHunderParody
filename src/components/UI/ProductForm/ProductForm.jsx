@@ -10,7 +10,17 @@ const ProductForm = ({title, image, description, price,...props}) => {
             <div className={classes.ProductForm_ContentWrapper}>
                 <div className={classes.ProductForm_Gallery}>
                     <div className={classes.ProductForm_SpLide}>
-                        <img className={classes.ProductForm_image} src={image}/>
+                        <div className={classes.ProductForm_SpLide_Slider}>
+                            <div className={classes.ProductForm_SpLide_Slider_Track}>
+                                <div className={classes.ProductForm_SpLide_Slide_List}>
+                                    <div className={classes.ProductForm_SpLide_Slide}>
+                                        <img className={classes.ProductForm_image} src={image}/>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
                     </div>
                 </div>
                 <table className={classes.ProductForm_Article_Wrapper}>
@@ -33,6 +43,15 @@ const ProductForm = ({title, image, description, price,...props}) => {
                                 <div className={classes.ProductForm_ShopBuy_Price__}>
                                     {price}
                                 </div>
+                            </div>
+                            <div className={classes.ProductForm_ShopBuy_ButtonWrapper}>
+                                <button className={[
+                                    classes.ProductForm_ShopBuy_BuyButton_1,
+                                    classes.ProductForm_ShopBuy_BuyButton_2,
+                                    classes.ProductForm_ShopBuy_BuyButton_3
+                                ].join(" ")}>
+                                    Купить
+                                </button>
                             </div>
                         </div>
                     </div>

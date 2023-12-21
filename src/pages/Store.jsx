@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import Background from "../components/UI/Background/Background";
 import MenuItem from "../components/UI/MenuItem/MenuItem";
 import Menu from "../components/UI/Menu/Menu";
@@ -20,6 +20,7 @@ import iconNation from "../styles/NationIcon.module.css"
 import Showcase from "../components/UI/Showcase/Showcase";
 import ShowcaseItem from "../components/UI/ShowcaseItem/ShowcaseItem";
 import {getPageCount} from "../utils/pages";
+import {AuthContext} from "../context";
 
 const Store = ({isTechnic = false, isPremiumCurrency = false, isPremiumAccount = false}) => {
     const technicCategory = [
@@ -74,6 +75,7 @@ const Store = ({isTechnic = false, isPremiumCurrency = false, isPremiumAccount =
     const [isActiveSecondFilter, setActiveFilter2] = useState(false)
     const [getToken, isLoading, tokenError] = useFetching(async (userData) => {
         await BackService.login(userData.login, userData.password, setToken)
+
     })
     const [getTechnique, isLoadingTechnique, errorTechnique] = useFetching(async (limit, page)=> {
         const response = await BackService.getTechnique(limit, page)
@@ -101,10 +103,17 @@ const Store = ({isTechnic = false, isPremiumCurrency = false, isPremiumAccount =
     })
 
     useEffect(() => {
-        //fetchCategories()
-        console.log(nationCategory[0].icon)
-        //console.log(categories)
-    }, []);
+        if (isTechnic) {
+            getTechnique(limit, page)
+        }
+        else if (isPremiumAccount) {
+            getPremiumAccounts(limit, page)
+        }
+        else if (isPremiumCurrency) {
+            getPremiumCurrency(limit, page)
+        }
+    }, [isTechnic, isPremiumCurrency, isPremiumAccount]);
+
 
     useEffect(() => {
         console.log(token)
@@ -121,10 +130,6 @@ const Store = ({isTechnic = false, isPremiumCurrency = false, isPremiumAccount =
             getPremiumCurrency(limit, page)
         }
     }, [limit, page]);
-
-    useEffect(() => {
-        console.log(productList)
-    }, [productList]);
 
     const setTechnicCategory = (value, index) => {
         filterTechnicValue[index].value = value
@@ -201,12 +206,14 @@ const Store = ({isTechnic = false, isPremiumCurrency = false, isPremiumAccount =
                     Поддержка
                 </MenuItem>
 
-                <MenuItem
-                    onClick={() => setModalLogin(true)}
-                    style={{color: "#ffe8aa"}}
-                >
-                    Войти
-                </MenuItem>
+
+                    <MenuItem
+                        onClick={() => setModalLogin(true)}
+                        style={{color: "#ffe8aa"}}
+                    >
+                        Войти
+                    </MenuItem>
+
                 <MenuItem>
                     Ru
                 </MenuItem>
@@ -224,22 +231,19 @@ const Store = ({isTechnic = false, isPremiumCurrency = false, isPremiumAccount =
                     H
                 </NavItem >
                 <NavItem
-                    onClick={() => {navigate("/premium_currency");
-                    getPremiumCurrency()}}
+                    onClick={() => {navigate("/premium_currency");}}
                     isActiveItem={isPremiumCurrency}
                 >
                     Золотые Орлы
                 </NavItem>
                 <NavItem
-                    onClick={() => {navigate("/technic");
-                    getTechnique()}}
+                    onClick={() => {navigate("/technic");}}
                     isActiveItem={isTechnic}
                 >
                     Техника
                 </NavItem>
                 <NavItem
-                    onClick={() => {navigate("/premium_account");
-                    getPremiumAccounts()}}
+                    onClick={() => {navigate("/premium_account");}}
                     isActiveItem={isPremiumAccount}
                 >
                     Премиум аккаунт
