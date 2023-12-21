@@ -11,7 +11,9 @@ function App() {
     const [token, setToken] = useState('')
 
     useEffect(() => {
-        if (localStorage.getItem('auth')) {
+        if (!localStorage.getItem('auth').localeCompare('true')) {
+            setIsAuth(true)
+        } else if (localStorage.getItem('auth').localeCompare('false')) {
             setIsAuth(false)
         }
         setLoading(false);
@@ -24,7 +26,8 @@ function App() {
             isAuth,
             setIsAuth,
             isLoading,
-            token
+            token,
+            setToken
         }}>
             <BrowserRouter>
                 <AppRouter/>

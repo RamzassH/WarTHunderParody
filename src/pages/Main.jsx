@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import Background from "../components/UI/Background/Background";
 import Menu from "../components/UI/Menu/Menu";
 import MenuItem from "../components/UI/MenuItem/MenuItem";
@@ -16,40 +16,35 @@ import BackService from "../API/BackService";
 import CreateModal from "../components/UI/CreateModal/CreateModal";
 import CreateForm from "../components/UI/CreateForm/CreateForm";
 import {useNavigate} from "react-router-dom";
+import MenuItemProfile from "../components/UI/MenuItemProfile/MenuItemProfile";
+import {AuthContext} from "../context";
 
 const Main = () => {
+    const {isAuth, setIsAuth} = useContext(AuthContext)
     let navigate = useNavigate()
     const [modalLogin, setModalLogin] = useState(false)
     const [modalCreateUser, setModalCreateUser] = useState(false)
     const [categories, setCategories] = useState([])
     const [token, setToken] = useState("");
 
-    const [fetchCategories, isPostsLoading, postError] = useFetching(async () => {
-        const response = await BackService.getCategory();
-        setCategories([...response.data])
-    })
     const [getToken, isLoading, tokenError] = useFetching(async (userData) => {
         await BackService.login(userData.login, userData.password, setToken)
 
     })
-
-    useEffect(() => {
-        fetchCategories()
-        //console.log(categories)
-    }, []);
-
-    useEffect(() => {
-        console.log(token)
-    }, [token]);
-
+    const [register, IsRegistration, errorRegistration] = useFetching(async (data) => {
+        const response = await BackService.register(data.login, data.username, data.password)
+    })
 
     function loginUser(userData) {
-        getToken(userData)
+        //getToken(userData)
+        setIsAuth(true)
+        localStorage.setItem('auth', 'true')
         setModalLogin(false)
     }
 
     function createUser(userData) {
         console.log(userData)
+        register(userData)
         setModalCreateUser(false)
     }
 
@@ -76,12 +71,21 @@ const Main = () => {
                     Поддержка
                 </MenuItem>
 
-                <MenuItem
-                    onClick={() => setModalLogin(true)}
-                    style={{color: "#ffe8aa"}}
-                >
-                    Войти
-                </MenuItem>
+                {!isAuth
+                    ?
+                    <MenuItem
+                        onClick={() => setModalLogin(true)}
+                        style={{color: "#ffe8aa"}}
+                    >
+                        Войти
+                    </MenuItem>
+                    :
+                    <MenuItemProfile
+                        profileFunction={() => {navigate('/profile')}}
+                        exitFunction={() => {setIsAuth(false); localStorage.setItem('auth', 'false'); navigate('/')}}
+                        username="TiltMan"
+                    />
+                }
                 <MenuItem>
                     Ru
                 </MenuItem>

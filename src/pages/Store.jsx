@@ -21,8 +21,11 @@ import Showcase from "../components/UI/Showcase/Showcase";
 import ShowcaseItem from "../components/UI/ShowcaseItem/ShowcaseItem";
 import {getPageCount} from "../utils/pages";
 import {AuthContext} from "../context";
+import MenuItemProfile from "../components/UI/MenuItemProfile/MenuItemProfile";
 
 const Store = ({isTechnic = false, isPremiumCurrency = false, isPremiumAccount = false}) => {
+    const {isAuth, setIsAuth} = useContext(AuthContext)
+
     const technicCategory = [
         {name: "Танки", icon: iconClasses.Tanks, value: false},
         {name: "Авиация", icon: iconClasses.Air, value: false},
@@ -65,9 +68,9 @@ const Store = ({isTechnic = false, isPremiumCurrency = false, isPremiumAccount =
     const [productList, setProductList] = useState([])
     const [modalLogin, setModalLogin] = useState(false)
     const [modalCreateUser, setModalCreateUser] = useState(false)
-    const [categories, setCategories] = useState([])
+    //const [categories, setCategories] = useState([])
     const [token, setToken] = useState("");
-    const [totalPages, setTotalPages] = useState(0);
+    //const [totalPages, setTotalPages] = useState(0);
     const [limit, setLimit] = useState("10");
     const [page, setPage] = useState("1");
     const [isActiveFirstFilter, setActiveFilter1] = useState(false)
@@ -120,11 +123,6 @@ const Store = ({isTechnic = false, isPremiumCurrency = false, isPremiumAccount =
         }
     }, [isTechnic, isPremiumCurrency, isPremiumAccount]);
 
-
-    useEffect(() => {
-        console.log(token)
-    }, [token]);
-
     useEffect(() => {
         if (isTechnic) {
             getTechnique(limit, page)
@@ -148,7 +146,9 @@ const Store = ({isTechnic = false, isPremiumCurrency = false, isPremiumAccount =
     }
 
     function loginUser(userData) {
-        getToken(userData)
+        //getToken(userData)
+        setIsAuth(true)
+        localStorage.setItem('auth', 'true')
         setModalLogin(false)
     }
 
@@ -221,13 +221,22 @@ const Store = ({isTechnic = false, isPremiumCurrency = false, isPremiumAccount =
                     Поддержка
                 </MenuItem>
 
+                {!isAuth
+                    ?
+                    <MenuItem
+                        onClick={() => setModalLogin(true)}
+                        style={{color: "#ffe8aa"}}
+                    >
+                        Войти
+                    </MenuItem>
+                    :
+                    <MenuItemProfile
+                        profileFunction={() => {navigate('/profile')}}
+                        exitFunction={() => {setIsAuth(false); localStorage.setItem('auth', 'false'); navigate('/')}}
+                        username="TiltMan"
+                    />
+                }
 
-                <MenuItem
-                    onClick={() => setModalLogin(true)}
-                    style={{color: "#ffe8aa"}}
-                >
-                    Войти
-                </MenuItem>
 
                 <MenuItem>
                     Ru

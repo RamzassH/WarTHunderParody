@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {useNavigate, useParams} from "react-router-dom";
 import Background from "../components/UI/Background/Background";
 import Menu from "../components/UI/Menu/Menu";
@@ -12,9 +12,13 @@ import NavItem from "../components/UI/NavItem/NavItem";
 import {useFetching} from "../hooks/useFetching";
 import BackService from "../API/BackService";
 import ProductForm from "../components/UI/ProductForm/ProductForm";
+import {AuthContext} from "../context";
+import MenuItemProfile from "../components/UI/MenuItemProfile/MenuItemProfile";
 
 const Product = () => {
     const params = useParams()
+    const {isAuth, setIsAuth} = useContext(AuthContext)
+
     let isTechnic = false;
     let isPremiumCurrency = false;
     let isPremiumAccount = false;
@@ -36,8 +40,9 @@ const Product = () => {
     const [token, setToken] = useState("");
     const [getToken, isLoading, tokenError] = useFetching(async (userData) => {
         await BackService.login(userData.login, userData.password, setToken)
+
     })
-    const [register, IsRegistration, errorRegistration] = useFetching(async (data)=> {
+    const [register, IsRegistration, errorRegistration] = useFetching(async (data) => {
         const response = await BackService.register(data.login, data.username, data.password)
     })
     const [getProduct, isLoadingProduct, errorProduct] = useFetching(async () => {
@@ -62,7 +67,9 @@ const Product = () => {
     }, []);
 
     function loginUser(userData) {
-        getToken(userData)
+        //getToken(userData)
+        setIsAuth(true)
+        localStorage.setItem('auth', 'true')
         setModalLogin(false)
     }
 
@@ -101,12 +108,21 @@ const Product = () => {
                     Поддержка
                 </MenuItem>
 
-                <MenuItem
-                    onClick={() => setModalLogin(true)}
-                    style={{color: "#ffe8aa"}}
-                >
-                    Войти
-                </MenuItem>
+                {!isAuth
+                    ?
+                    <MenuItem
+                        onClick={() => setModalLogin(true)}
+                        style={{color: "#ffe8aa"}}
+                    >
+                        Войти
+                    </MenuItem>
+                    :
+                    <MenuItemProfile
+                        profileFunction={() => {navigate('/profile')}}
+                        exitFunction={() => {setIsAuth(false); localStorage.setItem('auth', 'false'); navigate('/')}}
+                        username="TiltMan"
+                    />
+                }
                 <MenuItem>
                     Ru
                 </MenuItem>

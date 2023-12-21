@@ -1,0 +1,93 @@
+.MenuItemProfile {
+    display: block;
+    position: relative;
+    height: 42px;
+    flex-grow: 0;
+    flex-shrink: 0;
+    margin-left: 0;
+    background-color: rgba(0,0,0,0);
+}
+
+.MenuItemProfile_Label {
+    padding-right: 10px;
+    color: white;
+    background: rgba(0, 0, 0, 0);
+    font-size: 16px;
+    font-weight: 400;
+    text-transform: none;
+
+    display: flex;
+    height: 100%;
+    align-items: center;
+    padding: 0 16px;
+    user-select: none;
+    cursor: pointer;
+    text-decoration: none;
+    font-family: "PTRootUI", sans-serif;
+
+    line-height: 1em;
+    transition: background .3s ease,color .3s ease;
+}
+
+.MenuItemProfile_Drop {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font: inherit;
+}
+
+.MenuItemProfile_Dropdown {
+    display: block;
+    position: absolute;
+    top: 42px;
+    right: 0;
+    background: #1b242c;
+    min-width: 100%;
+    padding: 8px 0;
+    z-index: 9998;
+    opacity: 1;
+    will-change: top,opacity;
+    animation: OverlayAnimate cubic-bezier(1, 0, 0, 0.5) .3s;
+    animation-iteration-count: 1;
+    box-shadow: 0 15px 30px 0 rgba(3,12,21,.4);
+}
+
+.MenuItemProfile_Dropdown_Item {
+    margin-left: 0;
+    height: 40px;
+    transition: opacity .3s ease;
+    display: block;
+    position: relative;
+    flex-grow: 0;
+    flex-shrink: 0;
+    color: rgba(255, 255, 255, .70);
+    text-decoration: none;
+}
+
+.MenuItemProfile_Dropdown_ItemLabel {
+    padding: 0 24px 0 24px;
+    box-sizing: border-box;
+    white-space: nowrap;
+
+    display: flex;
+    height: 100%;
+    align-items: center;
+    user-select: none;
+    cursor: pointer;
+    text-decoration: none;
+    font-family: "PTRootUI", sans-serif;
+    font-size: 13px;
+    line-height: 1em;
+    text-transform: uppercase;
+    transition: background .3s ease,color .3s ease;
+}
+
+.MenuItemProfile_List_Divider {
+    display: block;
+    width: 100%;
+    height: 1px;
+    margin: 12px 0;
+    padding: 0;
+    background: rgba(3,12,21,.4);
+    border-bottom: 1px rgba(255,255,255,.1) solid;
+}
