@@ -5,6 +5,7 @@ import MyButton from "../button/MyButton";
 
 const CreateForm = ({create}) => {
     const [userData, setUserData] = useState({login: '', username:'', password: '', repeatPassword:''})
+    const [errorMessage, setMessage] = useState('')
     let check = false
 
     const createUser = (e) => {
@@ -12,8 +13,13 @@ const CreateForm = ({create}) => {
         const data = {
             ...userData, id: Date.now()
         }
-        create(data)
-        setUserData({login: '', username:'', password: '', repeatPassword:''})
+        try {
+            create(data)
+            setUserData({login: '', username:'', password: '', repeatPassword:''})
+            setMessage('')
+        } catch (e) {
+            setMessage(e)
+        }
     }
 
     return (
@@ -21,6 +27,15 @@ const CreateForm = ({create}) => {
             <div className={classes.CreateFormColumn}>
                 <div className={classes.CreateFormInputForm}>
                     <div className={classes.CreateFormTitleText}>Регистрация</div>
+                    {errorMessage
+                        ?
+                        <div className={classes.CreateForm_Access}>
+                            <div className={classes.CreateForm_Access_Text}>{errorMessage}</div>
+                        </div>
+                        :
+                        null
+                    }
+
                     <div className={classes.CreateFormRow}>
                         <MyInput
                             id="email"
@@ -44,14 +59,14 @@ const CreateForm = ({create}) => {
                             id="password"
                             value={userData.password}
                             onChange={e => setUserData({...userData, password: e.target.value})}
-                            type="text"
+                            type="password"
                             placeholder="Пароль"
                         />
                         <MyInput
                             id="repeatPassword"
                             value={userData.repeatPassword}
                             onChange={e => setUserData({...userData, repeatPassword: e.target.value})}
-                            type="text"
+                            type="password"
                             placeholder="Повторить пароль"
                         />
                     </div>

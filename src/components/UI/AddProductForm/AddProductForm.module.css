@@ -1,0 +1,23 @@
+.AddProductForm {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    margin-bottom: 24px;
+}
+
+.AddProductForm_InfoContainer {
+    position: relative;
+    z-index: 100;
+    width: 900px;
+    height: 400px;
+    overflow: hidden;
+    border-top: 1px #334251 solid;
+    background: #2d3a48;
+}
+
+.AddProductForm_InfoContainer_Wrapper {
+    position: relative;
+    z-index: 200;
+    height: 100%;
+    padding: 36px 130px 36px 32px;
+}

@@ -22,6 +22,7 @@ import ShowcaseItem from "../components/UI/ShowcaseItem/ShowcaseItem";
 import {getPageCount} from "../utils/pages";
 import {AuthContext} from "../context";
 import MenuItemProfile from "../components/UI/MenuItemProfile/MenuItemProfile";
+import LoginCreateComponent from "../components/LoginCreateComponent";
 
 const Store = ({isTechnic = false, isPremiumCurrency = false, isPremiumAccount = false}) => {
     const {isAuth, setIsAuth} = useContext(AuthContext)
@@ -75,10 +76,12 @@ const Store = ({isTechnic = false, isPremiumCurrency = false, isPremiumAccount =
     const [page, setPage] = useState("1");
     const [isActiveFirstFilter, setActiveFilter1] = useState(false)
     const [isActiveSecondFilter, setActiveFilter2] = useState(false)
+    /*
     const [getToken, isLoading, tokenError] = useFetching(async (userData) => {
         await BackService.login(userData.login, userData.password, setToken)
 
     })
+     */
     const [getTechnique, isLoadingTechnique, errorTechnique] = useFetching(async (limit, page) => {
         const response = await BackService.getTechnique(limit, page)
         setProductList(response.data)
@@ -104,26 +107,24 @@ const Store = ({isTechnic = false, isPremiumCurrency = false, isPremiumAccount =
         const response = await BackService.GetTechnicByFilter(limit, page, filterTechnicValue, filterNationValue)
         setProductList(response.data)
     })
+    /*
     const [register, IsRegistration, errorRegistration] = useFetching(async (data) => {
         const response = await BackService.register(data.login, data.username, data.password)
     })
+    */
 
     useEffect(() => {
-        console.log(filterTechnicValue)
-        console.log(filterNationValue)
-    }, [filterTechnicValue,filterNationValue]);
-
-    useEffect(() => {
-        if (isTechnic) {
+        /*if (isTechnic) {
             getTechnique(limit, page)
         } else if (isPremiumAccount) {
             getPremiumAccounts(limit, page)
         } else if (isPremiumCurrency) {
             getPremiumCurrency(limit, page)
-        }
+        }*/
+        setProductList([{id: 1}])
     }, [isTechnic, isPremiumCurrency, isPremiumAccount]);
 
-    useEffect(() => {
+    /*useEffect(() => {
         if (isTechnic) {
             getTechnique(limit, page)
         } else if (isPremiumAccount) {
@@ -131,7 +132,7 @@ const Store = ({isTechnic = false, isPremiumCurrency = false, isPremiumAccount =
         } else if (isPremiumCurrency) {
             getPremiumCurrency(limit, page)
         }
-    }, [limit, page]);
+    }, [limit, page]);*/
 
     const setTechnicCategory = (value, index) => {
         let tmp = [...filterTechnicValue]
@@ -144,19 +145,33 @@ const Store = ({isTechnic = false, isPremiumCurrency = false, isPremiumAccount =
         tmp[index] = {...tmp[index], value: value}
         setFilterNationValue(tmp)
     }
-
+    /*
     function loginUser(userData) {
         //getToken(userData)
+        if (!userData.login || !userData.password) {
+            throw "Поля Логин и Пароль не должны быть пусты"
+        }
+
         setIsAuth(true)
         localStorage.setItem('auth', 'true')
         setModalLogin(false)
     }
 
     function createUser(userData) {
+        if (!userData.username ||
+            !userData.login ||
+            !userData.password) {
+            throw "Все поля должны быть заполнены"
+        }
+        if (userData.password.localeCompare(userData.repeatPassword)) {
+            throw "Пароль, введённый повторно, не совпадает с первым"
+        }
+
         console.log(userData)
         register(userData)
         setModalCreateUser(false)
     }
+    */
 
     const navigateProductPage = (idProduct) => {
         let type = ''
@@ -172,7 +187,11 @@ const Store = ({isTechnic = false, isPremiumCurrency = false, isPremiumAccount =
     }
 
     const buy = (id) => {
-        console.log(id)
+        if (isAuth) {
+            navigate(`/buy/${id}`)
+        } else {
+            setModalLogin(true)
+        }
     }
 
     const applyFilter = () => {
@@ -243,15 +262,14 @@ const Store = ({isTechnic = false, isPremiumCurrency = false, isPremiumAccount =
                 </MenuItem>
             </Menu>
 
-            <LoginModal visible={modalLogin} setVisible={setModalLogin}>
-                <LoginForm login={loginUser} create={() => {
-                    setModalLogin(false);
-                    setModalCreateUser(true)
-                }}/>
-            </LoginModal>
-            <CreateModal visible={modalCreateUser} setVisible={setModalCreateUser}>
-                <CreateForm create={createUser}/>
-            </CreateModal>
+            <LoginCreateComponent
+                modalLogin={modalLogin}
+                setModalLogin={setModalLogin}
+                modalCreateUser={modalCreateUser}
+                setModalCreateUser={setModalCreateUser}
+                setIsAuth={setIsAuth}
+                setToken={setToken}
+            />
 
             <Nav>
                 <NavItem onClick={() => navigate("/")}>

@@ -1,8 +1,8 @@
-.CreateForm {
+.BuyForm {
     box-sizing: border-box;
 }
 
-.CreateFormTitle {
+.BuyFormTitle {
     padding: 20px 15px;
     background: transparent;
     color: #fff;
@@ -11,7 +11,7 @@
     font-family: "Fira Sans",Arial,sans-serif;
 }
 
-.CreateFormTitleText {
+.BuyFormTitleText {
     padding: 0;
     font-size: 32px;
     color: #fff;
@@ -20,24 +20,34 @@
     margin-bottom: 24px;
 }
 
-.CreateFormTable {
+.BuyFormPrice {
+    position: relative;
+    padding: 0;
+    font-size: 26px;
+    color: #fff;
+    font-family: "Fira Sans",sans-serif;
+    font-weight: 500;
+    margin-bottom: 0px;
+}
+
+.BuyFormTable {
     padding: 0;
     margin-left: 0;
     margin-right: 0;
     box-sizing: border-box;
 }
 
-.CreateFormTable::after {
+.BuyFormTable::after {
     clear: both;
 }
 
-.CreateFormTable::before {
+.BuyFormTable::before {
     content: " ";
     display: table;
 }
 
-.CreateFormColumn {
-    width: 57.14285714%;
+.BuyFormColumn {
+    width: 100%;
     float: left;
     position: relative;
     min-height: 1px;
@@ -46,7 +56,7 @@
     box-sizing: border-box;
 }
 
-.CreateFormInputForm {
+.BuyFormInputForm {
     margin-bottom: 16px;
     display: flex;
     flex-direction: column;
@@ -54,14 +64,14 @@
     max-width: 500px;
 }
 
-.CreateFormRow {
+.BuyFormRow {
     display: flex;
     margin-bottom: 24px;
     align-items: center;
     column-gap: 16px;
 }
 
-.CreateFormCenter {
+.BuyFormCenter {
     font-family: "Fira Sans",sans-serif;
     font-size: 16px !important;
     font-weight: 300;
@@ -72,7 +82,7 @@
     box-sizing: border-box;
 }
 
-.CreateFormCreateButton {
+.BuyFormCreateButton {
     width: 100%;
     opacity: .6;
     border: 2px solid #fff;
@@ -92,7 +102,7 @@
     line-height: inherit;
 }
 
-.CreateFormCheckBoxContainer {
+.BuyFormCheckBoxContainer {
     flex-wrap: wrap;
     display: flex;
     width: 100%;
@@ -105,7 +115,7 @@
     column-gap: 16px;
 }
 
-.CreateFormCheckBox {
+.BuyFormCheckBox {
     position: relative;
     appearance: none;
     display: inline-flex;
@@ -126,11 +136,11 @@
     margin: 0;
 }
 
-.CreateFormCheckBox:checked::after {
+.BuyFormCheckBox:checked::after {
     opacity: 1;
 }
 
-.CreateFormCheckBox::after {
+.BuyFormCheckBox::after {
     display: block;
     content: "";
     width: 18px;
@@ -144,7 +154,7 @@
     transition: opacity .3s ease;
 }
 
-.CreateFormCheckBoxLabel {
+.BuyFormCheckBoxLabel {
     display: flex;
     flex: 1;
     align-items: center;
@@ -155,7 +165,7 @@
     line-height: 1.5;
 }
 
-.CreateForm_Access {
+.BuyForm_Access {
     margin-left: 0;
     margin-right: 0;
     margin-bottom: 10px;
@@ -163,16 +173,16 @@
     align-items: center;
 }
 
-.CreateForm_Access::after {
+.BuyForm_Access::after {
     clear: both;
 }
 
-.CreateForm_Access::after, .LoginForm_Access::before {
+.BuyForm_Access::after, .LoginForm_Access::before {
     content: " ";
     display: table;
 }
 
-.CreateForm_Access_Text {
+.BuyForm_Access_Text {
     margin: 10px 0;
     font-family: "Fira Sans",sans-serif;
     font-size: 16px;

@@ -1,0 +1,30 @@
+.ProfileMenuItem {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding: 0 16px;
+    text-decoration: none;
+    transition: all .3s ease;
+    cursor: pointer;
+}
+
+.ProfileMenuItem::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: calc( 100% - 32px);
+    height: 2px;
+}
+
+.ProfileMenuItem_Active {
+    pointer-events: none;
+    cursor: none;
+    color: #31eeda;
+}
+
+.ProfileMenuItem_Active::after {
+    background-color: #29b2bc;
+}

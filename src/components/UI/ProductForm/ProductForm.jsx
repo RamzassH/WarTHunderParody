@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from "./ProductForm.module.css";
 
-const ProductForm = ({title, image, description, price,...props}) => {
+const ProductForm = ({title, image, description, price, buyFunction, ...props}) => {
     return (
         <section className={classes.ProductForm}>
             <div className={classes.ProductForm_Title}>
@@ -49,7 +49,7 @@ const ProductForm = ({title, image, description, price,...props}) => {
                                     classes.ProductForm_ShopBuy_BuyButton_1,
                                     classes.ProductForm_ShopBuy_BuyButton_2,
                                     classes.ProductForm_ShopBuy_BuyButton_3
-                                ].join(" ")}>
+                                ].join(" ")} onClick={(event) => {event.preventDefault(); buyFunction()}}>
                                     Купить
                                 </button>
                             </div>

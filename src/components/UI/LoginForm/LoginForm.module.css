@@ -91,3 +91,27 @@
     line-height: inherit;
 }
 
+.LoginForm_Access {
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.LoginForm_Access::after {
+    clear: both;
+}
+
+.LoginForm_Access::after, .LoginForm_Access::before {
+    content: " ";
+    display: table;
+}
+
+.LoginForm_Access_Text {
+    margin: 10px 0;
+    font-family: "Fira Sans",sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    color: #FF9270;
+}

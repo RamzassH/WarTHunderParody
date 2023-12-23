@@ -8,6 +8,7 @@ import Store from "../pages/Store";
 import Product from "../pages/Product";
 import About from "../pages/About";
 import Profile from "../pages/Profile";
+import BuyPage from "../pages/BuyPage";
 
 const AppRouter = () => {
     const {isAuth, isLoading} = useContext(AuthContext);
@@ -29,6 +30,7 @@ const AppRouter = () => {
                     <Route index path="/premium_account" element={<Store isPremiumAccount={true}/>}/>
                     <Route index path="/:category/:id" element={<Product/>}/>
                     <Route index path="/profile" element={<Profile/>}/>
+                    <Route index path="/buy/:id" element={<BuyPage/>}/>
                 </Route>
             </Routes>
             :

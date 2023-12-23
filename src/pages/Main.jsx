@@ -18,6 +18,7 @@ import CreateForm from "../components/UI/CreateForm/CreateForm";
 import {useNavigate} from "react-router-dom";
 import MenuItemProfile from "../components/UI/MenuItemProfile/MenuItemProfile";
 import {AuthContext} from "../context";
+import LoginCreateComponent from "../components/LoginCreateComponent";
 
 const Main = () => {
     const {isAuth, setIsAuth} = useContext(AuthContext)
@@ -26,7 +27,7 @@ const Main = () => {
     const [modalCreateUser, setModalCreateUser] = useState(false)
     const [categories, setCategories] = useState([])
     const [token, setToken] = useState("");
-
+    /*
     const [getToken, isLoading, tokenError] = useFetching(async (userData) => {
         await BackService.login(userData.login, userData.password, setToken)
 
@@ -37,16 +38,30 @@ const Main = () => {
 
     function loginUser(userData) {
         //getToken(userData)
+        if (!userData.login || !userData.password) {
+            throw "Поля Логин и Пароль не должны быть пусты"
+        }
+
         setIsAuth(true)
         localStorage.setItem('auth', 'true')
         setModalLogin(false)
     }
 
     function createUser(userData) {
+        if (!userData.username ||
+            !userData.login ||
+            !userData.password) {
+            throw "Все поля должны быть заполнены"
+        }
+        if (userData.password.localeCompare(userData.repeatPassword)) {
+            throw "Пароль, введённый повторно, не совпадает с первым"
+        }
+
         console.log(userData)
         register(userData)
         setModalCreateUser(false)
     }
+    */
 
     return (
         <div style={{
@@ -91,12 +106,14 @@ const Main = () => {
                 </MenuItem>
             </Menu>
 
-            <LoginModal visible={modalLogin} setVisible={setModalLogin}>
-                <LoginForm login={loginUser} create={() => {setModalLogin(false); setModalCreateUser(true)}}/>
-            </LoginModal>
-            <CreateModal visible={modalCreateUser} setVisible={setModalCreateUser}>
-                <CreateForm create={createUser}/>
-            </CreateModal>
+            <LoginCreateComponent
+                modalLogin={modalLogin}
+                setModalLogin={setModalLogin}
+                modalCreateUser={modalCreateUser}
+                setModalCreateUser={setModalCreateUser}
+                setIsAuth={setIsAuth}
+                setToken={setToken}
+            />
 
             <Nav>
                 <NavItem onClick={() => navigate("/")}>

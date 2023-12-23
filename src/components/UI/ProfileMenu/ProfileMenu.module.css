@@ -1,0 +1,14 @@
+.ProfileMenu {
+    position: relative;
+    font-size: 18px;
+    color: #c0c4c8;
+    background: #2d3a48;
+    margin-bottom: 24px;
+}
+
+.ProfileMenu_Wrapper {
+    display: flex;
+    height: 55px;
+    padding: 0 0 0 16px;
+    transition: all .3s ease;
+}

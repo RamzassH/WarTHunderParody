@@ -14,6 +14,7 @@ import BackService from "../API/BackService";
 import ProductForm from "../components/UI/ProductForm/ProductForm";
 import {AuthContext} from "../context";
 import MenuItemProfile from "../components/UI/MenuItemProfile/MenuItemProfile";
+import LoginCreateComponent from "../components/LoginCreateComponent";
 
 const Product = () => {
     const params = useParams()
@@ -38,13 +39,14 @@ const Product = () => {
     const [modalCreateUser, setModalCreateUser] = useState(false)
     const [data, setData] = useState({title:'', image:'', description:'', price: 0})
     const [token, setToken] = useState("");
+    /*
     const [getToken, isLoading, tokenError] = useFetching(async (userData) => {
         await BackService.login(userData.login, userData.password, setToken)
-
     })
     const [register, IsRegistration, errorRegistration] = useFetching(async (data) => {
         const response = await BackService.register(data.login, data.username, data.password)
     })
+    */
     const [getProduct, isLoadingProduct, errorProduct] = useFetching(async () => {
         const response = await BackService.getProduct(params.id)
         setData({
@@ -65,22 +67,39 @@ const Product = () => {
     useEffect(() => {
         getProduct()
     }, []);
-
+    /*
     function loginUser(userData) {
         //getToken(userData)
+        if (!userData.login || !userData.password) {
+            throw "Поля Логин и Пароль не должны быть пусты"
+        }
+
         setIsAuth(true)
         localStorage.setItem('auth', 'true')
         setModalLogin(false)
     }
 
     function createUser(userData) {
+        if (!userData.username ||
+            !userData.login ||
+            !userData.password) {
+            throw "Все поля должны быть заполнены"
+        }
+        if (userData.password.localeCompare(userData.repeatPassword)) {
+            throw "Пароль, введённый повторно, не совпадает с первым"
+        }
+
         console.log(userData)
         register(userData)
         setModalCreateUser(false)
     }
-
-    const buy = (id) => {
-        console.log(id)
+    */
+    const buy = () => {
+        if (isAuth) {
+            navigate(`/buy/${params.id}`)
+        } else {
+            setModalLogin(true)
+        }
     }
 
     return (
@@ -128,12 +147,14 @@ const Product = () => {
                 </MenuItem>
             </Menu>
 
-            <LoginModal visible={modalLogin} setVisible={setModalLogin}>
-                <LoginForm login={loginUser} create={() => {setModalLogin(false); setModalCreateUser(true)}}/>
-            </LoginModal>
-            <CreateModal visible={modalCreateUser} setVisible={setModalCreateUser}>
-                <CreateForm create={createUser}/>
-            </CreateModal>
+            <LoginCreateComponent
+                modalLogin={modalLogin}
+                setModalLogin={setModalLogin}
+                modalCreateUser={modalCreateUser}
+                setModalCreateUser={setModalCreateUser}
+                setIsAuth={setIsAuth}
+                setToken={setToken}
+            />
 
             <Nav>
                 <NavItem onClick={() => navigate("/")}>
@@ -170,6 +191,7 @@ const Product = () => {
                 image={data.image}
                 description={data.description}
                 price={data.price}
+                buyFunction={buy}
             />
 
         </div>

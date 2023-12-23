@@ -1,0 +1,66 @@
+.ProfileInfo {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    margin-bottom: 24px;
+}
+
+.ProfileInfo_InfoContainer {
+    position: relative;
+    z-index: 100;
+    width: 700px;
+    height: 344px;
+    overflow: hidden;
+    border-top: 1px #334251 solid;
+    background: #2d3a48;
+}
+
+.ProfileInfo_InfoContainer_Wrapper {
+    position: relative;
+    z-index: 200;
+    height: 100%;
+    padding: 36px 130px 36px 32px;
+}
+
+.ProfileInfo_Username {
+    margin-bottom: 5px;
+    font-size: 38px;
+    line-height: 1.3;
+    font-weight: 300;
+    color: #c0c4c8;
+}
+
+.ProfileInfo_Id {
+    margin-bottom: 16px;
+}
+
+.ProfileInfo_Id__ {
+    display: inline-flex;
+    align-items: center;
+    min-height: 48px;
+    padding: 3px 16px;
+    border-radius: 4px;
+    font-size: 18px;
+    background-color: rgba(3,12,21,.4);
+    cursor: none;
+    transition: all .3s ease;
+}
+
+.ProfileInfo_Id__Label {
+    margin-right: 8px;
+    color: #969ca4;
+}
+
+.ProfileInfo_Email {
+    margin-bottom: 12px;
+    font-size: 18px;
+    line-height: 1;
+    color: #c0c4c8;
+}
+
+.ProfileInfo_Meta {
+    margin-bottom: 8px;
+    font-size: 13px;
+    line-height: 1.2;
+    color: #969ca4;
+}

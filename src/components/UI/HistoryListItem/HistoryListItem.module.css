@@ -1,0 +1,150 @@
+.Item {
+    border: 1px #3a4b5a solid;
+    width: 282px;
+    position: relative;
+    z-index: 100;
+    height: 344px;
+    background: #2d3a48 url(https://store.gaijin.net/templates/shop/src/cc066ca2a4c79903b9d5.png) no-repeat 0 0;
+    background-size: 100% 214px;
+    margin: 0 24px 24px 0;
+}
+
+.Item__Corners {
+    position: absolute;
+    z-index: 100;
+    left: -1px;
+    right: -1px;
+    height: 0;
+    font-style: normal;
+    font-variant-caps: normal;
+    font-weight: normal;
+    font-stretch: normal;
+    font-size: 0px;
+    line-height: 0;
+    font-family: a;
+    font-size-adjust: none;
+    font-kerning: auto;
+    font-optical-sizing: auto;
+    font-variant-alternates: normal;
+    font-variant-east-asian: normal;
+    font-variant-ligatures: normal;
+    font-variant-numeric: normal;
+    font-variant-position: normal;
+    font-language-override: normal;
+    font-feature-settings: normal;
+    font-variation-settings: normal;
+}
+
+
+
+.Item__Corners::before, .Item__Corners::after {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 14px;
+    height: 14px;
+    border: 2px #ffe8aa solid;
+}
+
+.Item__Corners_Top {
+    top: -1px;
+}
+
+.Item__Corners_Top::after {
+    left: 0;
+    border-width: 2px 0 0 2px;
+}
+
+.Item__Corners_Top::before {
+    right: 0;
+    border-width: 2px 2px 0 0;
+}
+
+.Item__Corners_Bottom::before {
+    right: 0;
+    bottom: 0;
+    border-width: 0 2px 2px 0;
+}
+
+.Item__Corners_Bottom {
+    bottom: -1px;
+}
+
+.Item__Corners_Bottom::after {
+    left: 0;
+    bottom: 0;
+    border-width: 0 0 2px 2px;
+}
+
+.Item__Preview {
+    position: relative;
+    width: 100%;
+    height: 160px;
+    overflow: hidden;
+}
+
+.Item__Comment {
+    position: absolute;
+    z-index: 100;
+    left: 18px;
+    top: 13px;
+    font-size: 18px;
+    line-height: 1.2;
+    color: #fff;
+}
+
+.Item__TimeStamp {
+    position: absolute;
+    z-index: 100;
+    left: 14px;
+    bottom: 15px;
+    padding-right: 50px;
+    font-size: 13px;
+    line-height: 1;
+    color: #969ca4;
+}
+
+.Item__Price {
+    right: 16px;
+    bottom: 15px;
+    font-size: 13px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    font-weight: 400;
+    line-height: 1;
+    white-space: nowrap;
+    color: #fff;
+    transition: opacity .3s ease;
+    position: absolute;
+    z-index: 200;
+}
+
+.Item__Description {
+    display: flex;
+    flex-direction: column;
+    opacity: 1;
+    transition: opacity .3s ease;
+
+    position: absolute;
+    z-index: 200;
+    left: 17px;
+    right: 17px;
+    top: 166px;
+}
+
+.Item__Description_Title {
+    font-size: 18px;
+    line-height: 1.3;
+    color: #fff;
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+}
+
+.Item__Description_Comment {
+    margin-top: 5px;
+    font-size: 13px;
+    color: #c0c4c8;
+}

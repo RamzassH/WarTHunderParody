@@ -5,15 +5,21 @@ import classes from "./LoginForm.module.css";
 
 const LoginForm = ({login, create}) => {
     const [userData, setUserData] = useState({login: '', password: ''})
-
+    const [errorMessage, setMessage] = useState('')
 
     const loginUser = (e) => {
         e.preventDefault()
         const data = {
             ...userData, id: Date.now()
         }
-        login(data)
-        setUserData({login: '', password: ''})
+        console.log(userData)
+        try {
+            login(data)
+            setUserData({login: '', password: ''})
+            setMessage('')
+        } catch (e) {
+            setMessage(e)
+        }
     }
 
     const createUser = (e) => {
@@ -30,6 +36,13 @@ const LoginForm = ({login, create}) => {
             </div>
             <div className={classes.LoginModalTable}>
                 <div className={classes.LoginModalColumn}>
+                    {errorMessage ?
+                        <div className={classes.LoginForm_Access}>
+                            <div className={classes.LoginForm_Access_Text}>{errorMessage}</div>
+                        </div>
+                        :
+                        null
+                    }
                     <div className={classes.LoginModalInputForm}>
                         <div className={classes.LoginFormRow}>
                             <MyInput
@@ -45,7 +58,7 @@ const LoginForm = ({login, create}) => {
                                 id="password"
                                 value={userData.password}
                                 onChange={e => setUserData({...userData, password: e.target.value})}
-                                type="text"
+                                type="password"
                                 placeholder="Пароль"
                             />
                         </div>
