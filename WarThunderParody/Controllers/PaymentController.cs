@@ -33,7 +33,7 @@ public class PaymentController : ControllerBase
             var model = new HistoryDTO
             {
                 AccountId = order.Data.UserId,
-                ProductId = order.Data.ProductId
+                OrderId = order.Data.ProductId
             };
             await _historyService.Create(model);
             

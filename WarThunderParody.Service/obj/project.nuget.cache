@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "wmM/Uj5lVabgJmzDdz3F3Mjvfifdbk88ddie1a2Zc2jo5ph1sVKLsJIZAdOCOodTLZzeE9414M9oS603MvSRyQ==",
+  "dgSpecHash": "c/DUk/nMoCOVI1YOXal3eGnYAWY0ckhLGhqJTcnOfS6YIgU9WdM2EKLZ6YddZNm1wSwb3VoKV3/uOtAeBZlKRA==",
   "success": true,
   "projectFilePath": "Z:\\5SEM\\WarThunderParody\\WarThunderParody.Service\\WarThunderParody.Service.csproj",
   "expectedPackageFiles": [
@@ -35,7 +35,8 @@
     "C:\\Users\\RamzAss\\.nuget\\packages\\system.identitymodel.tokens.jwt\\6.15.1\\system.identitymodel.tokens.jwt.6.15.1.nupkg.sha512",
     "C:\\Users\\RamzAss\\.nuget\\packages\\system.memory\\4.5.5\\system.memory.4.5.5.nupkg.sha512",
     "C:\\Users\\RamzAss\\.nuget\\packages\\system.security.cryptography.cng\\4.5.0\\system.security.cryptography.cng.4.5.0.nupkg.sha512",
-    "C:\\Users\\RamzAss\\.nuget\\packages\\system.threading.tasks.extensions\\4.5.4\\system.threading.tasks.extensions.4.5.4.nupkg.sha512"
+    "C:\\Users\\RamzAss\\.nuget\\packages\\system.threading.tasks.extensions\\4.5.4\\system.threading.tasks.extensions.4.5.4.nupkg.sha512",
+    "C:\\Users\\RamzAss\\.nuget\\packages\\yandexdisk.client\\1.3.27\\yandexdisk.client.1.3.27.nupkg.sha512"
   ],
   "logs": [
     {

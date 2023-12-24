@@ -28,7 +28,7 @@ public class CategoryRepository : ICategoryRepository
     {
         return _db.Categories;
     }
-    
+
     public async Task<Category> Update(Category entity)
     {
         _db.Categories.Update(entity);
@@ -43,11 +43,22 @@ public class CategoryRepository : ICategoryRepository
         return true;
     }
 
+    public async Task<List<int>> GetAllId()
+    {
+        var listCategories = await _db.Categories.ToListAsync();
+        List<int> result = new List<int>();
+        foreach (var category in listCategories)
+        {
+            result.Add(category.Id);
+        }
+
+        return result;
+    }
+
     public async Task<Category?> GetByName(string name)
     {
         return await _db.Categories.FirstOrDefaultAsync(x => x.Name == name);
     }
-   
 
 
     public async Task<List<Category>> GetAllCategories()

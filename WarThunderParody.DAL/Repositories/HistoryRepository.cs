@@ -43,4 +43,9 @@ public class HistoryRepository : WarThunderParody.DAL.Interfaces.IHistoryReposit
         await _db.SaveChangesAsync();
         return true;
     }
+
+    public Task<List<int>> GetAllId()
+    {
+        throw new NotImplementedException();
+    }
 }

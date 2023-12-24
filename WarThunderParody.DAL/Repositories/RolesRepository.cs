@@ -41,6 +41,11 @@ public class RolesRepository : IRolesRepository
         return true;
     }
 
+    public Task<List<int>> GetAllId()
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<Role?> GetByName(string name)
     {
         return await _db.Roles.FirstOrDefaultAsync(x => x.Name == name);

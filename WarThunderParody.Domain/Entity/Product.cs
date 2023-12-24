@@ -21,8 +21,6 @@ public partial class Product
 
     public virtual Category Category { get; set; } = null!;
 
-    public virtual ICollection<History> Histories { get; set; } = new List<History>();
-
     public virtual Nation? Nation { get; set; }
 
     public virtual ICollection<Order> Orders { get; set; } = new List<Order>();

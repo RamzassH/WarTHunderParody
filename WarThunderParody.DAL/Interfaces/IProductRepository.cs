@@ -5,6 +5,7 @@ public interface IProductRepository : IBaseRepository<Product>
     public Task<Product?> GetByName(string name);
 
     public Task<List<Product>> GetAllProducts();
+    public Task<List<Product>> GetAllProductsById(int id);
 
     public Task<List<Product>> GetPremiumCurrencyBaPage(int limit, int page);
 

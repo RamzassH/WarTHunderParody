@@ -1,4 +1,5 @@
-﻿using WarThunderParody.DAL.Interfaces;
+﻿using Microsoft.AspNetCore.Components.Web;
+using WarThunderParody.DAL.Interfaces;
 using WarThunderParody.Domain.Enum;
 using WarThunderParody.Domain.Response;
 using WarThunderParody.Domain.ViewModel.Order;
@@ -10,10 +11,12 @@ namespace WarThunderParody.Service.Implementations;
 public class OrderService : IOrderService
 {
     private readonly IOrderRepository _orderRepository;
+    private readonly IOrderStatusRepository _orderStatusRepository;
 
-    public OrderService(IOrderRepository orderRepository)
+    public OrderService(IOrderRepository orderRepository, IOrderStatusRepository orderStatusRepository)
     {
         _orderRepository = orderRepository;
+        _orderStatusRepository = orderStatusRepository;
     }
 
     public Task<IBaseResponse<IEnumerable<Order>>> GetOrders()
@@ -33,10 +36,11 @@ public class OrderService : IOrderService
         {
             var order = new Order
             {
-                Date = DateTime.Now.Date,
+                Date = DateOnly.FromDateTime(DateTime.Now),
                 Price = model.Price,
                 ProductId = model.Id,
-                UserId = userId
+                UserId = userId,
+                StatusId =  (await _orderStatusRepository.GetByName("Не оплачен")).Id
             };
             
             var result = await _orderRepository.Create(order);
@@ -46,12 +50,41 @@ public class OrderService : IOrderService
                 baseResponse.StatusCode = StatusCode.InternalServerError;
                 return baseResponse;
             }
-            
+
+            baseResponse.StatusCode = StatusCode.OK;
             return baseResponse;
         }
         catch (Exception e)
         {
             return new BaseResponse<bool>()
+            {
+                Description = e.Message,
+                StatusCode = StatusCode.InternalServerError
+            };
+        }
+    }
+
+    public async Task<IBaseResponse<Order>> GetOrderByParams(int userId, int productId, string status)
+    {
+        var baseResponse = new BaseResponse<Order>();
+        try
+        {
+            var order = await _orderRepository.GetOrderByParams(userId, productId, status);
+            
+            if (order is null)
+            {
+                baseResponse.Description = "Order not found";
+                baseResponse.StatusCode = StatusCode.OrderNotFound;
+                return baseResponse;
+            }
+
+            baseResponse.StatusCode = StatusCode.OK;
+            baseResponse.Data = order;
+            return baseResponse;
+        }
+        catch (Exception e)
+        {
+            return new BaseResponse<Order>()
             {
                 Description = e.Message,
                 StatusCode = StatusCode.InternalServerError
@@ -88,5 +121,34 @@ public class OrderService : IOrderService
     public Task<IBaseResponse<Order>> Edit(int id, OrderDTO model)
     {
         throw new NotImplementedException();
+    }
+
+    public async Task<IBaseResponse<bool>> AccessOrder(int id)
+    {
+        var baseResponse = new BaseResponse<bool>();
+        try
+        {
+            var order = await _orderRepository.GetById(id);
+            if (order is null)
+            {
+                baseResponse.Description = "Order not found";
+                baseResponse.StatusCode = StatusCode.CategoryNotFound;
+                return baseResponse;
+            }
+
+            var accessStatusId = (await _orderStatusRepository.GetByName("Оплачен")).Id;
+            order.StatusId = accessStatusId;
+            baseResponse.StatusCode = StatusCode.OK;
+            baseResponse.Data = true;
+            return baseResponse;
+        }
+        catch (Exception e)
+        {
+            return new BaseResponse<bool>()
+            {
+                Description = e.Message,
+                StatusCode = StatusCode.InternalServerError
+            };
+        }
     }
 }

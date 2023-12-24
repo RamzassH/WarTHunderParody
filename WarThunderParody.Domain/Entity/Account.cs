@@ -13,9 +13,9 @@ public partial class Account
 
     public string Email { get; set; } = null!;
 
-    public decimal? Balance { get; set; }
+    public decimal Balance { get; set; }
 
-    public DateTime RegistrationDate { get; set; }
+    public DateOnly RegistrationDate { get; set; }
 
     public virtual ICollection<History> Histories { get; set; } = new List<History>();
 

@@ -48,8 +48,9 @@ public class AuthController : ControllerBase
         }
         
         var tokenString = await GenerateJwtToken(result.Data);
-    
-        return Ok(new { Token = tokenString });
+        var name = result.Data.Name;
+        
+        return Ok(new { Token = tokenString, name});
     }
 
     

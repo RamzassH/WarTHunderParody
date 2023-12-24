@@ -1,7 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Data.Common;
 using System.Diagnostics;
+using System.Net;
+using System.Net.Http.Headers;
 using Microsoft.EntityFrameworkCore;
+using YandexDisk.Client;
+using YandexDisk.Client.Clients;
+using YandexDisk.Client.Http;
+
 
 namespace WarThunderParody;
 
@@ -16,38 +21,94 @@ public partial class WarThunderShopContext : DbContext
     {
     }
 
-    public static void BackupDatabase()
+    public async Task BackupDatabase()
     {
         ProcessStartInfo info = new ProcessStartInfo();
         info.FileName = "C:\\Program Files\\PostgreSQL\\16\\bin\\pg_dump.exe";
-        info.Arguments = "-U postgres -F c -b -v -f \"Z:\\ICloud\\iCloudDrive\\Backups\\pg_dump.dump\" war_thunder_shop";
+        info.Arguments = "-U postgres -F c -b -v -f war_thunder_shop.exe";
         info.UseShellExecute = false;
         info.RedirectStandardOutput = true;
 
         Process process = new Process();
         process.StartInfo = info;
         process.Start();
-
+        
         string output = process.StandardOutput.ReadToEnd();
-        process.WaitForExit();
-    }
-    public static void RestoreDatabase()
-    {
-        ProcessStartInfo info = new ProcessStartInfo();
-        info.FileName = "C:\\Program Files\\PostgreSQL\\16\\bin\\pg_restore.exe";
-        info.Arguments = "-U postgres -d war_thunder_shop -v \"Z:\\ICloud\\iCloudDrive\\Backups\\pg_dump.dump\"";
-        info.UseShellExecute = false;
-        info.RedirectStandardOutput = true;
-
-        Process process = new Process();
-        process.StartInfo = info;
-        process.Start();
-
-        string output = process.StandardOutput.ReadToEnd();
-        process.WaitForExit();
+        await process.WaitForExitAsync();
+        
+        string backupName = $"war_thunder_shop_{DateTime.Today.ToString("yyyy-MM-dd")}";
+        await UploadSample("y0_AgAAAABqFvaLAAsE4AAAAAD1WX52J0ONqR-wSC-Fj8zLDPoK3O47geQ",backupName);
+        
+        if (File.Exists("war_thunder_shop.exe"))
+        {
+            File.Delete("war_thunder_shop.exe");
+        }
     }
     
-    public virtual DbSet<Account> Accounts { get; set; }
+    
+    async Task UploadSample(string token, string backupName)
+    {
+        string oauthToken = token;
+    
+        // Create a client instance
+        IDiskApi diskApi = new DiskHttpApi(oauthToken);
+    
+        //Upload file from local
+        await diskApi.Files.UploadFileAsync(path: $"BackupWarThunderParody/{backupName}",
+            overwrite: true,
+            localFile: @$"{backupName}",
+            cancellationToken: CancellationToken.None);
+    }
+    
+    public async Task<string> UploadFile(string filePath)
+    {
+        await UploadSample("y0_AgAAAABqFvaLAAsE4AAAAAD1WX52J0ONqR-wSC-Fj8zLDPoK3O47geQ", filePath);
+        var url = await MakeFilePublic("y0_AgAAAABqFvaLAAsE4AAAAAD1WX52J0ONqR-wSC-Fj8zLDPoK3O47geQ",filePath);
+        
+        if (File.Exists(filePath))
+        {
+            File.Delete(filePath);
+        }
+
+        return url;
+    }
+    
+    public async Task<string> MakeFilePublic(string token, string fileName)
+    {
+        
+        string url = $"https://cloud-api.yandex.net/v1/disk/resources/publish?path=BackupWarThunderParody/{fileName}";
+        
+        using (HttpClient client = new HttpClient())
+        {
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("OAuth", token);
+            HttpResponseMessage response = await client.PutAsync(url, null);
+            
+            var responseContent = await response.Content.ReadAsStringAsync();
+            
+            var startIndex = responseContent.IndexOf(':') + 2;
+            var endIndex = responseContent.IndexOf(',') - 1;
+            var length = endIndex - startIndex;
+            
+            url = responseContent.Substring(startIndex, length);
+            HttpResponseMessage r = await client.GetAsync(url);
+            
+            var rContent = await r.Content.ReadAsStringAsync();
+            
+            startIndex = rContent.IndexOf("public_url") + "public_url".Length + 3;
+            endIndex = rContent.IndexOf("name") - 3;
+            length = endIndex - startIndex;
+            url = rContent.Substring(startIndex, length);
+            
+            response.EnsureSuccessStatusCode();
+            r.EnsureSuccessStatusCode();
+        }
+
+        return url;
+    }
+    
+    
+    
+   public virtual DbSet<Account> Accounts { get; set; }
 
     public virtual DbSet<Category> Categories { get; set; }
 
@@ -56,6 +117,8 @@ public partial class WarThunderShopContext : DbContext
     public virtual DbSet<Nation> Nations { get; set; }
 
     public virtual DbSet<Order> Orders { get; set; }
+
+    public virtual DbSet<OrderStatus> OrderStatuses { get; set; }
 
     public virtual DbSet<Product> Products { get; set; }
 
@@ -130,17 +193,17 @@ public partial class WarThunderShopContext : DbContext
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.AccountId).HasColumnName("account_id");
-            entity.Property(e => e.ProductId).HasColumnName("product_id");
+            entity.Property(e => e.OrderId).HasColumnName("order_id");
 
             entity.HasOne(d => d.Account).WithMany(p => p.Histories)
                 .HasForeignKey(d => d.AccountId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("history_account_id_fkey");
 
-            entity.HasOne(d => d.Product).WithMany(p => p.Histories)
-                .HasForeignKey(d => d.ProductId)
+            entity.HasOne(d => d.Order).WithMany(p => p.Histories)
+                .HasForeignKey(d => d.OrderId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("history_product_id_fkey");
+                .HasConstraintName("history_order_id_fkey");
         });
 
         modelBuilder.Entity<Nation>(entity =>
@@ -165,6 +228,7 @@ public partial class WarThunderShopContext : DbContext
             entity.Property(e => e.Date).HasColumnName("date");
             entity.Property(e => e.Price).HasColumnName("price");
             entity.Property(e => e.ProductId).HasColumnName("product_id");
+            entity.Property(e => e.StatusId).HasColumnName("status_id");
             entity.Property(e => e.UserId).HasColumnName("user_id");
 
             entity.HasOne(d => d.Product).WithMany(p => p.Orders)
@@ -172,10 +236,26 @@ public partial class WarThunderShopContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("order_product_id_fkey");
 
+            entity.HasOne(d => d.Status).WithMany(p => p.Orders)
+                .HasForeignKey(d => d.StatusId)
+                .HasConstraintName("order_status_id_fkey");
+
             entity.HasOne(d => d.User).WithMany(p => p.Orders)
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("order_user_id_fkey");
+        });
+
+        modelBuilder.Entity<OrderStatus>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("order_status_pkey");
+
+            entity.ToTable("order_status");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Name)
+                .HasMaxLength(256)
+                .HasColumnName("name");
         });
 
         modelBuilder.Entity<Product>(entity =>

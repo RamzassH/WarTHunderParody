@@ -54,6 +54,8 @@ builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IRolesRepository, RolesRepository>();
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+builder.Services.AddScoped<IOrderStatusRepository, OrderStatusRepository>();
+builder.Services.AddScoped<IHistoryRepository, HistoryRepository>();
 
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<INationService, NationService>();
@@ -61,6 +63,7 @@ builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IRolesService, RolesService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IHistoryService, HistoryService>();
 
 builder.Services.AddCors(options =>
 {
@@ -83,7 +86,8 @@ app.UseRouting();
 
 app.UseCors("AllowAllMethods");
 
-
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.UseEndpoints(endpoints =>
 {
@@ -91,9 +95,6 @@ app.UseEndpoints(endpoints =>
 });
 
 
-app.UseAuthentication();
-
-app.UseAuthorization();
 
 if (app.Environment.IsDevelopment())
 {

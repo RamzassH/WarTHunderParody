@@ -107,18 +107,29 @@ public class ProductService : IProductService
         }
     }
 
-    public async Task<IBaseResponse<Product>> GetProduct(int id)
+    public async Task<IBaseResponse<ProductDTO>> GetProduct(int id)
     {
-        var response = new BaseResponse<Product>();
+        var response = new BaseResponse<ProductDTO>();
         try
         {
-            var result = await _productRepository.GetById(id);
-            if (result == null)
+            var product = await _productRepository.GetById(id);
+            if (product == null)
             {
                 response.Description = "Не удалось найти продукт";
                 response.StatusCode = StatusCode.NotFound;
                 return response;
             }
+
+            var result = new ProductDTO
+            {
+                CategoryId = product.CategoryId,
+                Description = product.Description,
+                Id = product.Id,
+                Image = product.Image,
+                Name = product.Name,
+                NationId = product.NationId,
+                Price = product.Price
+            };
 
             response.Data = result;
             response.StatusCode = StatusCode.NotFound;
@@ -126,7 +137,7 @@ public class ProductService : IProductService
         }
         catch (Exception e)
         {
-            return new BaseResponse<Product>()
+            return new BaseResponse<ProductDTO>()
             {
                 Description = e.Message,
                 StatusCode = StatusCode.InternalServerError
@@ -163,6 +174,7 @@ public class ProductService : IProductService
                     NationId = product.NationId,
                     Description = product.Description,
                     Id = product.Id,
+                    Price = product.Price,
                     Image = product.Image
                 });
             }
@@ -205,6 +217,7 @@ public class ProductService : IProductService
                     NationId = product.NationId,
                     Description = product.Description,
                     Id = product.Id,
+                    Price = product.Price,
                     Image = product.Image
                 });
             }
@@ -222,49 +235,31 @@ public class ProductService : IProductService
             };
         }
     }
-
+    
     public async Task<IBaseResponse<IEnumerable<ProductDTO>>> GetTechnique(int limit, int page,
-        List<Category> categories,
-        List<Nation> nations)
+        List<int> categories,
+        List<int> nations)
     {
         var response = new BaseResponse<IEnumerable<ProductDTO>>();
         try
         {
-            if (!nations.Any())
+            if (nations == null)
             {
-                nations = await _nationRepository.GetAllNations();
+                nations = await _nationRepository.GetAllId();
             }
 
-            if (!categories.Any())
+            if (categories == null)
             {
-                categories = await _categoryRepository.GetAllCategories();
+                categories = await _categoryRepository.GetAllId();
             }
 
-            List<int> nationsId = new List<int>();
-            foreach (var nation in nations)
-            {
-                nationsId.Add((await _nationRepository.GetByName(nation.Name)).Id);
-            }
-
-            List<int> categoriesId = new List<int>();
-            foreach (var category in categories)
-            {
-                 categoriesId.Add((await _categoryRepository.GetByName(category.Name)).Id);
-            }
-
-            if (!nationsId.Any() || !categoriesId.Any())
-            {
-                response.Description = "Категории или нации не найдены";
-                response.StatusCode = StatusCode.NotFound;
-                return response;
-            }
-
-            var products = await _productRepository.GetTechniqueByPage(limit, page, categoriesId, nationsId);
+            var products = await _productRepository.GetTechniqueByPage(limit, page, categories, nations);
 
             if (!products.Any())
             {
                 response.Description = "Продукты не найдены";
                 response.StatusCode = StatusCode.ProductNotFound;
+                response.Data = new List<ProductDTO>();
                 return response;
             }
 
@@ -277,6 +272,7 @@ public class ProductService : IProductService
                     CategoryId = (int)product.CategoryId,
                     NationId = product.NationId,
                     Description = product.Description,
+                    Price = product.Price,
                     Id = product.Id,
                     Image = product.Image
                 });
@@ -296,7 +292,31 @@ public class ProductService : IProductService
         }
     }
 
-    public async Task<IBaseResponse<bool>> CreateProduct(ProductDTO model)
+    public async Task<IBaseResponse<IEnumerable<Product>>> GetAllProducts()
+    {
+       var response = new BaseResponse<IEnumerable<Product>>();
+        try
+        {
+            var products = await _productRepository.GetAllProducts();
+            if (products == null)
+            {
+                response.Description = "Продукты не найдены";
+                response.StatusCode = StatusCode.ProductNotFound;
+                return response;
+            }
+
+            response.Data = products;
+            response.StatusCode = StatusCode.OK;
+
+            return response;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+    public async Task<IBaseResponse<bool>> CreateProduct(CreateProductDTO model)
     {
         var response = new BaseResponse<bool>();
         try
@@ -305,6 +325,7 @@ public class ProductService : IProductService
             {
                 Name = model.Name,
                 Image = model.Image,
+                Price = model.Price,
                 Description = model.Description,
                 CategoryId = model.CategoryId,
                 NationId = model.NationId
@@ -328,6 +349,42 @@ public class ProductService : IProductService
                 Description = e.Message,
                 StatusCode = StatusCode.InternalServerError
             };
+        }
+    }
+
+    public async Task<IBaseResponse<ProductDTO>> GetProductById(int productId)
+    {
+        var response = new BaseResponse<ProductDTO>();
+        try
+        {
+            var product = await _productRepository.GetById(productId);
+            if (product == null)
+            {
+                response.Description = "Продукт не найден";
+                response.StatusCode = StatusCode.ProductNotFound;
+                return response;
+            }
+
+            var productDTO = new ProductDTO
+            {
+                CategoryId = product.CategoryId,
+                Description = product.Description,
+                Id = product.Id,
+                Image = product.Image,
+                Name = product.Name,
+                NationId = product.NationId,
+                Price = product.Price
+            };
+
+            response.Data = productDTO;
+            response.StatusCode = StatusCode.OK;
+
+            return response;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
         }
     }
 }

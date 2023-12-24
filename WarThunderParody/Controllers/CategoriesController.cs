@@ -20,7 +20,7 @@ public class CategoriesController : ControllerBase
     
     [EnableCors("AllowAllMethods")]
     [HttpGet("GetCategories")]
-    //[Authorize]
+    [Authorize]
     public async Task<IEnumerable<Category>> Get()
     {
         var response = await _categoryService.GetCategories();

@@ -13,4 +13,6 @@ public interface IBaseRepository<T>
     public Task<T> Update(T entity);
     
     public Task<bool> Delete(T entity);
+
+    public Task<List<int>> GetAllId();
 }

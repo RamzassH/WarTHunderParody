@@ -57,4 +57,9 @@ public class AccountRepository : IAccountRepository
         await _db.SaveChangesAsync();
         return true;
     }
+
+    public Task<List<int>> GetAllId()
+    {
+        throw new NotImplementedException();
+    }
 }

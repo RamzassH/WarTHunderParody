@@ -41,7 +41,7 @@ public class AccountService : IAccountService
                 Name = model.Name,
                 Email = model.Email,
                 Balance = 0,
-                RegistrationDate = DateTime.Now,
+                RegistrationDate = DateOnly.FromDateTime(DateTime.Now),
                 Password = HashPasswordHelper.HashPassword(model.Password),
                 Roles = newRole
             };
@@ -109,8 +109,8 @@ public class AccountService : IAccountService
             account.Balance = model.Ballance;
             account.Email = account.Email;
             account.RegistrationDate = model.RegistrationDate;
-            account.Password = HashPasswordHelper.HashPassword(model.Password);
-            account.Roles = model.Roles;
+            //account.Password = HashPasswordHelper.HashPassword(model.Password);
+            //account.Roles = model.Roles;
 
             await _accountRepository.Update(account);
             return response;
@@ -122,6 +122,40 @@ public class AccountService : IAccountService
                 Description = e.Message,
                 StatusCode = StatusCode.InternalServerError
             };
+        }
+    }
+
+    public async Task<IBaseResponse<UserAccountDTO>> GetAccountInfoByEmail(string email)
+    {
+        var response = new BaseResponse<UserAccountDTO>();
+        try
+        {
+            var accountInfo = await _accountRepository.GetByEmail(email);
+            if (accountInfo == null)
+            {
+                response.Description = "Пользователь не найден";
+                response.StatusCode = StatusCode.AccountNotFound;
+                return response;
+            }
+
+            var accountInfoDTO = new UserAccountDTO
+            {
+                Id = accountInfo.Id,
+                Ballance = accountInfo.Balance,
+                Email = accountInfo.Email,
+                Name = accountInfo.Name,
+                RegistrationDate = accountInfo.RegistrationDate
+            };
+
+            response.Data = accountInfoDTO;
+            response.StatusCode = StatusCode.OK;
+            return response;
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
         }
     }
 }

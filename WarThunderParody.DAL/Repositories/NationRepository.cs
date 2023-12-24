@@ -34,6 +34,8 @@ public class NationRepository : INationRepository
         return await _db.Nations.ToListAsync();
     }
 
+
+
     public IQueryable<Nation> GetAll()
     {
         return _db.Nations;
@@ -51,5 +53,17 @@ public class NationRepository : INationRepository
         _db.Nations.Remove(entity);
         await _db.SaveChangesAsync();
         return true;
+    }
+
+    public async Task<List<int>> GetAllId()
+    {
+        var listNations = await _db.Nations.ToListAsync();
+        List<int> result = new List<int>();
+        foreach (var nation in listNations)
+        {
+            result.Add(nation.Id);
+        }
+
+        return result;
     }
 }

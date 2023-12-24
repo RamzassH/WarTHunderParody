@@ -45,6 +45,11 @@ public class ProductRepository : IProductRepository
         return true;
     }
 
+    public Task<List<int>> GetAllId()
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<Product?> GetByName(string name)
     {
         return await _db.Products.FirstOrDefaultAsync(x => x.Name == name);
@@ -53,6 +58,11 @@ public class ProductRepository : IProductRepository
     public async Task<List<Product>> GetAllProducts()
     {
         return await _db.Products.ToListAsync();
+    }
+
+    public async Task<List<Product>> GetAllProductsById(int id)
+    {
+        return await _db.Products.Where(x => x.Id == id).ToListAsync();
     }
 
     public async Task<List<Product>> GetPremiumCurrencyBaPage(int limit, int page)

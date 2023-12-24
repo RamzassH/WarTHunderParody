@@ -39,42 +39,28 @@ public class ProductController : ControllerBase
     [EnableCors("AllowAllMethods")]
     [Microsoft.AspNetCore.Mvc.HttpGet("GetTechnique")]
     public async Task<IEnumerable<ProductDTO>> GetTechnique([FromQuery] GetTechniqueDTO model)
-    {
-        HttpContext.Response.Headers.Add("ngrok-skip-browser-warning", "true");
-        //List<Category> categories = new List<Category>();
-        // if (model.CategoriesId != null)
-        // {
-        //     foreach (var category in model.Categories)
-        //     {
-        //         categories.Add(new Category
-        //         {
-        //             Name = category.Name
-        //         });
-        //     }
-        // }
-        //
-        // List<Nation> nations= new List<Nation>();
-        // if (model.NationsId != null)
-        // {
-        //     foreach (var nation in model.Nations)
-        //     {
-        //         nations.Add(new Nation
-        //         {
-        //             Name = nation.Name
-        //         });
-        //     }
-        // }
-      
+    { 
         var products = await _productService.GetTechnique(model.Limit, model.Page,
             model.CategoriesId, model.NationsId);
         
         Response.Headers.Add("Total-Count-Products", products.Data.Count().ToString());
         return products.Data;
     }
+    
+    
+    //TODO Выгрузка JSON, CSV
+    [EnableCors("AllowAllMethods")]
+    [Microsoft.AspNetCore.Mvc.HttpGet("GetAllProducts")]
+    public async Task<IEnumerable<Product>> GetAllProducts()
+    {
+        var products = await _productService.GetProducts();
+        Response.Headers.Add("Total-Count-Products", products.Data.Count().ToString());
+        return products.Data;
+    }
 
-    [Microsoft.AspNetCore.Mvc.HttpPost("CreateProduct")]
-    [Authorize]
-    public async Task<IActionResult> CreateProduct([Microsoft.AspNetCore.Mvc.FromBody] ProductDTO model)
+    [Microsoft.AspNetCore.Mvc.HttpPost("CreateProduct")]        
+    [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> CreateProduct([Microsoft.AspNetCore.Mvc.FromBody] CreateProductDTO model)
     {
         var result = await _productService.CreateProduct(model);
         
@@ -85,4 +71,16 @@ public class ProductController : ControllerBase
     
         return Ok(result.StatusCode);
     }
+    
+    
+    [EnableCors("AllowAllMethods")]
+    [Microsoft.AspNetCore.Mvc.HttpGet("GetProduct")]
+    public async Task<ProductDTO> GetProduct([FromQuery] int id)
+    {
+        HttpContext.Response.Headers.Add("ngrok-skip-browser-warning", "true");
+        var products = await _productService.GetProduct(id);
+        
+        return products.Data;
+    }
+
 }
