@@ -21,12 +21,11 @@ import {AuthContext} from "../context";
 import LoginCreateComponent from "../components/LoginCreateComponent";
 
 const Main = () => {
-    const {isAuth, setIsAuth} = useContext(AuthContext)
+    const {isAuth, setIsAuth, token, setToken} = useContext(AuthContext)
     let navigate = useNavigate()
     const [modalLogin, setModalLogin] = useState(false)
     const [modalCreateUser, setModalCreateUser] = useState(false)
     const [categories, setCategories] = useState([])
-    const [token, setToken] = useState("");
     /*
     const [getToken, isLoading, tokenError] = useFetching(async (userData) => {
         await BackService.login(userData.login, userData.password, setToken)
@@ -62,6 +61,13 @@ const Main = () => {
         setModalCreateUser(false)
     }
     */
+    function Exit(functionIsAuth, functionToken) {
+        localStorage.setItem("auth", 'false');
+        localStorage.setItem("token", "");
+        localStorage.setItem("username", "")
+        functionIsAuth(false);
+        functionToken({token: "", username: ""});
+    }
 
     return (
         <div style={{
@@ -96,9 +102,14 @@ const Main = () => {
                     </MenuItem>
                     :
                     <MenuItemProfile
-                        profileFunction={() => {navigate('/profile')}}
-                        exitFunction={() => {setIsAuth(false); localStorage.setItem('auth', 'false'); navigate('/')}}
-                        username="TiltMan"
+                        profileFunction={() => {
+                            navigate('/profile')
+                        }}
+                        exitFunction={() => {
+                            Exit(setIsAuth, setToken);
+                            navigate('/')
+                        }}
+                        username={token.username}
                     />
                 }
                 <MenuItem>
@@ -113,12 +124,13 @@ const Main = () => {
                 setModalCreateUser={setModalCreateUser}
                 setIsAuth={setIsAuth}
                 setToken={setToken}
+                token={token}
             />
 
             <Nav>
                 <NavItem onClick={() => navigate("/")}>
                     H
-                </NavItem >
+                </NavItem>
                 <NavItem onClick={() => navigate("/premium_currency")}>
                     Золотые Орлы
                 </NavItem>

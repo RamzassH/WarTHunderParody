@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {useNavigate, useParams} from "react-router-dom";
 import CreateForm from "../components/UI/CreateForm/CreateForm";
 import BuyForm from "../components/UI/BuyForm/BuyForm";
@@ -6,15 +6,25 @@ import {useFetching} from "../hooks/useFetching";
 import classes from "../../src/components/UI/BuyForm/BuyForm.module.css";
 import MyButton from "../components/UI/button/MyButton";
 import BackService from "../API/BackService";
+import {AuthContext} from "../context";
 
 const BuyPage = () => {
+    const {token} = useContext(AuthContext);
     const params = useParams()
     let navigate = useNavigate()
 
-    const [startBuy, setStart] = useState( false)
+    const [startBuy, setStart] = useState(false)
+    const [prodInfo, setProdInfo] = useState({title: '', price: ''})
     const [buyProduct, isProcessBuy, error] = useFetching(async (cardData) => {
-
+        const response = await BackService.purchase(params.id, cardData, token.token);
     })
+    const [productInfo, isGetInfo, errorNotInfo] = useFetching(async () => {
+        const response = await BackService.getProduct(params.id);
+        setProdInfo({title: response.data.name, price: response.data.price})
+    })
+    useEffect(() => {
+        productInfo()
+    }, []);
 
     function buy(card) {
         setStart(true)
@@ -31,8 +41,8 @@ const BuyPage = () => {
             {!startBuy
                 ?
                 <BuyForm
-                    title="Набор 'Нагиб до следующего патча'"
-                    price="Одна почка"
+                    title={prodInfo.title}
+                    price={prodInfo.price}
                     buyFunction={buy}
                 />
                 :
@@ -59,7 +69,9 @@ const BuyPage = () => {
                             </div>
                         </div>
                         <div className={classes.BuyFormRow}>
-                            <MyButton onClick={() => {navigate('/')}}>
+                            <MyButton onClick={() => {
+                                navigate('/')
+                            }}>
                                 Вернуться на главную страницу
                             </MyButton>
                         </div>
@@ -81,7 +93,9 @@ const BuyPage = () => {
                             </div>
                         </div>
                         <div className={classes.BuyFormRow}>
-                            <MyButton onClick={() => {navigate('/')}}>
+                            <MyButton onClick={() => {
+                                navigate('/')
+                            }}>
                                 Вернуться на главную страницу
                             </MyButton>
                         </div>

@@ -18,7 +18,7 @@ import LoginCreateComponent from "../components/LoginCreateComponent";
 
 const Product = () => {
     const params = useParams()
-    const {isAuth, setIsAuth} = useContext(AuthContext)
+    const {isAuth, setIsAuth, token, setToken} = useContext(AuthContext)
 
     let isTechnic = false;
     let isPremiumCurrency = false;
@@ -37,8 +37,7 @@ const Product = () => {
 
     const [modalLogin, setModalLogin] = useState(false)
     const [modalCreateUser, setModalCreateUser] = useState(false)
-    const [data, setData] = useState({title:'', image:'', description:'', price: 0})
-    const [token, setToken] = useState("");
+    const [data, setData] = useState({title: '', image: '', description: '', price: 0})
     /*
     const [getToken, isLoading, tokenError] = useFetching(async (userData) => {
         await BackService.login(userData.login, userData.password, setToken)
@@ -67,6 +66,14 @@ const Product = () => {
     useEffect(() => {
         getProduct()
     }, []);
+    function Exit(functionIsAuth, functionToken) {
+        localStorage.setItem("auth", 'false');
+        localStorage.setItem("token", "");
+        localStorage.setItem("username", "")
+        functionIsAuth(false);
+        functionToken({token: "", username: ""});
+    }
+
     /*
     function loginUser(userData) {
         //getToken(userData)
@@ -105,10 +112,10 @@ const Product = () => {
     return (
         <div
             style={{
-                    display: "flex",
-                    width: "100%",
-                    flexDirection: 'column',
-                    alignItems: 'center',
+                display: "flex",
+                width: "100%",
+                flexDirection: 'column',
+                alignItems: 'center',
             }}
         >
             <Background></Background>
@@ -137,9 +144,14 @@ const Product = () => {
                     </MenuItem>
                     :
                     <MenuItemProfile
-                        profileFunction={() => {navigate('/profile')}}
-                        exitFunction={() => {setIsAuth(false); localStorage.setItem('auth', 'false'); navigate('/')}}
-                        username="TiltMan"
+                        profileFunction={() => {
+                            navigate('/profile')
+                        }}
+                        exitFunction={() => {
+                            Exit(setIsAuth, setToken);
+                            navigate('/')
+                        }}
+                        username={token.username}
                     />
                 }
                 <MenuItem>
@@ -154,26 +166,33 @@ const Product = () => {
                 setModalCreateUser={setModalCreateUser}
                 setIsAuth={setIsAuth}
                 setToken={setToken}
+                token={token}
             />
 
             <Nav>
                 <NavItem onClick={() => navigate("/")}>
                     H
-                </NavItem >
+                </NavItem>
                 <NavItem
-                    onClick={() => {navigate("/premium_currency");}}
+                    onClick={() => {
+                        navigate("/premium_currency");
+                    }}
                     isActiveItem={isPremiumCurrency}
                 >
                     Золотые Орлы
                 </NavItem>
                 <NavItem
-                    onClick={() => {navigate("/technic");}}
+                    onClick={() => {
+                        navigate("/technic");
+                    }}
                     isActiveItem={isTechnic}
                 >
                     Техника
                 </NavItem>
                 <NavItem
-                    onClick={() => {navigate("/premium_account");}}
+                    onClick={() => {
+                        navigate("/premium_account");
+                    }}
                     isActiveItem={isPremiumAccount}
                 >
                     Премиум аккаунт

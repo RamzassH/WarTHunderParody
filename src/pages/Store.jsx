@@ -25,7 +25,7 @@ import MenuItemProfile from "../components/UI/MenuItemProfile/MenuItemProfile";
 import LoginCreateComponent from "../components/LoginCreateComponent";
 
 const Store = ({isTechnic = false, isPremiumCurrency = false, isPremiumAccount = false}) => {
-    const {isAuth, setIsAuth} = useContext(AuthContext)
+    const {isAuth, setIsAuth, token, setToken} = useContext(AuthContext)
 
     const technicCategory = [
         {name: "Танки", icon: iconClasses.Tanks, value: false},
@@ -70,7 +70,6 @@ const Store = ({isTechnic = false, isPremiumCurrency = false, isPremiumAccount =
     const [modalLogin, setModalLogin] = useState(false)
     const [modalCreateUser, setModalCreateUser] = useState(false)
     //const [categories, setCategories] = useState([])
-    const [token, setToken] = useState("");
     //const [totalPages, setTotalPages] = useState(0);
     const [limit, setLimit] = useState("10");
     const [page, setPage] = useState("1");
@@ -114,14 +113,14 @@ const Store = ({isTechnic = false, isPremiumCurrency = false, isPremiumAccount =
     */
 
     useEffect(() => {
-        /*if (isTechnic) {
+        if (isTechnic) {
             getTechnique(limit, page)
         } else if (isPremiumAccount) {
             getPremiumAccounts(limit, page)
         } else if (isPremiumCurrency) {
             getPremiumCurrency(limit, page)
-        }*/
-        setProductList([{id: 1}])
+        }
+        //setProductList([{id: 1}])
     }, [isTechnic, isPremiumCurrency, isPremiumAccount]);
 
     /*useEffect(() => {
@@ -144,6 +143,15 @@ const Store = ({isTechnic = false, isPremiumCurrency = false, isPremiumAccount =
         let tmp = [...filterNationValue]
         tmp[index] = {...tmp[index], value: value}
         setFilterNationValue(tmp)
+    }
+
+
+    function Exit(functionIsAuth, functionToken) {
+        functionIsAuth(false);
+        functionToken({token: "", username: ""});
+        localStorage.setItem('auth', 'false');
+        localStorage.setItem('token', '');
+        localStorage.setItem('username', '')
     }
     /*
     function loginUser(userData) {
@@ -250,9 +258,14 @@ const Store = ({isTechnic = false, isPremiumCurrency = false, isPremiumAccount =
                     </MenuItem>
                     :
                     <MenuItemProfile
-                        profileFunction={() => {navigate('/profile')}}
-                        exitFunction={() => {setIsAuth(false); localStorage.setItem('auth', 'false'); navigate('/')}}
-                        username="TiltMan"
+                        profileFunction={() => {
+                            navigate('/profile')
+                        }}
+                        exitFunction={() => {
+                            Exit(setIsAuth, setToken);
+                            navigate('/')
+                        }}
+                        username={token.username}
                     />
                 }
 
@@ -269,6 +282,7 @@ const Store = ({isTechnic = false, isPremiumCurrency = false, isPremiumAccount =
                 setModalCreateUser={setModalCreateUser}
                 setIsAuth={setIsAuth}
                 setToken={setToken}
+                token={token}
             />
 
             <Nav>

@@ -12,8 +12,6 @@ import BuyPage from "../pages/BuyPage";
 
 const AppRouter = () => {
     const {isAuth, isLoading} = useContext(AuthContext);
-    console.log(isAuth)
-
 
     if (isLoading) {
         return <Loader/>

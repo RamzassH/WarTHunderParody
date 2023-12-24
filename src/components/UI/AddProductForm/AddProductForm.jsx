@@ -1,17 +1,19 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import classes from "./AddProductForm.module.css";
 import MyInput from "../input/MyInput";
 import {useFetching} from "../../../hooks/useFetching";
 import MyButton from "../button/MyButton";
+import BackService from "../../../API/BackService";
+import {AuthContext} from "../../../context";
 
 const AddProductForm = ({...props}) => {
+    const {token} = useContext(AuthContext)
     const [productData, setProductData] = useState(
         {title:'', description:'', image:'', category:'', nation:'', price: ''})
     const [startProcess, setStartProcess] = useState(false)
 
     const [addNewProduct, isLoading, error] = useFetching(async (data) => {
-        // добавление
-        throw "Лови"
+        const response = await BackService.createProduct({...data, token:token.token})
     })
 
     function addProduct() {

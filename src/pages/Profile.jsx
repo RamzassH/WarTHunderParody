@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import MenuItem from "../components/UI/MenuItem/MenuItem";
 import MenuItemProfile from "../components/UI/MenuItemProfile/MenuItemProfile";
 import Menu from "../components/UI/Menu/Menu";
@@ -11,18 +11,65 @@ import ProfileInfo from "../components/UI/ProfileInfo/ProfileInfo";
 import HistoryList from "../components/UI/HistoryList/HistoryList";
 import HistoryListItem from "../components/UI/HistoryListItem/HistoryListItem";
 import AddProductForm from "../components/UI/AddProductForm/AddProductForm";
+import {useFetching} from "../hooks/useFetching";
+import BackService from "../API/BackService";
+import product from "./Product";
+import MyButton from "../components/UI/button/MyButton";
 
 const Profile = () => {
-    const {isAuth, setIsAuth} = useContext(AuthContext)
+    const {isAuth, setIsAuth, token, setToken, userInfoFromToken} = useContext(AuthContext)
 
+    const [fileUrl, setFileUrl] = useState("")
+    const [info, setInfo] = useState({username: '', id: '', email: '', date: ''})
+    const [historyList, setUserHistory] = useState([])
     const [isProfileInfo, setIsProfileInfo] = useState(true)
     const [isHistory, setIsHistory] = useState(false)
     const [isAddProduct, setIsAddProduct] = useState(false)
     const [isDischarge, setIsDischarge] = useState(false)
-    const [isAdmin, setIsAdmin] = useState(true)
+    const [isAdmin, setIsAdmin] = useState(false)
     let navigate = useNavigate()
+    const [getInfo, isLoadInfo, errorInfo] = useFetching(async (data) => {
+        const response = await BackService.getAccountInfo(data);
+        setInfo({username: response.data.name, id: response.data.id,
+            date: response.data.registrationDate, email: response.data.email})
+
+    })
+    const [getUserHistory, isLoadHistory, historyError] = useFetching(async () =>{
+        const response = await BackService.getUserHistory(token.token)
+        setUserHistory([...response.data])
+    })
+
+    const [getJsonURl, isLoadJsonURL, errorJsonURL] = useFetching(async () => {
+        const response = await  BackService.getProductsJSON(token.token)
+        setFileUrl(response.data)
+    })
+    const [getCsvURl, isLoadCsvURL, errorCsvURL] = useFetching(async () => {
+        const response = await  BackService.getProductsCSV(token.token)
+        setFileUrl(response.data)
+    })
+
+    useEffect(() => {
+        if (typeof userInfoFromToken.role !== 'string') {
+            userInfoFromToken.role.map(userRole => {
+                if (!userRole.localeCompare('Admin')) {
+                    setIsAdmin(true)
+                }
+            })
+        }
+        else if (!userInfoFromToken.role.localeCompare('Admin')){
+            setIsAdmin(true);
+        }
+        getInfo(localStorage.getItem('token'))
+    }, [token]);
 
 
+    useEffect(() => {
+        getUserHistory()
+    }, [isHistory]);
+
+    useEffect(() => {
+        console.log(info)
+    }, [info]);
     function clickProfileInfo() {
         if (isHistory) {
             setIsHistory(false)
@@ -34,6 +81,24 @@ const Profile = () => {
             setIsDischarge(false)
         }
         setIsProfileInfo(true)
+    }
+
+
+
+    function getJson(event) {
+        event.preventDefault();
+        getJsonURl()
+    }
+    function getCsv(event) {
+        event.preventDefault();
+        getCsvURl()
+    }
+    function Exit(functionIsAuth, functionToken) {
+        localStorage.setItem("auth", 'false');
+        localStorage.setItem("token", "");
+        localStorage.setItem("username", "")
+        functionIsAuth(false);
+        functionToken({token: "", username: ""});
     }
     function clickHistory() {
         if (isProfileInfo) {
@@ -47,6 +112,7 @@ const Profile = () => {
         }
         setIsHistory(true)
     }
+
     function clickAddProduct() {
         if (isProfileInfo) {
             setIsProfileInfo(false)
@@ -59,6 +125,7 @@ const Profile = () => {
         }
         setIsAddProduct(true)
     }
+
     function clickDischarge() {
         if (isProfileInfo) {
             setIsProfileInfo(false)
@@ -86,7 +153,9 @@ const Profile = () => {
                 <MenuItem>
                     Игры
                 </MenuItem>
-                <MenuItem onClick={() => {navigate('/')}}>
+                <MenuItem onClick={() => {
+                    navigate('/')
+                }}>
                     Магазин
                 </MenuItem>
                 <MenuItem style={{marginRight: "auto"}}>
@@ -98,9 +167,14 @@ const Profile = () => {
                     null
                     :
                     <MenuItemProfile
-                        profileFunction={() => {navigate('/profile')}}
-                        exitFunction={() => {setIsAuth(false); localStorage.setItem('auth', 'false'); navigate('/')}}
-                        username="TiltMan"
+                        profileFunction={() => {
+                            navigate('/profile')
+                        }}
+                        exitFunction={() => {
+                            Exit(setIsAuth, setToken);
+                            navigate('/')
+                        }}
+                        username={token.username}
                     />
                 }
                 <MenuItem>
@@ -108,13 +182,15 @@ const Profile = () => {
                 </MenuItem>
             </Menu>
 
-            <div style={{position: "absolute",
+            <div style={{
+                position: "absolute",
                 zIndex: "-1",
                 left: "0",
                 top: "0",
                 width: "100%",
                 height: "80px",
-                background: "linear-gradient(to bottom, rgba(3, 12, 21, 0.2) 0%, transparent 100%)"}}>
+                background: "linear-gradient(to bottom, rgba(3, 12, 21, 0.2) 0%, transparent 100%)"
+            }}>
             </div>
 
             <ProfileSection>
@@ -147,10 +223,10 @@ const Profile = () => {
                 {isProfileInfo
                     ?
                     <ProfileInfo
-                        username="Я уже в тильте. А ты???"
-                        id="1337"
-                        email="siniyLamborginy@zov.ussr"
-                        meta="9 мая 1945 года"
+                        username={info.username}
+                        id={info.id}
+                        email={info.email}
+                        meta={info.date}
                     />
                     :
                     null
@@ -158,14 +234,20 @@ const Profile = () => {
 
                 {isHistory
                     ?
-                    <HistoryList>
-                        <HistoryListItem
-                            image="https://store.gaijin.net/img/items/B9E88B57-8BFC-4FB3-9EA9-9ED00DA44847.jpg"
-                            title="Пивной прорыв"
-                            price="Балтика 9"
-                            description="СССР"
-                            meta="24.02.2022"
-                        />
+                    <HistoryList>`
+                        {
+                            historyList.map(product =>
+                                <HistoryListItem
+                                    image={product.image}
+                                    title={product.name}
+                                    price={product.price}
+                                    description={product.nationId}
+                                    meta={product.date}
+                                />
+
+                            )
+
+                        }
                     </HistoryList>
                     :
                     null
@@ -177,7 +259,22 @@ const Profile = () => {
                     :
                     null
                 }
-
+                {isDischarge
+                    ?
+                    <div style={{display:"flex", width:"300px", height:"400px"}}>
+                        <MyButton onClick = {getJson}>
+                            Получить продукты в JSON
+                        </MyButton>
+                        <MyButton onClick = {getCsv}>
+                            Получить продукты в CSV
+                        </MyButton>
+                        <div>
+                            {fileUrl}
+                        </div>
+                    </div>
+                    :
+                    null
+                }
             </ProfileSection>
         </div>
     );
