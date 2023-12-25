@@ -103,7 +103,7 @@ const Main = () => {
                     :
                     <MenuItemProfile
                         profileFunction={() => {
-                            navigate('/profile')
+                            navigate(`/profile/${token}`)
                         }}
                         exitFunction={() => {
                             Exit(setIsAuth, setToken);

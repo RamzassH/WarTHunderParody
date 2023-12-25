@@ -259,7 +259,7 @@ const Store = ({isTechnic = false, isPremiumCurrency = false, isPremiumAccount =
                     :
                     <MenuItemProfile
                         profileFunction={() => {
-                            navigate('/profile')
+                            navigate(`/profile/${token}`)
                         }}
                         exitFunction={() => {
                             Exit(setIsAuth, setToken);

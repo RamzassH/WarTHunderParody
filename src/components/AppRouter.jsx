@@ -27,7 +27,7 @@ const AppRouter = () => {
                     <Route index path="/premium_currency" element={<Store isPremiumCurrency={true}/>}/>
                     <Route index path="/premium_account" element={<Store isPremiumAccount={true}/>}/>
                     <Route index path="/:category/:id" element={<Product/>}/>
-                    <Route index path="/profile" element={<Profile/>}/>
+                    <Route index path="/profile/:tok" element={<Profile/>}/>
                     <Route index path="/buy/:id" element={<BuyPage/>}/>
                 </Route>
             </Routes>

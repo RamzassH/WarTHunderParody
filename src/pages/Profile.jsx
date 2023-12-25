@@ -13,8 +13,6 @@ import HistoryListItem from "../components/UI/HistoryListItem/HistoryListItem";
 import AddProductForm from "../components/UI/AddProductForm/AddProductForm";
 import {useFetching} from "../hooks/useFetching";
 import BackService from "../API/BackService";
-import product from "./Product";
-import MyButton from "../components/UI/button/MyButton";
 import GetFileBD from "../components/UI/GetFileBD/GetFileBD";
 
 const Profile = () => {
@@ -224,7 +222,6 @@ const Profile = () => {
                                     description={product.nationId}
                                     meta={product.date}
                                 />
-
                             )
 
                         }

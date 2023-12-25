@@ -7,6 +7,8 @@ import {useFetching} from "../hooks/useFetching";
 import BackService from "../API/BackService";
 import {AuthContext} from "../context";
 import {jwtDecode} from "jwt-decode";
+import LoginLoading from "./UI/LoginLoading/LoginLoading";
+import CreateLoading from "./UI/CreateLoading/CreateLoading";
 
 const LoginCreateComponent = ({modalLogin, setModalLogin, modalCreateUser, setModalCreateUser, setIsAuth, setToken, token}) => {
     const {setIsReloadData, setUserInfoFromToken} = useContext(AuthContext)
@@ -34,6 +36,13 @@ const LoginCreateComponent = ({modalLogin, setModalLogin, modalCreateUser, setMo
 
     }, [token]);
 
+    useEffect(() => {
+        if (!isRegistration && startRegistration && !errorRegistration) {
+            setStart(false)
+            setModalCreateUser(false)
+        }
+    }, [isRegistration]);
+
     function loginUser(userData) {
         getToken(userData)
         if (!userData.login || !userData.password) {
@@ -41,7 +50,6 @@ const LoginCreateComponent = ({modalLogin, setModalLogin, modalCreateUser, setMo
         }
 
     }
-
 
     function createUser(userData) {
         if (!userData.username ||
@@ -55,8 +63,7 @@ const LoginCreateComponent = ({modalLogin, setModalLogin, modalCreateUser, setMo
 
         console.log(userData)
         register(userData)
-        // setStart(true);
-        setModalCreateUser(false)
+        setStart(true);
     }
 
     return (
@@ -65,14 +72,14 @@ const LoginCreateComponent = ({modalLogin, setModalLogin, modalCreateUser, setMo
                 {!isLoading?
                     <LoginForm login={loginUser} create={() => {setModalLogin(false); setModalCreateUser(true)}}/>
                     :
-                    null
+                    <LoginLoading/>
                 }
             </LoginModal>
-            <CreateModal visible={modalCreateUser} setVisible={setModalCreateUser}>
+            <CreateModal visible={modalCreateUser} setVisible={(value) => {setModalCreateUser(value); setStart(false)}}>
                 {!isRegistration?
                     <CreateForm create={createUser}/>
                     :
-                    null
+                    <CreateLoading/>
                 }
             </CreateModal>
         </div>

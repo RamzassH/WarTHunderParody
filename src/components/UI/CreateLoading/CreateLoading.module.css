@@ -1,0 +1,74 @@
+.CreateLoading {
+    box-sizing: border-box;
+}
+
+.CreateLoadingTitle {
+    padding: 20px 15px;
+    background: transparent;
+    color: #fff;
+    box-sizing: border-box;
+    font-size: 14px;
+    font-family: "Fira Sans",Arial,sans-serif;
+}
+
+.CreateLoadingTitleText {
+    padding: 0;
+    font-size: 32px;
+    color: #fff;
+    font-family: "Fira Sans",sans-serif;
+    font-weight: 400;
+}
+
+.CreateLoadingTable {
+    padding: 0;
+    margin-left: 0;
+    margin-right: 0;
+    box-sizing: border-box;
+}
+
+.CreateLoadingTable::after {
+    clear: both;
+}
+
+.CreateLoadingTable::before {
+    content: " ";
+    display: table;
+}
+
+.CreateLoadingColumn {
+    width: 100%;
+    float: left;
+    position: relative;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+    box-sizing: border-box;
+}
+
+.CreateLoadingInputForm {
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 500px;
+}
+
+.CreateLoadingRow {
+    display: flex;
+    position: relative;
+    left: 50%;
+    margin-bottom: 24px;
+    align-items: center;
+    column-gap: 16px;
+}
+
+.CreateLoadingCenter {
+    font-family: "Fira Sans",sans-serif;
+    font-size: 16px !important;
+    font-weight: 300;
+    line-height: 24px;
+    color: #7d838c;
+    padding-left: 50px;
+    padding-top: 5px;
+    box-sizing: border-box;
+}
