@@ -1,0 +1,41 @@
+.GetFileBD {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    margin-bottom: 24px;
+}
+
+.GetFileBD_InfoContainer {
+    position: relative;
+    z-index: 100;
+    width: 900px;
+    height: 450px;
+    overflow: hidden;
+    border-top: 1px #334251 solid;
+    background: #2d3a48;
+}
+
+.GetFileBD_InfoContainer_Wrapper {
+    position: relative;
+    z-index: 200;
+    height: 100%;
+    padding: 36px 130px 36px 32px;
+}
+
+.GetFileBD_Title {
+    padding: 20px 15px;
+    background: transparent;
+    color: #fff;
+    box-sizing: border-box;
+    font-size: 14px;
+    font-family: "Fira Sans",Arial,sans-serif;
+}
+
+.GetFileBD_Title_Text {
+    padding: 0;
+    font-size: 32px;
+    color: #fff;
+    font-family: "Fira Sans",sans-serif;
+    font-weight: 500;
+    margin-bottom: 24px;
+}

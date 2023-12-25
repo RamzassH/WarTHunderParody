@@ -15,11 +15,11 @@ import {useFetching} from "../hooks/useFetching";
 import BackService from "../API/BackService";
 import product from "./Product";
 import MyButton from "../components/UI/button/MyButton";
+import GetFileBD from "../components/UI/GetFileBD/GetFileBD";
 
 const Profile = () => {
     const {isAuth, setIsAuth, token, setToken, userInfoFromToken} = useContext(AuthContext)
 
-    const [fileUrl, setFileUrl] = useState("")
     const [info, setInfo] = useState({username: '', id: '', email: '', date: ''})
     const [historyList, setUserHistory] = useState([])
     const [isProfileInfo, setIsProfileInfo] = useState(true)
@@ -32,20 +32,10 @@ const Profile = () => {
         const response = await BackService.getAccountInfo(data);
         setInfo({username: response.data.name, id: response.data.id,
             date: response.data.registrationDate, email: response.data.email})
-
     })
     const [getUserHistory, isLoadHistory, historyError] = useFetching(async () =>{
         const response = await BackService.getUserHistory(token.token)
         setUserHistory([...response.data])
-    })
-
-    const [getJsonURl, isLoadJsonURL, errorJsonURL] = useFetching(async () => {
-        const response = await  BackService.getProductsJSON(token.token)
-        setFileUrl(response.data)
-    })
-    const [getCsvURl, isLoadCsvURL, errorCsvURL] = useFetching(async () => {
-        const response = await  BackService.getProductsCSV(token.token)
-        setFileUrl(response.data)
     })
 
     useEffect(() => {
@@ -83,16 +73,6 @@ const Profile = () => {
         setIsProfileInfo(true)
     }
 
-
-
-    function getJson(event) {
-        event.preventDefault();
-        getJsonURl()
-    }
-    function getCsv(event) {
-        event.preventDefault();
-        getCsvURl()
-    }
     function Exit(functionIsAuth, functionToken) {
         localStorage.setItem("auth", 'false');
         localStorage.setItem("token", "");
@@ -261,17 +241,7 @@ const Profile = () => {
                 }
                 {isDischarge
                     ?
-                    <div style={{display:"flex", width:"300px", height:"400px"}}>
-                        <MyButton onClick = {getJson}>
-                            Получить продукты в JSON
-                        </MyButton>
-                        <MyButton onClick = {getCsv}>
-                            Получить продукты в CSV
-                        </MyButton>
-                        <div>
-                            {fileUrl}
-                        </div>
-                    </div>
+                    <GetFileBD/>
                     :
                     null
                 }
