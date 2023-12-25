@@ -14,7 +14,7 @@ const LoginCreateComponent = ({modalLogin, setModalLogin, modalCreateUser, setMo
         const response = await BackService.login(userData.login, userData.password)
         setToken({token:response.data.token, username:response.data.name})
     })
-    const [register, IsRegistration, errorRegistration] = useFetching(async (data) => {
+    const [register, isRegistration, errorRegistration] = useFetching(async (data) => {
         const response = await BackService.register(data.login, data.username, data.password)
     })
 
@@ -62,10 +62,18 @@ const LoginCreateComponent = ({modalLogin, setModalLogin, modalCreateUser, setMo
     return (
         <div>
             <LoginModal visible={modalLogin} setVisible={setModalLogin}>
-                <LoginForm login={loginUser} create={() => {setModalLogin(false); setModalCreateUser(true)}}/>
+                {!isLoading?
+                    <LoginForm login={loginUser} create={() => {setModalLogin(false); setModalCreateUser(true)}}/>
+                    :
+                    null
+                }
             </LoginModal>
             <CreateModal visible={modalCreateUser} setVisible={setModalCreateUser}>
-                <CreateForm create={createUser}/>
+                {!isRegistration?
+                    <CreateForm create={createUser}/>
+                    :
+                    null
+                }
             </CreateModal>
         </div>
     );

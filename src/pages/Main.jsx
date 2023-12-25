@@ -155,7 +155,7 @@ const Main = () => {
                         height: "auto",
                     }}>
                         <img
-                            src="https://sun9-74.userapi.com/impf/uCU3k-dMZbOli-cvKWbflPx7PYMkQH26TSX0Rw/r1ukcJG6tjc.jpg?size=2560x1440&quality=95&sign=f3d5061e24481a982016ef7487a39ddc&type=album"
+                            src="https://images-live.warthunder.com/f68/01d/db8ac0b61abe581ae5cffa4ca5d722a7f5.jpeg"
                             style={{
                                 height: "440px",
                                 width: "auto",

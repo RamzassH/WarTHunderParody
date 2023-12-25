@@ -84,7 +84,7 @@ const LoginForm = ({login, create}) => {
                         <input
                             className={classes.LoginFormCreateButton}
                             type="submit"
-                            value="Продать очко"
+                            value="Заложить квартиру"
                             onClick={createUser}
                         />
                     </div>
