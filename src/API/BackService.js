@@ -27,7 +27,7 @@ export default class BackService {
 
     static async createProduct(data) {
         const article = {header: {"Authorization" : `Bearer ${data.token}`},
-        description: data.description, categoryId: data.category, price: data.price,
+        description: data.description, categoryIdnb: data.category, price: data.price,
             image: data.image, nationId: data.nation, name: data.title}
         const response = await axios.post(`http://localhost:5283/api/Product/CreateProduct`, article)
         return response
@@ -44,6 +44,7 @@ export default class BackService {
                 return Promise.reject(error)
             }
         )
+        console.log(token)
         const response = await axios.get(`http://localhost:5283/Account/GetAccountInfo`)
         return response
     }
@@ -79,7 +80,7 @@ export default class BackService {
                 return Promise.reject(error)
             }
         )
-        const response = await axios.get(`http://127.0.0.1:5283/Files/GetJSONroducts`)
+        const response = await axios.get(`http://127.0.0.1:5283/Files/GetJSONProducts`)
         return response
     }
     static async getProductsCSV(token) {

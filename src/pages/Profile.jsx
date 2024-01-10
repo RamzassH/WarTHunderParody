@@ -27,7 +27,8 @@ const Profile = () => {
     const [isAdmin, setIsAdmin] = useState(false)
     let navigate = useNavigate()
     const [getInfo, isLoadInfo, errorInfo] = useFetching(async (data) => {
-        const response = await BackService.getAccountInfo(data);
+        console.log(token)
+        const response = await BackService.getAccountInfo(token.token);
         setInfo({username: response.data.name, id: response.data.id,
             date: response.data.registrationDate, email: response.data.email})
     })
@@ -47,9 +48,11 @@ const Profile = () => {
         else if (!userInfoFromToken.role.localeCompare('Admin')){
             setIsAdmin(true);
         }
-        getInfo(localStorage.getItem('token'))
-    }, [token]);
+        if (isProfileInfo) {
+            getInfo(token.token)
+        }
 
+    }, [token]);
 
     useEffect(() => {
         getUserHistory()
@@ -77,6 +80,7 @@ const Profile = () => {
         localStorage.setItem("username", "")
         functionIsAuth(false);
         functionToken({token: "", username: ""});
+        setInfo({username: '', id: '', email: '', date: ''})
     }
     function clickHistory() {
         if (isProfileInfo) {
@@ -198,7 +202,7 @@ const Profile = () => {
                     }
                 </ProfileMenu>
 
-                {isProfileInfo
+                {isProfileInfo && !isLoadInfo
                     ?
                     <ProfileInfo
                         username={info.username}

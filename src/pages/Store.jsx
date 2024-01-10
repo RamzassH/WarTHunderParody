@@ -71,7 +71,7 @@ const Store = ({isTechnic = false, isPremiumCurrency = false, isPremiumAccount =
     const [modalCreateUser, setModalCreateUser] = useState(false)
     //const [categories, setCategories] = useState([])
     //const [totalPages, setTotalPages] = useState(0);
-    const [limit, setLimit] = useState("10");
+    const [limit, setLimit] = useState("100");
     const [page, setPage] = useState("1");
     const [isActiveFirstFilter, setActiveFilter1] = useState(false)
     const [isActiveSecondFilter, setActiveFilter2] = useState(false)
@@ -259,7 +259,7 @@ const Store = ({isTechnic = false, isPremiumCurrency = false, isPremiumAccount =
                     :
                     <MenuItemProfile
                         profileFunction={() => {
-                            navigate(`/profile/${token}`)
+                            navigate(`/profile/${token.token}`)
                         }}
                         exitFunction={() => {
                             Exit(setIsAuth, setToken);
