@@ -109,8 +109,6 @@ public class AccountService : IAccountService
             account.Balance = model.Ballance;
             account.Email = account.Email;
             account.RegistrationDate = model.RegistrationDate;
-            //account.Password = HashPasswordHelper.HashPassword(model.Password);
-            //account.Roles = model.Roles;
 
             await _accountRepository.Update(account);
             return response;

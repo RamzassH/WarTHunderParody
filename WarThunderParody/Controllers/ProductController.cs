@@ -47,8 +47,6 @@ public class ProductController : ControllerBase
         return products.Data;
     }
     
-    
-    //TODO Выгрузка JSON, CSV
     [EnableCors("AllowAllMethods")]
     [Microsoft.AspNetCore.Mvc.HttpGet("GetAllProducts")]
     public async Task<IEnumerable<Product>> GetAllProducts()

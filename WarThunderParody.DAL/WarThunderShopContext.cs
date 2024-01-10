@@ -24,8 +24,10 @@ public partial class WarThunderShopContext : DbContext
     public async Task BackupDatabase()
     {
         ProcessStartInfo info = new ProcessStartInfo();
+        System.Environment.SetEnvironmentVariable("PGPASSWORD", "postgres");
+        string backupName = $"war_thunder_shop_{DateTime.Today.ToString("yyyy-MM-dd")}";
         info.FileName = "C:\\Program Files\\PostgreSQL\\16\\bin\\pg_dump.exe";
-        info.Arguments = "-U postgres -F c -b -v -f war_thunder_shop.exe";
+        info.Arguments = $"-U postgres -w -F c -b -v -f {backupName}";
         info.UseShellExecute = false;
         info.RedirectStandardOutput = true;
 
@@ -36,12 +38,12 @@ public partial class WarThunderShopContext : DbContext
         string output = process.StandardOutput.ReadToEnd();
         await process.WaitForExitAsync();
         
-        string backupName = $"war_thunder_shop_{DateTime.Today.ToString("yyyy-MM-dd")}";
+      
         await UploadSample("y0_AgAAAABqFvaLAAsE4AAAAAD1WX52J0ONqR-wSC-Fj8zLDPoK3O47geQ",backupName);
         
-        if (File.Exists("war_thunder_shop.exe"))
+        if (File.Exists(backupName))
         {
-            File.Delete("war_thunder_shop.exe");
+            File.Delete(backupName);
         }
     }
     

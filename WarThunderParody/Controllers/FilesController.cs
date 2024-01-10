@@ -21,7 +21,7 @@ public class FilesController :  ControllerBase
     }
 
     [EnableCors("AllowAllMethods")]
-    [HttpGet("GetJSONroducts")] 
+    [HttpGet("GetJSONProducts")] 
     [Authorize(Roles = "Admin")]
     public async Task<string> GetJSONProducts()
     {

@@ -9,6 +9,7 @@ using WarThunderParody.DAL.Repositories;
 using WarThunderParody.Service.Implementations;
 using WarThunderParody.Service.Interfaces;
 using System.Timers;
+using Microsoft.AspNetCore.Identity;
 using Timer = System.Timers.Timer;
 
 
@@ -76,11 +77,8 @@ builder.Services.AddCors(options =>
         });
 });
 
-BackupScheduler backupScheduler = new BackupScheduler();
-backupScheduler.Start();
 
 var app = builder.Build();
-
 
 app.UseRouting();
 
@@ -108,6 +106,8 @@ app.MapControllers();
 
 app.Run();
 
+BackupScheduler backupScheduler = new BackupScheduler();
+backupScheduler.Start();
 
 public class BackupScheduler
 {

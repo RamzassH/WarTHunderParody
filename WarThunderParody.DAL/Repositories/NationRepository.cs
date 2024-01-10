@@ -33,9 +33,7 @@ public class NationRepository : INationRepository
     {
         return await _db.Nations.ToListAsync();
     }
-
-
-
+    
     public IQueryable<Nation> GetAll()
     {
         return _db.Nations;

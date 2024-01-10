@@ -14,5 +14,4 @@ public interface IAccountService
     Task<IBaseResponse<Account>> Edit(int id, UserAccountDTO model);
 
     Task<IBaseResponse<UserAccountDTO>> GetAccountInfoByEmail(string email);
-
 }

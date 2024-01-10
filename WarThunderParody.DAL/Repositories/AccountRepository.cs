@@ -57,9 +57,14 @@ public class AccountRepository : IAccountRepository
         await _db.SaveChangesAsync();
         return true;
     }
-
-    public Task<List<int>> GetAllId()
+    public async Task<List<int>> GetAllId()
     {
+        var accountList= await _db.Accounts.ToListAsync();
+        List<int> idList = new List<int>();
+        foreach (var account in accountList)
+        {
+            idList.Add(account.Id);
+        }
         throw new NotImplementedException();
     }
 }
